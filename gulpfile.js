@@ -21,14 +21,14 @@ gulp.task('jshint', function(){
 // Compile SASS task
 gulp.task('sass', function(){
 	return gulp.src('site/scss/*.scss')
-		.pipe (sass())
+		.pipe(sass())
 		.pipe(gulp.dest('site/css'));
 });
 
 // Watch task
 gulp.task('watch', function(){
 	gulp.watch('site/js/*.js', ['jshint']);
-	gulp.watch('site/scss/*.scss', ['sass']);
+	gulp.watch('site/scss/*', ['sass']);
 });
 
 // Default task

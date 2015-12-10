@@ -423,6 +423,27 @@ th {
   padding: 0;
 }
 
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+footer li {
+  display: inline-block; }
+
 p {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1.2em; }
+
+body {
+  margin: 0 auto;
+  text-align: center; }
+
+nav {
+  margin: 0 2em;
+  text-align: right; }
+  nav li {
+    display: inline-block; }
+  nav a {
+    text-decoration: none; }
