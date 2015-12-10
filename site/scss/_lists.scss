@@ -2,10 +2,15 @@ ul {
 	padding: 0;
 
 	li {
-		display: inline-block; 
-
+		display: inline-block;
+		// padding: 0 0.6em
 		a {
-			text-decoration: none;
+			@include button-style;
+			background-color: $button-background-color;
 		}
 	}
 }
+
+// @media screen and ($desktop) {
+
+// }
