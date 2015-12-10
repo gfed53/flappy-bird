@@ -9,8 +9,21 @@ body {
 
 @media screen and (min-width: 640px) {
 	body {
+		.features {
+			@include outer-container(100%);
+			li {
+				@include span-columns(4);
+
+			}
+		}
+	}
+} 
+
+@media screen and (min-width: 1024px){
+	body {
 		img {
 			width: 17em;
 		}
 	}
-} 
+
+}
