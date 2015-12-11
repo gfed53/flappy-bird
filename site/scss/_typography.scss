@@ -1,15 +1,16 @@
 header h1 {
-	font-size: 2em;
+	font-size: 3em;
 	font-family: $helvetica;
 }
 
 h2 {
-	font-size: 1em;
+	font-size: 1.8em;
 }
 
 a {
 	text-decoration: none;
 	color: #ecf0f1;
+	font-size: 1.3em;
 }
 
 .intro p {
@@ -18,12 +19,12 @@ a {
 
 p {
 	font-family: $sans-serif-font;
-	font-size: 0.8em;
+	font-size: 1.5em;
 }
 
 .action {
 	a {
-		font-size: 1.5em;
+		font-size: 1.8em;
 		@include button-style;
 		background-color: $button-background-color;
 	}

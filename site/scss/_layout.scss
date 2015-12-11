@@ -10,13 +10,13 @@ body {
 	.features {
 		li {
 			margin-bottom: 1em;
+			margin: auto;
 
 			img {
 				max-width: 100%;
 				margin-bottom: 1em;
 			}
 		}
-	}
 	}
 	footer {
 		div {
@@ -27,7 +27,6 @@ body {
 			margin: 2em;
 		}
 	}
-
 }
 
 @media screen and ($tablet) {

@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Flappy Bird Clone Landing Page</title>
-  <meta name="description" content="The Flappy Bird 2.0 app.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Flappy Bird Clone Landing Page</title>
+    <meta name="description" content="The Flappy Bird 2.0 app.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- <link rel="stylesheet" href="css/styles.css"> -->
-  <style>html {box-sizing: border-box; } *, *::after, *::before {box-sizing: inherit; } body {margin: 1em; text-align: center; background-color: #bdc3c7; } body nav, body section {margin: 3em auto; } body .features li {margin-bottom: 1em; } body .features li img {width: 12em; margin-bottom: 1em; } @media screen and (min-width: 768px) {body .features {max-width: 100%; margin-left: auto; margin-right: auto; } body .features::after {clear: both; content: ""; display: table; } body .features li {float: left; display: block; margin-right: 2.35765%; width: 31.76157%; } body .features li:last-child {margin-right: 0; } } @media screen and (min-width: 1024px) {body img {width: 17em; } } ul {padding: 0; } ul li {display: inline-block; } ul li a {padding: 0.5em 0.5em; border-radius: 0.3em; background-color: #1abc9c; } nav {margin: 0 2em; text-align: right; } header h1 {font-size: 2em; font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif; } h2 {font-size: 1em; } a {text-decoration: none; color: #ecf0f1; } .intro p {font-style: italic; } p {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 0.8em; } .action a {font-size: 1.5em; padding: 0.5em 0.5em; border-radius: 0.3em; background-color: #1abc9c; } @media screen and (min-width: 768px) {header h1 {font-size: 3em; } h2 {font-size: 1.2em; } p {font-size: 1.2em; } .action a {font-size: 2em; } }</style> </head>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
   <body>
     <nav>
       <ul>
@@ -19,7 +19,6 @@
         <li><a href="#">Contact</a></li>
       </ul>
     </nav>
-
     <header>
       <h1>The Return Of The Flappy Bird</h1>
     </header>
@@ -64,16 +63,5 @@
       </div>
       <p>By Gregory Federico. Courtesy of Dong Nguyen, original mastermind behind Flappy Bird.</p>
     </footer>
-    <script>
-      var cb = function() {
-        var l = document.createElement('link'); l.rel = 'stylesheet';
-        l.href = 'css/styles.css';
-        var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-      webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(cb);
-      else window.addEventListener('load', cb);
-    </script>
   </body>
-  </html>
+</html>
