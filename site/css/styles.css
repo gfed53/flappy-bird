@@ -90,3 +90,6 @@ p {
     font-size: 1.2em; }
   .action a {
     font-size: 2em; } }
+
+.btn-action {
+  -webkit-transform: translateX(20px); }
