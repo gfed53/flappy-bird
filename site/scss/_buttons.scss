@@ -1,5 +1,14 @@
-.btn-action {
-	-webkit-transform: translateX(20px);
+.action {
+	// .btn-action {
+	// -webkit-transform: translateX(20px);
 	// -webkit-transform-origin: 100% 100%;
 	// transform-origin: 100% 100%;
+	// }
+
+	input{
+		@include button-style;
+		font-size: 2em;
+		background-color: $button-background-color;
+	}
 }
+

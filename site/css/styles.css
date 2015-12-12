@@ -91,5 +91,8 @@ p {
   .action a {
     font-size: 2em; } }
 
-.btn-action {
-  -webkit-transform: translateX(20px); }
+.action input {
+  padding: 0.5em 0.5em;
+  border-radius: 0.3em;
+  font-size: 2em;
+  background-color: #1abc9c; }
