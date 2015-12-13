@@ -1,5 +1,6 @@
 $(function(){
 	$("body").velocity("fadeIn", { duration: 1000 });
+	$(".features li").velocity({ translateX: [0, "-30em"], opacity: [1, 0] }, { duration: 800 });
 	$(".lnk-home").on("click", function(e){
 		e.preventDefault();
 		console.log("Clicked btn");
