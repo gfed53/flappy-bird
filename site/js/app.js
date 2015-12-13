@@ -1,17 +1,14 @@
 $(function(){
 	$("body").velocity("fadeIn", { duration: 1000 });
 	$(".features li").velocity({ translateX: [0, "-30em"], opacity: [1, 0] }, { duration: 800 });
-	$(".lnk-home").on("click", function(e){
-		e.preventDefault();
-		console.log("Clicked btn");
-	});
+	$("h1").velocity({rotateZ: 360, "font-size": ["3em", "1em"], opacity: [1, 0.2] }, { duration: 800 });
 	// $(".btn-action").on("click", function(e){
 	// 	e.preventDefault();
 	// 	console.log("clicked button");
 	// 	$(this).velocity( { "translateY": "-10px"}, 400 );
 	// });
 
-	$(".btn-action").on("mouseenter", function(){
+	$(".btn-action, nav li, footer li").on("mouseenter", function(){
 		console.log("hover");
 		$("a", this).velocity({"border-radius": "0", "padding": "0.7em"}, {"easing": "spring"});
 		}).on("mouseleave", function(){
