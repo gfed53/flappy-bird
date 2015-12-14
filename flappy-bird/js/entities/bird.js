@@ -6,6 +6,6 @@ var Bird = function(){
 	this.components= {
 		graphics: graphics
 	};
-}
+};
 
 exports.Bird = Bird;
