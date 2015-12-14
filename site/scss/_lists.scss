@@ -11,6 +11,20 @@ ul {
 	}
 }
 
-// @media screen and ($desktop) {
+.social {
+	li {
+		margin: 2.5em;
+		display: block;
+	}
 
-// }
+}
+
+@media screen and ($social-tweak1) {
+	.social {
+		li {
+			margin: 0.4em;
+			display: inline-block;
+		}
+	}
+
+}

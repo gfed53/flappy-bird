@@ -52,6 +52,15 @@ ul {
       border-radius: 0.3em;
       background-color: #1abc9c; }
 
+.social li {
+  margin: 2.5em;
+  display: block; }
+
+@media screen and (min-width: 453px) {
+  .social li {
+    margin: 0.4em;
+    display: inline-block; } }
+
 nav {
   margin: 0 2em;
   text-align: right; }
@@ -66,7 +75,7 @@ h2 {
 a, .action input {
   text-decoration: none;
   color: #ecf0f1;
-  font-size: 1.3em; }
+  font-size: 1em; }
 
 .intro p {
   font-style: italic; }

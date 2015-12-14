@@ -10,6 +10,10 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+    // Picture element HTML5 shiv
+    document.createElement( "picture" );
+    </script>
   </head>
   <body>
     <nav>
@@ -29,7 +33,16 @@
     <section class="features">
       <ul>
         <li>
-          <img src="img/flappy1.jpg">
+          <!-- <img src="img/flappy1.jpg" srcset="img/flappy1.jpg 640w, img/flappy-med1.jpg 1024w"> -->
+          <!-- portrait-cropped-sm.jpg 640w, portrait-cropped-lg.jpg 640w 2x -->
+          <picture>
+            <source srcset="img/flappy-med1.jpg" media="(min-width: 64em)" alt="...">
+            <source srcset="img/flappy1.jpg" media="(min-width: 37.5em)" alt="...">
+             <!-- <source src="img/flappy3.jpg"> -->
+            <img src="img/flappy1.jpg">
+          </picture>
+          <!-- <source srcset="large.jpg" media="(min-width: 800px)"> -->
+  <!-- <img src="small.jpg" alt="…"> -->
           <h2>Keep your lovably sacrilegious mutation from being ravaged by deadly pipes.</h2>
         </li>
         <li>
@@ -65,6 +78,7 @@
       <p>By Gregory Federico. Courtesy of Dong Nguyen, original mastermind behind Flappy Bird.</p>
     </footer>
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script async type = "text/javascript" src="js/picturefill.min.js"></script>
     <script defer src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
     <script defer src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.ui.min.js"></script>
     <script defer type="text/javascript" src="js/app.js"></script>

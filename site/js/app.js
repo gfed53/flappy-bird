@@ -1,7 +1,8 @@
 $(function(){
 	$("body").velocity("fadeIn", { duration: 1000 });
 	$(".features li").velocity({ translateX: [0, "-30em"], opacity: [1, 0] }, { duration: 800 });
-	$("h1").velocity({rotateZ: 360, "font-size": ["3em", "1em"], opacity: [1, 0.2] }, { duration: 800 });
+
+	$("h1").velocity({ translateY: [0, "-10em"], "font-size": ["3em", "1em"], opacity: [1, 0.2] }, { duration: 800 });
 	// $(".btn-action").on("click", function(e){
 	// 	e.preventDefault();
 	// 	console.log("clicked button");
