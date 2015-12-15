@@ -35,7 +35,14 @@ FlappyBird.prototype.run = function(){
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":2,"./systems/graphics":4}],4:[function(require,module,exports){
+},{"./entities/bird":2,"./systems/graphics":5}],4:[function(require,module,exports){
+var flappyBird = require('./flappy_bird');
+
+document.addEventListener('DOMContentLoaded', function() {
+	var app = new flappyBird.FlappyBird();
+	app.run();
+});
+},{"./flappy_bird":3}],5:[function(require,module,exports){
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
 };
@@ -59,4 +66,4 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 exports.GraphicsSystem = GraphicsSystem;
-},{}]},{},[3]);
+},{}]},{},[4]);

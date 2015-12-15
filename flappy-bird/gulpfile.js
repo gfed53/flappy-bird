@@ -13,7 +13,7 @@ gulp.task('jshint', function(){
 });
 
 gulp.task('scripts', function(){
-	return browserify('js/flappy_bird.js')
+	return browserify('js/main.js')
 	.bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('js'));
