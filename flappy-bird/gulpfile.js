@@ -19,5 +19,9 @@ gulp.task('scripts', function(){
     .pipe(gulp.dest('js'));
 });
 
+gulp.task('watch', function(){
+	gulp.watch('js/**/*.js', ['jshint', 'scripts']);
+});
+
 gulp.task('build', ['jshint', 'scripts']);
 
