@@ -1,37 +1,40 @@
-header h1 {
-	font-size: 3em;
-	font-family: $helvetica;
-}
-
-h2 {
-	font-size: 1.8em;
-}
-
-a, .action input {
-	text-decoration: none;
-	color: #ecf0f1;
-	font-size: 1em;
-}
-
-.intro p {
-	font-style: italic;
-}
-
-p {
-	font-family: $sans-serif-font;
-	font-size: 1.5em;
-}
-
-.action {
-	a {
-		font-size: 1.8em;
-		@include button-style;
-		background-color: $button-background-color;
+body {
+	// color: white;
+	header h1 {
+		font-size: 3em;
+		font-family: $helvetica;
 	}
-}
 
-footer p {
-	font-size: 1em;
+	h2 {
+		font-size: 1.8em;
+	}
+
+	a, .action input {
+		text-decoration: none;
+		color: #ecf0f1;
+		font-size: 1em;
+	}
+
+	.intro p {
+		font-style: italic;
+	}
+
+	p {
+		font-family: $sans-serif-font;
+		font-size: 1.5em;
+	}
+
+	.action {
+		a {
+			font-size: 1.8em;
+			@include button-style;
+			background-color: $button-background-color;
+		}
+	}
+
+	footer p {
+		font-size: 1em;
+	}
 }
 
 
@@ -54,8 +57,6 @@ footer p {
 			font-size: 2em;
 		}
 	}
-
-
 }
 
 

@@ -2,6 +2,13 @@ body {
 
 	margin: 1em;
 	text-align: center;
+	background: url(../img/bird-mobile.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	@media screen and ($tablet){
+		background: url(../img/white-brick.jpg);
+	}
 	background-color: $background-color;
 
 	nav, section {
