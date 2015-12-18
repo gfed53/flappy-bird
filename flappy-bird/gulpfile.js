@@ -23,5 +23,7 @@ gulp.task('watch', function(){
 	gulp.watch('js/**/*.js', ['jshint', 'scripts']);
 });
 
+gulp.task('default', ['jshint', 'scripts', 'watch']);
+
 gulp.task('build', ['jshint', 'scripts']);
 
