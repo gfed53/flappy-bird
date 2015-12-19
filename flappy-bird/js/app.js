@@ -22,8 +22,14 @@ var PipeGraphicsComponent = function(entity) {
 	this.entity = entity;
 };
 
-PipeGraphicsComponent.prototype.draw = function(){
+PipeGraphicsComponent.prototype.draw = function(context){
+	var position = this.entity.components.physics.position;
+	context.save();
+	context.translate(position.x, position.y);
+	context.beginPath();
+	context.fillRect(0.25, -1, 0.25, 1);
 	console.log("Drawing a pipe.");
+	context.restore();
 };
 
 exports.PipeGraphicsComponent = PipeGraphicsComponent;
@@ -76,17 +82,23 @@ var Bird = function(){
 exports.Bird = Bird;
 },{"../components/graphics/bird":1,"../components/physics/physics":3}],5:[function(require,module,exports){
 var graphicsComponent = require("../components/graphics/pipe");
+var physicsComponent = require("../components/physics/physics");
 
 var Pipe = function(){
 	console.log("Creating pipe entity");
+
+	var physics = new physicsComponent.PhysicsComponent(this);
+	physics.position.y = 0.5;
+
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 	this.components= {
-		graphics: graphics
+		graphics: graphics,
+		physics: physics,
 	};
 };
 
 exports.Pipe = Pipe;
-},{"../components/graphics/pipe":2}],6:[function(require,module,exports){
+},{"../components/graphics/pipe":2,"../components/physics/physics":3}],6:[function(require,module,exports){
 // Systems
 var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
@@ -97,7 +109,7 @@ var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 
 var FlappyBird = function(){
-	this.entities = [new bird.Bird()];
+	this.entities = [new bird.Bird(), new pipe.Pipe];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
@@ -182,7 +194,8 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
 };
 
-InputSystem.prototype.onClick = function(){
+InputSystem.prototype.onClick = function(e){
+	e.preventDefault();
 	var bird = this.entities[0];
 	bird.components.physics.velocity.y = 0.7;
 };
