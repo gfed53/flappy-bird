@@ -12,7 +12,7 @@ BirdGraphicsComponent.prototype.draw = function(context){
 	context.arc(0, 0, 0.02, 0, 2 * Math.PI);
 	context.fill();
 	context.closePath();
-	console.log("Drawing a bird.");
+	// console.log("Drawing a bird.");
 	context.restore();
 };
 
@@ -29,7 +29,7 @@ PipeGraphicsComponent.prototype.draw = function(context){
 	context.translate(position.x, position.y);
 	context.beginPath();
 	context.fillRect(0, 0, 0.25, 1);
-	console.log("Drawing a pipe.");
+	// console.log("Drawing a pipe.");
 	context.restore();
 };
 
@@ -111,19 +111,34 @@ var inputSystem = require("./systems/input");
 var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 
-var FlappyBird = function(){
-	var pipeTop = new pipe.Pipe(1,0.75)
+var pipeTop = new pipe.Pipe(1,0.75)
 	pipeBottom = new pipe.Pipe(1,-0.75);
+	x = function(){
+		console.log("report");
+	}
+
+var FlappyBird = function(){
 	this.entities = [new bird.Bird(), pipeTop, pipeBottom];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 };
 
+FlappyBird.prototype.newPipes = function(){
+	this.entities += pipeTop;
+	this.entities += pipeBottom;
+	console.log(this.entities);
+}
+
+// var createNewPipes = function(){
+// 	window.setInterval(newPipes, 2000);
+// }
+
 FlappyBird.prototype.run = function(){
 	this.graphics.run();
 	this.physics.run();
 	this.input.run();
+	this.graphics.create(pipeTop);
 };
 
 exports.FlappyBird = FlappyBird;
@@ -153,6 +168,7 @@ GraphicsSystem.prototype.run = function(){
 
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
+	window.setInterval(this.create.bind(this));
 };
 
 GraphicsSystem.prototype.tick = function() {
@@ -185,7 +201,19 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
+GraphicsSystem.prototype.create = function(pipes){
+	this.entities += pipes;
+};
+
 exports.GraphicsSystem = GraphicsSystem;
+
+
+
+
+
+
+
+
 },{}],9:[function(require,module,exports){
 var InputSystem = function(entities) {
 	this.entities = entities;
@@ -195,6 +223,7 @@ var InputSystem = function(entities) {
 };
 
 InputSystem.prototype.run = function(){
+	// On mobile, leaving both of these active creates a doubling-effect on touch. 
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
 };

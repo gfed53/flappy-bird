@@ -11,7 +11,7 @@ BirdGraphicsComponent.prototype.draw = function(context){
 	context.arc(0, 0, 0.02, 0, 2 * Math.PI);
 	context.fill();
 	context.closePath();
-	console.log("Drawing a bird.");
+	// console.log("Drawing a bird.");
 	context.restore();
 };
 

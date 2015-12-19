@@ -14,6 +14,7 @@ GraphicsSystem.prototype.run = function(){
 
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
+	window.setInterval(this.create.bind(this));
 };
 
 GraphicsSystem.prototype.tick = function() {
@@ -46,4 +47,15 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
+GraphicsSystem.prototype.create = function(pipes){
+	this.entities += pipes;
+};
+
 exports.GraphicsSystem = GraphicsSystem;
+
+
+
+
+
+
+
