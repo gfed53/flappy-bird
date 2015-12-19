@@ -2,20 +2,17 @@
 var BirdGraphicsComponent = function(entity) {
 	this.entity = entity;
 }
-step=0;
 
 BirdGraphicsComponent.prototype.draw = function(context){
+	var position = {x:0, y: 0.5};
+
 	context.save();
+	context.translate(position.x, position.y);
 	context.beginPath();
-	// context.arc(1+step, 1, 20, 0, 2 * Math.PI);
+	context.arc(0, 0, 0.02, 0, 2 * Math.PI);
 	context.fill();
-	context.fillStyle="#0000FF";
-	// for(var i=0; i<10; i++){
-	// 	context.fillRect(10+i, 10+i, 25, 25);
-	// }
-	context.fillRect(0, 1, 2, -5);
+	context.closePath();
 	console.log("Drawing a bird.");
-	step+=0.1;
 	context.restore();
 };
 
@@ -55,22 +52,28 @@ var Pipe = function(){
 
 exports.Pipe = Pipe;
 },{"../components/graphics/pipe":2}],5:[function(require,module,exports){
+// Systems
 var graphicsSystem = require("./systems/graphics");
+var physicsSystem = require("./systems/physics");
+
+// Entities
 var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 
 var FlappyBird = function(){
-	this.entities = [new bird.Bird(), new pipe.Pipe()];
+	this.entities = [new bird.Bird()];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
+	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 };
 
 FlappyBird.prototype.run = function(){
 	this.graphics.run();
+	this.physics.run();
 };
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":3,"./entities/pipe":4,"./systems/graphics":7}],6:[function(require,module,exports){
+},{"./entities/bird":3,"./entities/pipe":4,"./systems/graphics":7,"./systems/physics":8}],6:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
@@ -128,4 +131,26 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 exports.GraphicsSystem = GraphicsSystem;
+},{}],8:[function(require,module,exports){
+var PhysicsSystem = function(entities){
+	this.entities = entities;
+};
+
+PhysicsSystem.prototype.run = function(){
+	// Run the update loop
+	window.setInterval(this.tick.bind(this), 1000 /60);
+};
+
+PhysicsSystem.prototype.tick = function(){
+	for(var i=0; i<this.entities.length; i++){
+		var entity = this.entities[i];
+		if (!'physics' in entity.components){
+			continue;
+		}
+
+		entity.components.physics.update(1/60);
+	}
+};
+
+exports.PhysicsSystem = PhysicsSystem;
 },{}]},{},[6]);
