@@ -1,11 +1,12 @@
 var graphicsComponent = require("../components/graphics/pipe");
 var physicsComponent = require("../components/physics/physics");
 
-var Pipe = function(){
+var Pipe = function(x,y){
 	console.log("Creating pipe entity");
 
 	var physics = new physicsComponent.PhysicsComponent(this);
-	physics.position.y = 0.5;
+	physics.position.x = x;
+	physics.position.y = y;
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 	this.components= {
