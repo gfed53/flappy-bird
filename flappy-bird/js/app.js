@@ -90,6 +90,7 @@ exports.Pipe = Pipe;
 // Systems
 var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
+var inputSystem = require("./systems/input");
 
 // Entities
 var bird = require("./entities/bird");
@@ -99,16 +100,18 @@ var FlappyBird = function(){
 	this.entities = [new bird.Bird()];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
+	this.input = new inputSystem.InputSystem(this.entities);
 };
 
 FlappyBird.prototype.run = function(){
 	this.graphics.run();
 	this.physics.run();
+	this.input.run();
 };
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":4,"./entities/pipe":5,"./systems/graphics":8,"./systems/physics":9}],7:[function(require,module,exports){
+},{"./entities/bird":4,"./entities/pipe":5,"./systems/graphics":8,"./systems/input":9,"./systems/physics":10}],7:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
@@ -167,6 +170,24 @@ GraphicsSystem.prototype.tick = function() {
 
 exports.GraphicsSystem = GraphicsSystem;
 },{}],9:[function(require,module,exports){
+var InputSystem = function(entities) {
+	this.entities = entities;
+
+	//Canvas is where we get input from
+	this.canvas = document.getElementById('main-canvas');
+};
+
+InputSystem.prototype.run = function(){
+	this.canvas.addEventListener('click', this.onClick.bind(this));
+};
+
+InputSystem.prototype.onClick = function(){
+	var bird = this.entities[0];
+	bird.components.physics.velocity.y = 0.7;
+};
+
+exports.InputSystem = InputSystem;
+},{}],10:[function(require,module,exports){
 var PhysicsSystem = function(entities){
 	this.entities = entities;
 };
