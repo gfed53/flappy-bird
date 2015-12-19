@@ -1,10 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var BirdGraphicsComponent = function(entity) {
 	this.entity = entity;
-}
+};
 
 BirdGraphicsComponent.prototype.draw = function(context){
-	var position = {x:0, y: 0.5};
+	var position = this.entity.components.physics.position;
 
 	context.save();
 	context.translate(position.x, position.y);
@@ -28,18 +28,53 @@ PipeGraphicsComponent.prototype.draw = function(){
 
 exports.PipeGraphicsComponent = PipeGraphicsComponent;
 },{}],3:[function(require,module,exports){
+var PhysicsComponent = function(entity) {
+	this.entity = entity;
+
+	this.position = {
+		x:0,
+		y:0
+	};
+	this.velocity = {
+		x:0,
+		y:0
+	};
+	this.acceleration = {
+		x:0,
+		y:0
+	};
+};
+
+PhysicsComponent.prototype.update = function(delta){
+	this.velocity.x += this.acceleration.x * delta;
+	this.velocity.y += this.acceleration.y * delta;
+
+	this.position.x += this.velocity.x * delta;
+	this.position.y += this.velocity.y * delta;
+};
+
+exports.PhysicsComponent = PhysicsComponent;
+},{}],4:[function(require,module,exports){
 var graphicsComponent = require("../components/graphics/bird");
+var physicsComponent = require("../components/physics/physics");
 
 var Bird = function(){
 	console.log("Creating bird entity");
+
+	var physics = new physicsComponent.PhysicsComponent(this);
+	physics.position.y = 0.5;
+	physics.acceleration.y = -2;
+
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
+
 	this.components= {
-		graphics: graphics
+		physics: physics,
+		graphics: graphics,
 	};
 };
 
 exports.Bird = Bird;
-},{"../components/graphics/bird":1}],4:[function(require,module,exports){
+},{"../components/graphics/bird":1,"../components/physics/physics":3}],5:[function(require,module,exports){
 var graphicsComponent = require("../components/graphics/pipe");
 
 var Pipe = function(){
@@ -51,7 +86,7 @@ var Pipe = function(){
 };
 
 exports.Pipe = Pipe;
-},{"../components/graphics/pipe":2}],5:[function(require,module,exports){
+},{"../components/graphics/pipe":2}],6:[function(require,module,exports){
 // Systems
 var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
@@ -73,7 +108,7 @@ FlappyBird.prototype.run = function(){
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":3,"./entities/pipe":4,"./systems/graphics":7,"./systems/physics":8}],6:[function(require,module,exports){
+},{"./entities/bird":4,"./entities/pipe":5,"./systems/graphics":8,"./systems/physics":9}],7:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
@@ -81,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
 });
-},{"./flappy_bird":5}],7:[function(require,module,exports){
+},{"./flappy_bird":6}],8:[function(require,module,exports){
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
 	// Canvas is where we draw
@@ -131,7 +166,7 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 exports.GraphicsSystem = GraphicsSystem;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var PhysicsSystem = function(entities){
 	this.entities = entities;
 };
@@ -144,7 +179,7 @@ PhysicsSystem.prototype.run = function(){
 PhysicsSystem.prototype.tick = function(){
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
-		if (!'physics' in entity.components){
+		if (!"physics" in entity.components){
 			continue;
 		}
 
@@ -153,4 +188,4 @@ PhysicsSystem.prototype.tick = function(){
 };
 
 exports.PhysicsSystem = PhysicsSystem;
-},{}]},{},[6]);
+},{}]},{},[7]);

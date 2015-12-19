@@ -1,6 +1,6 @@
 var PhysicsComponent = function(entity) {
 	this.entity = entity;
-	
+
 	this.position = {
 		x:0,
 		y:0
@@ -15,7 +15,7 @@ var PhysicsComponent = function(entity) {
 	};
 };
 
-var PhysicsComponent.prototype.update = function(delta){
+PhysicsComponent.prototype.update = function(delta){
 	this.velocity.x += this.acceleration.x * delta;
 	this.velocity.y += this.acceleration.y * delta;
 
