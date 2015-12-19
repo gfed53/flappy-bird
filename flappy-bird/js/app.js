@@ -91,7 +91,7 @@ var Pipe = function(x,y){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.velocity.x = -0.25;
+	physics.acceleration.x = -0.05;
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 	this.components= {
