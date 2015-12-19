@@ -179,6 +179,7 @@ var InputSystem = function(entities) {
 
 InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
+	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
 };
 
 InputSystem.prototype.onClick = function(){
