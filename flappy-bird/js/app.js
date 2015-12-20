@@ -113,32 +113,26 @@ var pipe = require("./entities/pipe");
 
 var pipeTop = new pipe.Pipe(1,0.75)
 	pipeBottom = new pipe.Pipe(1,-0.75);
-	x = function(){
-		console.log("report");
-	}
 
 var FlappyBird = function(){
-	this.entities = [new bird.Bird(), pipeTop, pipeBottom];
+	this.entities = [new bird.Bird()/*, pipeTop, pipeBottom*/];
+	this.pipes = [pipeTop, pipeBottom];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 };
 
-FlappyBird.prototype.newPipes = function(){
-	this.entities += pipeTop;
-	this.entities += pipeBottom;
-	console.log(this.entities);
-}
-
-// var createNewPipes = function(){
-// 	window.setInterval(newPipes, 2000);
-// }
+// FlappyBird.prototype.createNewPipes = function(){
+// 	window.setInterval(this.newPipes.bind(this), 2000);
+// 	console.log(this.entities);
+// 	this.graphics.PipeGraphicsComponent.draw(this.context);
+// };
 
 FlappyBird.prototype.run = function(){
 	this.graphics.run();
 	this.physics.run();
 	this.input.run();
-	this.graphics.create(pipeTop);
+	this.graphics.createPipes();
 };
 
 exports.FlappyBird = FlappyBird;
@@ -152,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	app.run();
 });
 },{"./flappy_bird":6}],8:[function(require,module,exports){
+var pipe = require("../entities/pipe");
+
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
 	// Canvas is where we draw
@@ -168,8 +164,11 @@ GraphicsSystem.prototype.run = function(){
 
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
-	window.setInterval(this.create.bind(this));
 };
+
+// GraphicsSystem.prototype.create = function(){
+// 	window.setInterval(this.create.bind(this), 2000);
+// }
 
 GraphicsSystem.prototype.tick = function() {
 	// Set the canvas to the correct size if the window is resized
@@ -201,8 +200,24 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
-GraphicsSystem.prototype.create = function(pipes){
-	this.entities += pipes;
+GraphicsSystem.prototype.newPipes = function(){
+	this.entities.push(new pipe.Pipe(1,0.75));
+	this.entities.push(new pipe.Pipe(1,-0.75));
+};
+
+GraphicsSystem.prototype.createPipes = function(){
+	// var newPipes = function(){
+	// 	this.entities.push(pipeTop);
+	// }
+	window.setInterval(this.newPipes.bind(this), 2000);
+	for(var i=0; i<this.entities.length; i++){
+		var entity = this.entities[i];
+		if (!"graphics" in entity.components){
+			continue;
+		}
+
+		entity.components.graphics.draw(this.context);
+	}
 };
 
 exports.GraphicsSystem = GraphicsSystem;
@@ -214,7 +229,7 @@ exports.GraphicsSystem = GraphicsSystem;
 
 
 
-},{}],9:[function(require,module,exports){
+},{"../entities/pipe":5}],9:[function(require,module,exports){
 var InputSystem = function(entities) {
 	this.entities = entities;
 

@@ -1,3 +1,5 @@
+var pipe = require("../entities/pipe");
+
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
 	// Canvas is where we draw
@@ -14,8 +16,11 @@ GraphicsSystem.prototype.run = function(){
 
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
-	window.setInterval(this.create.bind(this));
 };
+
+// GraphicsSystem.prototype.create = function(){
+// 	window.setInterval(this.create.bind(this), 2000);
+// }
 
 GraphicsSystem.prototype.tick = function() {
 	// Set the canvas to the correct size if the window is resized
@@ -47,8 +52,24 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
-GraphicsSystem.prototype.create = function(pipes){
-	this.entities += pipes;
+GraphicsSystem.prototype.newPipes = function(){
+	this.entities.push(new pipe.Pipe(1,0.75));
+	this.entities.push(new pipe.Pipe(1,-0.75));
+};
+
+GraphicsSystem.prototype.createPipes = function(){
+	// var newPipes = function(){
+	// 	this.entities.push(pipeTop);
+	// }
+	window.setInterval(this.newPipes.bind(this), 2000);
+	for(var i=0; i<this.entities.length; i++){
+		var entity = this.entities[i];
+		if (!"graphics" in entity.components){
+			continue;
+		}
+
+		entity.components.graphics.draw(this.context);
+	}
 };
 
 exports.GraphicsSystem = GraphicsSystem;
