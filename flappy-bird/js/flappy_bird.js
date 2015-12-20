@@ -7,12 +7,12 @@ var inputSystem = require("./systems/input");
 var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 
-var pipeTop = new pipe.Pipe(1,0.75)
-	pipeBottom = new pipe.Pipe(1,-0.75);
+// var pipeTop = new pipe.Pipe(1,0.75)
+// 	pipeBottom = new pipe.Pipe(1,-0.75);
 
 var FlappyBird = function(){
 	this.entities = [new bird.Bird()/*, pipeTop, pipeBottom*/];
-	this.pipes = [pipeTop, pipeBottom];
+	// this.pipes = [pipeTop, pipeBottom];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);

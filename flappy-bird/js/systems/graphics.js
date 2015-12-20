@@ -1,4 +1,6 @@
 var pipe = require("../entities/pipe");
+var pipes = pipe.pipes;
+// var pipeGraphics = require("../graphics/pipe");
 
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
@@ -53,8 +55,13 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 GraphicsSystem.prototype.newPipes = function(){
-	this.entities.push(new pipe.Pipe(1,0.75));
-	this.entities.push(new pipe.Pipe(1,-0.75));
+	// for(var i=0; i<pipes.length; i++){
+	// 	var pipe = pipes[i];
+	// 	window.setInterval(this.entities.push(i), 2000);
+	// 	// this.createPipes();
+	// }
+	this.entities.push(new pipe.Pipe(2,0.75));
+	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
 GraphicsSystem.prototype.createPipes = function(){

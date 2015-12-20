@@ -91,7 +91,8 @@ var Pipe = function(x,y){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.acceleration.x = -0.05;
+	physics.velocity.x = -0.1;
+	physics.acceleration.x = -0.15;
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 	this.components= {
@@ -100,7 +101,14 @@ var Pipe = function(x,y){
 	};
 };
 
+var pipeTop = new Pipe(1,0.75)
+	pipeBottom = new Pipe(1,-0.75);
+
+var pipes = [pipeTop, pipeBottom];
+
 exports.Pipe = Pipe;
+exports.pipes = pipes;
+exports.pipeBottom = pipeBottom;
 },{"../components/graphics/pipe":2,"../components/physics/physics":3}],6:[function(require,module,exports){
 // Systems
 var graphicsSystem = require("./systems/graphics");
@@ -111,12 +119,12 @@ var inputSystem = require("./systems/input");
 var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 
-var pipeTop = new pipe.Pipe(1,0.75)
-	pipeBottom = new pipe.Pipe(1,-0.75);
+// var pipeTop = new pipe.Pipe(1,0.75)
+// 	pipeBottom = new pipe.Pipe(1,-0.75);
 
 var FlappyBird = function(){
 	this.entities = [new bird.Bird()/*, pipeTop, pipeBottom*/];
-	this.pipes = [pipeTop, pipeBottom];
+	// this.pipes = [pipeTop, pipeBottom];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
@@ -147,6 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 },{"./flappy_bird":6}],8:[function(require,module,exports){
 var pipe = require("../entities/pipe");
+var pipes = pipe.pipes;
+// var pipeGraphics = require("../graphics/pipe");
 
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
@@ -201,8 +211,13 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 GraphicsSystem.prototype.newPipes = function(){
-	this.entities.push(new pipe.Pipe(1,0.75));
-	this.entities.push(new pipe.Pipe(1,-0.75));
+	// for(var i=0; i<pipes.length; i++){
+	// 	var pipe = pipes[i];
+	// 	window.setInterval(this.entities.push(i), 2000);
+	// 	// this.createPipes();
+	// }
+	this.entities.push(new pipe.Pipe(2,0.75));
+	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
 GraphicsSystem.prototype.createPipes = function(){
