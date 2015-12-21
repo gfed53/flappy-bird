@@ -210,20 +210,28 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
-GraphicsSystem.prototype.newPipes = function(){
-	// for(var i=0; i<pipes.length; i++){
-	// 	var pipe = pipes[i];
-	// 	window.setInterval(this.entities.push(i), 2000);
-	// 	// this.createPipes();
-	// }
-	this.entities.push(new pipe.Pipe(2,0.75));
-	this.entities.push(new pipe.Pipe(2.3,-0.75));
+GraphicsSystem.prototype.newPipes = function(array){
+	for(i in array){
+		var pipe = pipes[i];
+		window.setInterval(this.entities.push(pipe), 2000);
+		window.setInterval(this.drawPipes.bind(this), 2000);
+	// // 	// this.createPipes();
+	}
+	// this.entities.push(pipe);
+	// this.entities.push(new pipe.Pipe(2,0.75));
+	// this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
 GraphicsSystem.prototype.createPipes = function(){
-	// var newPipes = function(){
-	// 	this.entities.push(pipeTop);
+	// for(var i=0; i<pipes.length; i++){
+		// var pipe = pipes[i];
+		this.newPipes(pipes);
+		// window.setInterval(this.newPipes.bind(this), 2000);
+		// window.setInterval(this.drawPipes.bind(this), 2000);
 	// }
+};
+
+GraphicsSystem.prototype.drawPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
@@ -232,8 +240,11 @@ GraphicsSystem.prototype.createPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
+		console.log("draw");
 	}
 };
+
+
 
 exports.GraphicsSystem = GraphicsSystem;
 
