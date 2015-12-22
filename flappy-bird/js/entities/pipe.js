@@ -17,11 +17,11 @@ var Pipe = function(x,y){
 	};
 };
 
-var pipeTop = new Pipe(1,0.75)
-	pipeBottom = new Pipe(1,-0.75);
+// var pipeTop = new Pipe(1,0.75)
+// 	pipeBottom = new Pipe(1,-0.75);
 
-var pipes = [pipeTop, pipeBottom];
+// var pipes = [pipeTop, pipeBottom];
 
 exports.Pipe = Pipe;
-exports.pipes = pipes;
-exports.pipeBottom = pipeBottom;
+// exports.pipes = pipes;
+// exports.pipeBottom = pipeBottom;

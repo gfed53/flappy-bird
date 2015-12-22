@@ -101,14 +101,14 @@ var Pipe = function(x,y){
 	};
 };
 
-var pipeTop = new Pipe(1,0.75)
-	pipeBottom = new Pipe(1,-0.75);
+// var pipeTop = new Pipe(1,0.75)
+// 	pipeBottom = new Pipe(1,-0.75);
 
-var pipes = [pipeTop, pipeBottom];
+// var pipes = [pipeTop, pipeBottom];
 
 exports.Pipe = Pipe;
-exports.pipes = pipes;
-exports.pipeBottom = pipeBottom;
+// exports.pipes = pipes;
+// exports.pipeBottom = pipeBottom;
 },{"../components/graphics/pipe":2,"../components/physics/physics":3}],6:[function(require,module,exports){
 // Systems
 var graphicsSystem = require("./systems/graphics");
@@ -154,8 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	app.run();
 });
 },{"./flappy_bird":6}],8:[function(require,module,exports){
-var pipe = require("../entities/pipe");
-var pipes = pipe.pipes;
+var pipe = require("../entities/pipe")
+	pipeTop = new pipe.Pipe(1,0.75)
+	pipeBottom = new pipe.Pipe(1,-0.75)
+	pipes = [pipeTop, pipeBottom];
+
+// var pipes = pipe.pipes;
 // var pipeGraphics = require("../graphics/pipe");
 
 var GraphicsSystem = function(entities) {
@@ -224,32 +228,54 @@ GraphicsSystem.prototype.newPipes = function(){
 	// 		}
 	// 	}, 2000);
 	// }
+
 	// for(var i=0; i<pipes.length; i++){
 	// 	var pipe = pipes[i];
-	// 	window.setTimeout(this.entities.push(pipe), 2000);
+	// 	setTimeout(function(){
+	// 		this.entities.push(pipe);
+
+	// 		, 2000);
 	// 	console.log(this.entities);
+
 	// 	this.drawPipes()
+
 		// window.setInterval(this.drawPipes.bind(this), 2000);
 	// // 	// this.createPipes();
 	// }
 	// this.entities.push(pipe);
-	
+
 	//Uncomment this below for the basic formula..
 	this.entities.push(new pipe.Pipe(2,0.75));
 	this.entities.push(new pipe.Pipe(2.3,-0.75));
+};
+
+GraphicsSystem.prototype.createPipe3 = function(){
+	this.entities.push(pipes[0]);
+	console.log("created pipe 3");
+};
+
+GraphicsSystem.prototype.createPipe4 = function(){
+	this.entities.push(pipes[1]);
+	console.log("created pipe 4");
 };
 
 GraphicsSystem.prototype.createPipes = function(){
 	// for(var i=0; i<pipes.length; i++){
 		// var pipe = pipes[i];
 		// this.newPipes(pipes);
-		window.setInterval(this.newPipes.bind(this), 2000);
+
+		// Uncomment this below for the basic formula..
+		window.setInterval(this.createPipe3.bind(this), 2000);
+		window.setInterval(this.createPipe4.bind(this), 4000);
+		// window.setInterval(this.newPipes.bind(this), 2000);
+		// window.setInterval(this.tick.bind(this), 2000);
 		window.setInterval(this.drawPipes.bind(this), 2000);
+
+
 	// }
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
-	// Uncomment this below for the basic formula..
 	// window.setInterval(this.newPipes.bind(this), 2000);
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
@@ -258,7 +284,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		// console.log(this.entities);
+		console.log(this.entities);
 		console.log("draw");
 	}
 };
