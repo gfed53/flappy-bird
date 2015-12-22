@@ -210,29 +210,47 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
-GraphicsSystem.prototype.newPipes = function(array){
-	for(i in array){
-		var pipe = pipes[i];
-		window.setInterval(this.entities.push(pipe), 2000);
-		window.setInterval(this.drawPipes.bind(this), 2000);
+GraphicsSystem.prototype.newPipes = function(){
+	// var pushPipe = function(pipe){
+	// 	this.entities.push(pipe);
+	// }
+	// var count = 1;
+	// var myLoop = function(){
+	// 	setTimeout(function(){
+	// 		pushPipe;
+	// 		count++;
+	// 		if (i<pipes.length){
+	// 			myLoop();
+	// 		}
+	// 	}, 2000);
+	// }
+	// for(var i=0; i<pipes.length; i++){
+	// 	var pipe = pipes[i];
+	// 	window.setTimeout(this.entities.push(pipe), 2000);
+	// 	console.log(this.entities);
+	// 	this.drawPipes()
+		// window.setInterval(this.drawPipes.bind(this), 2000);
 	// // 	// this.createPipes();
-	}
+	// }
 	// this.entities.push(pipe);
-	// this.entities.push(new pipe.Pipe(2,0.75));
-	// this.entities.push(new pipe.Pipe(2.3,-0.75));
+	
+	//Uncomment this below for the basic formula..
+	this.entities.push(new pipe.Pipe(2,0.75));
+	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
 GraphicsSystem.prototype.createPipes = function(){
 	// for(var i=0; i<pipes.length; i++){
 		// var pipe = pipes[i];
-		this.newPipes(pipes);
-		// window.setInterval(this.newPipes.bind(this), 2000);
-		// window.setInterval(this.drawPipes.bind(this), 2000);
+		// this.newPipes(pipes);
+		window.setInterval(this.newPipes.bind(this), 2000);
+		window.setInterval(this.drawPipes.bind(this), 2000);
 	// }
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
-	window.setInterval(this.newPipes.bind(this), 2000);
+	// Uncomment this below for the basic formula..
+	// window.setInterval(this.newPipes.bind(this), 2000);
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
 		if (!"graphics" in entity.components){
@@ -240,6 +258,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
+		// console.log(this.entities);
 		console.log("draw");
 	}
 };
