@@ -1,8 +1,11 @@
-var pipe = require("../entities/pipe")
-	pipeTop = new pipe.Pipe(1,0.75)
-	pipeBottom = new pipe.Pipe(1,-0.75)
+var pipe = require("../entities/pipe"),
+	pipeTop = new pipe.Pipe(1,0.75),
+	pipeBottom = new pipe.Pipe(1,-0.75),
 	pipes = [pipeTop, pipeBottom];
 
+console.log(pipeTop);
+console.log(new pipe.Pipe(1,0.75));
+console.log(pipes[0]);
 // var pipes = pipe.pipes;
 // var pipeGraphics = require("../graphics/pipe");
 
@@ -93,6 +96,16 @@ GraphicsSystem.prototype.newPipes = function(){
 	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
+// GraphicsSystem.prototype.newPipes2 = function(){
+// 	setInterval(
+// 		for(var i=0; i<pipes.length; i++){
+// 			setTimeout(
+
+// 				)
+// 			}
+// 		);
+// }
+
 GraphicsSystem.prototype.createPipe3 = function(){
 	this.entities.push(pipes[0]);
 	console.log("created pipe 3");
@@ -110,7 +123,7 @@ GraphicsSystem.prototype.createPipes = function(){
 
 		// Uncomment this below for the basic formula..
 		window.setInterval(this.createPipe3.bind(this), 2000);
-		window.setInterval(this.createPipe4.bind(this), 4000);
+		// window.setInterval(this.createPipe4.bind(this), 4000);
 		// window.setInterval(this.newPipes.bind(this), 2000);
 		// window.setInterval(this.tick.bind(this), 2000);
 		window.setInterval(this.drawPipes.bind(this), 2000);

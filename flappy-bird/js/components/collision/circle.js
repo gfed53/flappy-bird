@@ -1,7 +1,7 @@
 var CircleCollisionComponent = function(entity, radius){
 	this.entity = entity;
 	this.radius = radius;
-	this.type = 'circle';
+	this.type = "circle";
 };
 
 CircleCollisionComponent.prototype.collidesWith = function(entity){
@@ -15,7 +15,21 @@ CircleCollisionComponent.prototype.collidesWith = function(entity){
 };
 
 CircleCollisionComponent.prototype.collideCircle = function(entity){
-	return false;
+	var positionA = this.entity.components.physics.position;
+	var positionB = entity.components.physics.position;
+
+	var radiusA = this.radius;
+	var radiusB = entity.components.collision.radius;
+
+	var diff = {
+		x: positionA.x - positionB.x,
+		y: positionA.y - positionB.y
+	};
+
+	var distanceSquared = diff.x * diff.x + diff.y * diff.y;
+	var radiusSum = radiusA + radiusB;
+
+	return distanceSquared < radiusSum * radiusSum;
 };
 
 CircleCollisionComponent.prototype.collideRect = function(entity){

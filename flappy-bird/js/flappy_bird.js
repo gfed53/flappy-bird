@@ -26,9 +26,10 @@ var FlappyBird = function(){
 
 FlappyBird.prototype.run = function(){
 	this.graphics.run();
+	this.graphics.createPipes();
 	this.physics.run();
 	this.input.run();
-	this.graphics.createPipes();
+
 };
 
 exports.FlappyBird = FlappyBird;
