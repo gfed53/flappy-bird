@@ -121,12 +121,14 @@ GraphicsSystem.prototype.createPipes = function(){
 		// var pipe = pipes[i];
 		// this.newPipes(pipes);
 
-		// Uncomment this below for the basic formula..
-		window.setInterval(this.createPipe3.bind(this), 2000);
+		// window.setInterval(this.createPipe3.bind(this), 2000);
 		// window.setInterval(this.createPipe4.bind(this), 4000);
-		// window.setInterval(this.newPipes.bind(this), 2000);
 		// window.setInterval(this.tick.bind(this), 2000);
-		window.setInterval(this.drawPipes.bind(this), 2000);
+		// Uncomment this below for the basic formula..
+		this.newPipes();
+		this.drawPipes();
+		// window.setInterval(this.newPipes.bind(this), 2000);
+		// window.setInterval(this.drawPipes.bind(this), 2000);
 
 
 	// }
