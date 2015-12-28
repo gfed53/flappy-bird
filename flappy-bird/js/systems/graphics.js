@@ -152,7 +152,13 @@ GraphicsSystem.prototype.drawPipes = function(){
 
 exports.GraphicsSystem = GraphicsSystem;
 
-
+//Possible solution
+// for(let i=0; i<100; i++){
+	// 	var pipe = pipes[random number between 0 and pipes.length(Math.rand..)];
+	// 	setTimeout(function(){
+	// 		this.entities.push(pipe);
+	// 		, (i+1)*1000);
+	// 	console.log(this.entities);
 
 
 

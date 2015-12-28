@@ -113,6 +113,7 @@ RectCollisionComponent.prototype.collideRect = function(entity) {
     var bottomB = positionB.y - sizeB.y / 2;
     var topB = positionB.y + sizeB.y / 2;
 
+    //This doesn't make sense. All would have to be false for a collision to occur, not at least one.
     return !(leftA > rightB || leftB > rightA || bottomA > topB || bottomB > topA);
 };
 
@@ -197,6 +198,7 @@ var Bird = function(){
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
+	//This doesn't seem to make sense. Could this be the problem? 
 	collision.onCollision = this.onCollision.bind(this);
 
 	this.components= {
@@ -314,10 +316,11 @@ CollisionSystem.prototype.tick = function() {
 				continue;
 			}
 
+			//collidesWith() is not actually running?? onCollision() is just running at every tick because there're no conditions being noticed!!
 			if(!entityA.components.collision.collidesWith(entityB)){
 				continue;
 			}
-
+			//Shouldn't it be entityA.onCollision?
 			if(entityA.components.collision.onCollision) {
 				entityA.components.collision.onCollision(entityB);
 			}
@@ -485,7 +488,13 @@ GraphicsSystem.prototype.drawPipes = function(){
 
 exports.GraphicsSystem = GraphicsSystem;
 
-
+//Possible solution
+// for(let i=0; i<100; i++){
+	// 	var pipe = pipes[random number between 0 and pipes.length(Math.rand..)];
+	// 	setTimeout(function(){
+	// 		this.entities.push(pipe);
+	// 		, (i+1)*1000);
+	// 	console.log(this.entities);
 
 
 

@@ -15,10 +15,11 @@ CollisionSystem.prototype.tick = function() {
 				continue;
 			}
 
+			//collidesWith() is not actually running?? onCollision() is just running at every tick because there're no conditions being noticed!!
 			if(!entityA.components.collision.collidesWith(entityB)){
 				continue;
 			}
-
+			//Shouldn't it be entityA.onCollision?
 			if(entityA.components.collision.onCollision) {
 				entityA.components.collision.onCollision(entityB);
 			}

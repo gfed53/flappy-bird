@@ -34,6 +34,7 @@ RectCollisionComponent.prototype.collideRect = function(entity) {
     var bottomB = positionB.y - sizeB.y / 2;
     var topB = positionB.y + sizeB.y / 2;
 
+    //This doesn't make sense. All would have to be false for a collision to occur, not at least one.
     return !(leftA > rightB || leftB > rightA || bottomA > topB || bottomB > topA);
 };
 

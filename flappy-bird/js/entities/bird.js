@@ -12,6 +12,7 @@ var Bird = function(){
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
+	//This doesn't seem to make sense. Could this be the problem? 
 	collision.onCollision = this.onCollision.bind(this);
 
 	this.components= {
