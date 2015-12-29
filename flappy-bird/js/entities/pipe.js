@@ -26,7 +26,7 @@ var Pipe = function(x,y){
 };
 
 Pipe.prototype.onCollision = function(entity) {
-	// console.log("Pipe collided with entity:", entity);
+	console.log("Pipe collided with entity:", entity);
 };
 
 // var pipeTop = new Pipe(1,0.75)

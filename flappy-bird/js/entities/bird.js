@@ -1,6 +1,7 @@
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
+//What is 'settings'?
 // var settings = require("../settings");
 
 var Bird = function(){
@@ -12,7 +13,7 @@ var Bird = function(){
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
-	//This doesn't seem to make sense. Could this be the problem? 
+	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
 
 	this.components= {
@@ -24,6 +25,7 @@ var Bird = function(){
 
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
+	
 };
 
 exports.Bird = Bird;

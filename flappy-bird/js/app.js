@@ -33,35 +33,36 @@ CircleCollisionComponent.prototype.collideCircle = function(entity){
 	return distanceSquared < radiusSum * radiusSum;
 };
 
-CircleCollisionComponent.prototype.collideRect = function(entity){
-	var clamp = function(value, low, high) {
-		if (value < low) {
-			return low;
-		}
-		if (value > high) {
-			return high;
-		}
-		return value;
-	};
+CircleCollisionComponent.prototype.collideRect = function(entity) {
+    var clamp = function(value, low, high) {
+        if (value < low) {
+            return low;
+        }
+        if (value > high) {
+            return high;
+        }
+        return value;
+    };
 
-	var positionA = this.entity.components.physics.position;
-	var positionB = entity.components.physics.position;
-	var sizeB = entity.components.collision.size;
+    var positionA = this.entity.components.physics.position;
+    var positionB = entity.components.physics.position;
+    var sizeB = entity.components.collision.size;
 
-	var closest = {
-		x: clamp(positionA.x, positionB.x - sizeB.x / 2, positionB.x + sizeB.x / 2),
-		y: clamp(positionA.y, positionB.y - sizeB.y / 2, positionB.y + sizeB.y / 2)
-	};
+    var closest = {
+        x: clamp(positionA.x, positionB.x - sizeB.x / 2,
+                 positionB.x + sizeB.x / 2),
+        y: clamp(positionA.y, positionB.y - sizeB.y / 2,
+                 positionB.y + sizeB.y / 2)
+    };
 
-	var radiusA = this.radius;
 
-	var diff = {
-		x: positionA.x - closest.x,
-		y: positionA.y - closest.y
-	};
+    var radiusA = this.radius;
 
-	var distanceSquared = diff.x * diff.x + diff.y * diff.y;
-	return distanceSquared > radiusA * radiusA;
+    var diff = {x: positionA.x - closest.x,
+                y: positionA.y - closest.y};
+
+    var distanceSquared = diff.x * diff.x + diff.y * diff.y;
+    return distanceSquared < radiusA * radiusA;
 };
 
 exports.CircleCollisionComponent = CircleCollisionComponent;
@@ -113,7 +114,7 @@ RectCollisionComponent.prototype.collideRect = function(entity) {
     var bottomB = positionB.y - sizeB.y / 2;
     var topB = positionB.y + sizeB.y / 2;
 
-    //This doesn't make sense. All would have to be false for a collision to occur, not at least one.
+    //?? All would have to be false for a collision to occur, not at least one.
     return !(leftA > rightB || leftB > rightA || bottomA > topB || bottomB > topA);
 };
 
@@ -187,6 +188,7 @@ exports.PhysicsComponent = PhysicsComponent;
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
+//What is 'settings'?
 // var settings = require("../settings");
 
 var Bird = function(){
@@ -198,7 +200,7 @@ var Bird = function(){
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
-	//This doesn't seem to make sense. Could this be the problem? 
+	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
 
 	this.components= {
@@ -210,6 +212,7 @@ var Bird = function(){
 
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
+	
 };
 
 exports.Bird = Bird;
@@ -242,7 +245,7 @@ var Pipe = function(x,y){
 };
 
 Pipe.prototype.onCollision = function(entity) {
-	// console.log("Pipe collided with entity:", entity);
+	console.log("Pipe collided with entity:", entity);
 };
 
 // var pipeTop = new Pipe(1,0.75)
@@ -258,6 +261,7 @@ exports.Pipe = Pipe;
 var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
 var inputSystem = require("./systems/input");
+var collisionSystem = require("./systems/collision");
 
 // Entities
 var bird = require("./entities/bird");
@@ -272,6 +276,7 @@ var FlappyBird = function(){
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
+	this.collision = new collisionSystem.CollisionSystem(this.entities);
 };
 
 // FlappyBird.prototype.createNewPipes = function(){
@@ -285,12 +290,14 @@ FlappyBird.prototype.run = function(){
 	this.graphics.createPipes();
 	this.physics.run();
 	this.input.run();
+	// this.collision.run();
+	
 
 };
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":6,"./entities/pipe":7,"./systems/graphics":11,"./systems/input":12,"./systems/physics":13}],9:[function(require,module,exports){
+},{"./entities/bird":6,"./entities/pipe":7,"./systems/collision":10,"./systems/graphics":11,"./systems/input":12,"./systems/physics":13}],9:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
@@ -301,6 +308,10 @@ document.addEventListener('DOMContentLoaded', function() {
 },{"./flappy_bird":8}],10:[function(require,module,exports){
 var CollisionSystem = function(entities) {
 	this.entities = entities;
+};
+
+CollisionSystem.prototype.run = function(){
+	window.setInterval(this.tick.bind(this), 2000);
 };
 
 CollisionSystem.prototype.tick = function() {
@@ -316,7 +327,6 @@ CollisionSystem.prototype.tick = function() {
 				continue;
 			}
 
-			//collidesWith() is not actually running?? onCollision() is just running at every tick because there're no conditions being noticed!!
 			if(!entityA.components.collision.collidesWith(entityB)){
 				continue;
 			}
@@ -331,6 +341,31 @@ CollisionSystem.prototype.tick = function() {
 		}
 	}
 };
+
+// CollisionSystem.prototype.tick = function() {
+// 	for(var i=0; i<this.entities.length; i++) {
+// 		var entityA = this.entities[i];
+// 		console.log(entityA);
+// 		if ("collision" in entityA.components){
+// 			console.log(entityA+"has collision");
+// 			for(var j=i+1; j<this.entities.length; j++){
+// 				var entityB = this.entities[j];
+// 				console.log(j);
+// 				if("collision" in entityB.components){
+// 					console.log(entityB);
+// 					if(entityA.components.collision.collidesWith(entityB)){
+// 						if(entityA.onCollision){
+// 							entityA.onCollision(entityB);
+// 						}
+// 						else if(entityB.onCollision){
+// 							entityB.onCollision(entityA);
+// 						}
+// 					}
+// 				}
+// 			}	
+// 		}
+// 	}
+// };
 
 exports.CollisionSystem = CollisionSystem;
 },{}],11:[function(require,module,exports){
@@ -432,15 +467,14 @@ GraphicsSystem.prototype.newPipes = function(){
 	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
-// GraphicsSystem.prototype.newPipes2 = function(){
-// 	setInterval(
-// 		for(var i=0; i<pipes.length; i++){
-// 			setTimeout(
+GraphicsSystem.prototype.newPipe1 = function(){
+	this.entities.push(new pipe.Pipe(2,0.75));
+}
 
-// 				)
-// 			}
-// 		);
-// }
+GraphicsSystem.prototype.newPipe2 = function(){
+	this.entities.push(new pipe.Pipe(2.3,-0.75));
+}
+
 
 GraphicsSystem.prototype.createPipe3 = function(){
 	this.entities.push(pipes[0]);
@@ -460,11 +494,13 @@ GraphicsSystem.prototype.createPipes = function(){
 		// window.setInterval(this.createPipe3.bind(this), 2000);
 		// window.setInterval(this.createPipe4.bind(this), 4000);
 		// window.setInterval(this.tick.bind(this), 2000);
+		// window.setInterval(this.newPipe1.bind(this), 2500);
+		// window.setInterval(this.newPipe2.bind(this), 4000);
 		// Uncomment this below for the basic formula..
-		this.newPipes();
-		this.drawPipes();
-		// window.setInterval(this.newPipes.bind(this), 2000);
-		// window.setInterval(this.drawPipes.bind(this), 2000);
+		// this.newPipes();
+		// this.drawPipes();
+		window.setInterval(this.newPipes.bind(this), 2000);
+		window.setInterval(this.drawPipes.bind(this), 1000);
 
 
 	// }

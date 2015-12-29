@@ -96,15 +96,14 @@ GraphicsSystem.prototype.newPipes = function(){
 	this.entities.push(new pipe.Pipe(2.3,-0.75));
 };
 
-// GraphicsSystem.prototype.newPipes2 = function(){
-// 	setInterval(
-// 		for(var i=0; i<pipes.length; i++){
-// 			setTimeout(
+GraphicsSystem.prototype.newPipe1 = function(){
+	this.entities.push(new pipe.Pipe(2,0.75));
+}
 
-// 				)
-// 			}
-// 		);
-// }
+GraphicsSystem.prototype.newPipe2 = function(){
+	this.entities.push(new pipe.Pipe(2.3,-0.75));
+}
+
 
 GraphicsSystem.prototype.createPipe3 = function(){
 	this.entities.push(pipes[0]);
@@ -124,11 +123,13 @@ GraphicsSystem.prototype.createPipes = function(){
 		// window.setInterval(this.createPipe3.bind(this), 2000);
 		// window.setInterval(this.createPipe4.bind(this), 4000);
 		// window.setInterval(this.tick.bind(this), 2000);
+		// window.setInterval(this.newPipe1.bind(this), 2500);
+		// window.setInterval(this.newPipe2.bind(this), 4000);
 		// Uncomment this below for the basic formula..
-		this.newPipes();
-		this.drawPipes();
-		// window.setInterval(this.newPipes.bind(this), 2000);
-		// window.setInterval(this.drawPipes.bind(this), 2000);
+		// this.newPipes();
+		// this.drawPipes();
+		window.setInterval(this.newPipes.bind(this), 2000);
+		window.setInterval(this.drawPipes.bind(this), 1000);
 
 
 	// }

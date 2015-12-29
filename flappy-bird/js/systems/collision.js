@@ -2,6 +2,10 @@ var CollisionSystem = function(entities) {
 	this.entities = entities;
 };
 
+CollisionSystem.prototype.run = function(){
+	window.setInterval(this.tick.bind(this), 2000);
+};
+
 CollisionSystem.prototype.tick = function() {
 	for(var i=0; i<this.entities.length; i++) {
 		var entityA = this.entities[i];
@@ -15,7 +19,6 @@ CollisionSystem.prototype.tick = function() {
 				continue;
 			}
 
-			//collidesWith() is not actually running?? onCollision() is just running at every tick because there're no conditions being noticed!!
 			if(!entityA.components.collision.collidesWith(entityB)){
 				continue;
 			}
@@ -30,5 +33,30 @@ CollisionSystem.prototype.tick = function() {
 		}
 	}
 };
+
+// CollisionSystem.prototype.tick = function() {
+// 	for(var i=0; i<this.entities.length; i++) {
+// 		var entityA = this.entities[i];
+// 		console.log(entityA);
+// 		if ("collision" in entityA.components){
+// 			console.log(entityA+"has collision");
+// 			for(var j=i+1; j<this.entities.length; j++){
+// 				var entityB = this.entities[j];
+// 				console.log(j);
+// 				if("collision" in entityB.components){
+// 					console.log(entityB);
+// 					if(entityA.components.collision.collidesWith(entityB)){
+// 						if(entityA.onCollision){
+// 							entityA.onCollision(entityB);
+// 						}
+// 						else if(entityB.onCollision){
+// 							entityB.onCollision(entityA);
+// 						}
+// 					}
+// 				}
+// 			}	
+// 		}
+// 	}
+// };
 
 exports.CollisionSystem = CollisionSystem;
