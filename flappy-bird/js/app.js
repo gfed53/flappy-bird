@@ -228,12 +228,12 @@ var Pipe = function(x,y){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.velocity.x = -0.1;
-	physics.acceleration.x = -0.15;
+	physics.velocity.x = -0.2;
+	physics.acceleration.x = -0.1;
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
-	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 1});
+	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 0.25});
 	collision.onCollision = this.onCollision.bind(this);
 
 
@@ -246,6 +246,7 @@ var Pipe = function(x,y){
 
 Pipe.prototype.onCollision = function(entity) {
 	console.log("Pipe collided with entity:", entity);
+	console.log(this.components.physics.position.x + ", "+this.components.physics.position.y);
 };
 
 // var pipeTop = new Pipe(1,0.75)
@@ -463,8 +464,8 @@ GraphicsSystem.prototype.newPipes = function(){
 	// this.entities.push(pipe);
 
 	//Uncomment this below for the basic formula..
-	this.entities.push(new pipe.Pipe(2,0.75));
-	this.entities.push(new pipe.Pipe(2.3,-0.75));
+	this.entities.push(new pipe.Pipe(1,0.75));
+	this.entities.push(new pipe.Pipe(2,-0.75));
 };
 
 GraphicsSystem.prototype.newPipe1 = function(){
@@ -500,7 +501,7 @@ GraphicsSystem.prototype.createPipes = function(){
 		// this.newPipes();
 		// this.drawPipes();
 		window.setInterval(this.newPipes.bind(this), 2000);
-		window.setInterval(this.drawPipes.bind(this), 1000);
+		window.setInterval(this.drawPipes.bind(this), 2000);
 
 
 	// }

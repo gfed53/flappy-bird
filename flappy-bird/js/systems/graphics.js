@@ -92,8 +92,8 @@ GraphicsSystem.prototype.newPipes = function(){
 	// this.entities.push(pipe);
 
 	//Uncomment this below for the basic formula..
-	this.entities.push(new pipe.Pipe(2,0.75));
-	this.entities.push(new pipe.Pipe(2.3,-0.75));
+	this.entities.push(new pipe.Pipe(1,0.75));
+	this.entities.push(new pipe.Pipe(2,-0.75));
 };
 
 GraphicsSystem.prototype.newPipe1 = function(){
@@ -129,7 +129,7 @@ GraphicsSystem.prototype.createPipes = function(){
 		// this.newPipes();
 		// this.drawPipes();
 		window.setInterval(this.newPipes.bind(this), 2000);
-		window.setInterval(this.drawPipes.bind(this), 1000);
+		window.setInterval(this.drawPipes.bind(this), 2000);
 
 
 	// }
