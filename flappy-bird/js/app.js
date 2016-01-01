@@ -371,9 +371,10 @@ CollisionSystem.prototype.tick = function() {
 exports.CollisionSystem = CollisionSystem;
 },{}],11:[function(require,module,exports){
 var pipe = require("../entities/pipe"),
-	pipeTop = new pipe.Pipe(1,0.75),
-	pipeBottom = new pipe.Pipe(1,-0.75),
-	pipes = [pipeTop, pipeBottom];
+pipeTop = new pipe.Pipe(1,0.75),
+pipeBottom = new pipe.Pipe(1,-0.75),
+pipes = [pipeTop, pipeBottom],
+pipeHeightsArray = [0.9, 0.75, 0.5, 0.25, -0.25, -0.75];
 
 console.log(pipeTop);
 console.log(new pipe.Pipe(1,0.75));
@@ -408,9 +409,9 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-		this.canvas.height = this.canvas.offsetHeight;
-	}
-	
+	this.canvas.height = this.canvas.offsetHeight;
+}
+
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -447,7 +448,9 @@ GraphicsSystem.prototype.newPipes = function(){
 	// 		}
 	// 	}, 2000);
 	// }
-
+	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
+	console.log(randomHeight);
+	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
 	// for(var i=0; i<pipes.length; i++){
 	// 	var pipe = pipes[i];
 	// 	setTimeout(function(){
@@ -464,8 +467,8 @@ GraphicsSystem.prototype.newPipes = function(){
 	// this.entities.push(pipe);
 
 	//Uncomment this below for the basic formula..
-	this.entities.push(new pipe.Pipe(1,0.75));
-	this.entities.push(new pipe.Pipe(2,-0.75));
+	// this.entities.push(new pipe.Pipe(2.5,0.75));
+	// this.entities.push(new pipe.Pipe(2,-0.75));
 };
 
 GraphicsSystem.prototype.newPipe1 = function(){
@@ -497,11 +500,26 @@ GraphicsSystem.prototype.createPipes = function(){
 		// window.setInterval(this.tick.bind(this), 2000);
 		// window.setInterval(this.newPipe1.bind(this), 2500);
 		// window.setInterval(this.newPipe2.bind(this), 4000);
+		//Possible solution
+	// var i = 1;
+		
+	// setTimeout(
+	// 	// function(){
+			// var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length) + 1);
+	// 		// console.log(randomHeight);
+	// 		this.newPipes();
+	// 		i++;
+	// 		if(i<10){
+	// 			this.createPipes();
+	// 		}
+	// }, 2000)
+	// console.log(this.entities);
+		// this.drawPipes();	
 		// Uncomment this below for the basic formula..
 		// this.newPipes();
 		// this.drawPipes();
-		window.setInterval(this.newPipes.bind(this), 2000);
-		window.setInterval(this.drawPipes.bind(this), 2000);
+	window.setInterval(this.newPipes.bind(this), 2000);
+	window.setInterval(this.drawPipes.bind(this), 2000);
 
 
 	// }
@@ -516,8 +534,8 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		console.log(this.entities);
-		console.log("draw");
+		// console.log(this.entities);
+		// console.log("draw");
 	}
 };
 
@@ -525,13 +543,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 
 exports.GraphicsSystem = GraphicsSystem;
 
-//Possible solution
-// for(let i=0; i<100; i++){
-	// 	var pipe = pipes[random number between 0 and pipes.length(Math.rand..)];
-	// 	setTimeout(function(){
-	// 		this.entities.push(pipe);
-	// 		, (i+1)*1000);
-	// 	console.log(this.entities);
+
 
 
 
