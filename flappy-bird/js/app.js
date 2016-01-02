@@ -451,6 +451,10 @@ GraphicsSystem.prototype.newPipes = function(){
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 	console.log(randomHeight);
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
+	if(this.entities.length>5){
+		console.log("We splicing");
+		this.entities.splice(1, 1);
+	}
 	// for(var i=0; i<pipes.length; i++){
 	// 	var pipe = pipes[i];
 	// 	setTimeout(function(){
@@ -521,7 +525,6 @@ GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
 
-
 	// }
 };
 
@@ -534,7 +537,8 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		// console.log(this.entities);
+		console.log(this.entities);
+		console.log(this.entities.length);
 		// console.log("draw");
 	}
 };
