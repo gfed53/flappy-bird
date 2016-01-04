@@ -1,6 +1,7 @@
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
+var graphicsSystem = require("../systems/graphics");
 //What is 'settings'?
 // var settings = require("../settings");
 
@@ -25,6 +26,10 @@ var Bird = function(){
 
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
+	// console.log(FlappyBird.entities);
+	// this.physics.position.x = 0;
+	// this.physics.position.y = 0.5;
+
 	
 };
 

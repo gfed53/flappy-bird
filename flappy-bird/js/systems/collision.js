@@ -2,9 +2,9 @@ var CollisionSystem = function(entities) {
 	this.entities = entities;
 };
 
-CollisionSystem.prototype.run = function(){
-	window.setInterval(this.tick.bind(this), 2000);
-};
+// CollisionSystem.prototype.run = function(){
+// 	window.setInterval(this.tick.bind(this), 2000);
+// };
 
 CollisionSystem.prototype.tick = function() {
 	for(var i=0; i<this.entities.length; i++) {
@@ -33,6 +33,8 @@ CollisionSystem.prototype.tick = function() {
 		}
 	}
 };
+
+
 
 // CollisionSystem.prototype.tick = function() {
 // 	for(var i=0; i<this.entities.length; i++) {

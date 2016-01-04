@@ -80,7 +80,7 @@ GraphicsSystem.prototype.newPipes = function(){
 	console.log(randomHeight);
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
 	if(this.entities.length>5){
-		console.log("We splicing");
+		console.log("splicing");
 		this.entities.splice(1, 1);
 	}
 	// for(var i=0; i<pipes.length; i++){
