@@ -1,4 +1,5 @@
 var pipe = require("../entities/pipe"),
+bird = require("../entities/bird"),
 pipeTop = new pipe.Pipe(1,0.75),
 pipeBottom = new pipe.Pipe(1,-0.75),
 pipes = [pipeTop, pipeBottom],
@@ -46,6 +47,35 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));	
 };
 
+GraphicsSystem.prototype.runClear = function(){
+	window.setInterval(this.clearAll.bind(this), 10000);
+}
+
+GraphicsSystem.prototype.clearAll = function(){
+	// Clear the canvas
+	// window.cancelAnimationFrame(this.run.bind(this));
+	// this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	// this.run();
+
+	// this.context.save();
+
+	//Reset entities
+	// this.entities = [new bird.Bird()];
+	this.entities.splice(1,4);
+
+	//Rendering goes here
+	// for(var i=0; i<this.entities.length; i++){
+	// 	var entity = this.entities[i];
+	// 	if (!"graphics" in entity.components){
+	// 		continue;
+	// 	}
+	// 	entity.components.graphics.draw(this.context);
+	// }
+
+	// this.context.restore();
+	console.log("should be clear");
+}
+
 GraphicsSystem.prototype.newPipes = function(){
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
@@ -67,6 +97,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
+		console.log(this.entities);
 	}
 };
 
