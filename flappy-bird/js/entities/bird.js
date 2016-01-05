@@ -5,9 +5,18 @@ var graphicsSystem = require("../systems/graphics");
 //What is 'settings'?
 // var settings = require("../settings");
 
-var Bird = function(){
-	console.log("Creating bird entity");
+// var GraphicsSystem = function() {
+// 	// Canvas is where we draw
+// 	this.canvas = document.getElementById('main-canvas');
+// 	// Context is what we draw to
+// 	this.context = this.canvas.getContext('2d');
+// };
 
+// GraphicsSystem.prototype.clearCanvas = function() {
+// 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+// }
+
+var Bird = function(){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
 	physics.acceleration.y = -2;
@@ -26,10 +35,11 @@ var Bird = function(){
 
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
-	// console.log(FlappyBird.entities);
-	// this.physics.position.x = 0;
-	// this.physics.position.y = 0.5;
-
+	console.log(this.components.physics);
+	// GraphicsSystem.clearCanvas();
+	this.components.physics.position.x = 0;
+	this.components.physics.position.y = 0.5;
+	
 	
 };
 

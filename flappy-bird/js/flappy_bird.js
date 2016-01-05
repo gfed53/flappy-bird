@@ -21,9 +21,6 @@ FlappyBird.prototype.run = function(){
 	this.graphics.createPipes();
 	this.physics.run();
 	this.input.run();
-	// this.collision.run();
-	
-
 };
 
 exports.FlappyBird = FlappyBird;

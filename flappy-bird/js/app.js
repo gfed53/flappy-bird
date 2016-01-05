@@ -114,7 +114,7 @@ RectCollisionComponent.prototype.collideRect = function(entity) {
     var bottomB = positionB.y - sizeB.y / 2;
     var topB = positionB.y + sizeB.y / 2;
 
-    //?? All would have to be false for a collision to occur, not at least one.
+    
     return !(leftA > rightB || leftB > rightA || bottomA > topB || bottomB > topA);
 };
 
@@ -135,7 +135,6 @@ BirdGraphicsComponent.prototype.draw = function(context){
 	context.arc(0, 0, 0.02, 0, 2 * Math.PI);
 	context.fill();
 	context.closePath();
-	// console.log("Drawing a bird.");
 	context.restore();
 };
 
@@ -152,7 +151,6 @@ PipeGraphicsComponent.prototype.draw = function(context){
 	context.translate(position.x, position.y);
 	context.beginPath();
 	context.fillRect(0, 0, 0.25, 1);
-	// console.log("Drawing a pipe.");
 	context.restore();
 };
 
@@ -192,9 +190,18 @@ var graphicsSystem = require("../systems/graphics");
 //What is 'settings'?
 // var settings = require("../settings");
 
-var Bird = function(){
-	console.log("Creating bird entity");
+// var GraphicsSystem = function() {
+// 	// Canvas is where we draw
+// 	this.canvas = document.getElementById('main-canvas');
+// 	// Context is what we draw to
+// 	this.context = this.canvas.getContext('2d');
+// };
 
+// GraphicsSystem.prototype.clearCanvas = function() {
+// 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+// }
+
+var Bird = function(){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
 	physics.acceleration.y = -2;
@@ -213,10 +220,11 @@ var Bird = function(){
 
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
-	// console.log(FlappyBird.entities);
-	// this.physics.position.x = 0;
-	// this.physics.position.y = 0.5;
-
+	console.log(this.components.physics);
+	// GraphicsSystem.clearCanvas();
+	this.components.physics.position.x = 0;
+	this.components.physics.position.y = 0.5;
+	
 	
 };
 
@@ -228,7 +236,6 @@ var collisionComponent = require("../components/collision/rect");
 // var settings = require("../settings");
 
 var Pipe = function(x,y){
-	console.log("Creating pipe entity");
 
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
@@ -238,7 +245,7 @@ var Pipe = function(x,y){
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
-	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 0.25});
+	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 1});
 	collision.onCollision = this.onCollision.bind(this);
 
 
@@ -251,17 +258,10 @@ var Pipe = function(x,y){
 
 Pipe.prototype.onCollision = function(entity) {
 	console.log("Pipe collided with entity:", entity);
-	console.log(this.components.physics.position.x + ", "+this.components.physics.position.y);
+	// console.log(this.components.physics.position.x + ", "+this.components.physics.position.y);
 };
 
-// var pipeTop = new Pipe(1,0.75)
-// 	pipeBottom = new Pipe(1,-0.75);
-
-// var pipes = [pipeTop, pipeBottom];
-
 exports.Pipe = Pipe;
-// exports.pipes = pipes;
-// exports.pipeBottom = pipeBottom;
 },{"../components/collision/rect":2,"../components/graphics/pipe":4,"../components/physics/physics":5}],8:[function(require,module,exports){
 // Systems
 var graphicsSystem = require("./systems/graphics");
@@ -286,9 +286,6 @@ FlappyBird.prototype.run = function(){
 	this.graphics.createPipes();
 	this.physics.run();
 	this.input.run();
-	// this.collision.run();
-	
-
 };
 
 exports.FlappyBird = FlappyBird;
@@ -306,10 +303,6 @@ var CollisionSystem = function(entities) {
 	this.entities = entities;
 };
 
-// CollisionSystem.prototype.run = function(){
-// 	window.setInterval(this.tick.bind(this), 2000);
-// };
-
 CollisionSystem.prototype.tick = function() {
 	for(var i=0; i<this.entities.length; i++) {
 		var entityA = this.entities[i];
@@ -326,7 +319,7 @@ CollisionSystem.prototype.tick = function() {
 			if(!entityA.components.collision.collidesWith(entityB)){
 				continue;
 			}
-			//Shouldn't it be entityA.onCollision?
+
 			if(entityA.components.collision.onCollision) {
 				entityA.components.collision.onCollision(entityB);
 			}
@@ -338,33 +331,6 @@ CollisionSystem.prototype.tick = function() {
 	}
 };
 
-
-
-// CollisionSystem.prototype.tick = function() {
-// 	for(var i=0; i<this.entities.length; i++) {
-// 		var entityA = this.entities[i];
-// 		console.log(entityA);
-// 		if ("collision" in entityA.components){
-// 			console.log(entityA+"has collision");
-// 			for(var j=i+1; j<this.entities.length; j++){
-// 				var entityB = this.entities[j];
-// 				console.log(j);
-// 				if("collision" in entityB.components){
-// 					console.log(entityB);
-// 					if(entityA.components.collision.collidesWith(entityB)){
-// 						if(entityA.onCollision){
-// 							entityA.onCollision(entityB);
-// 						}
-// 						else if(entityB.onCollision){
-// 							entityB.onCollision(entityA);
-// 						}
-// 					}
-// 				}
-// 			}	
-// 		}
-// 	}
-// };
-
 exports.CollisionSystem = CollisionSystem;
 },{}],11:[function(require,module,exports){
 var pipe = require("../entities/pipe"),
@@ -372,12 +338,6 @@ pipeTop = new pipe.Pipe(1,0.75),
 pipeBottom = new pipe.Pipe(1,-0.75),
 pipes = [pipeTop, pipeBottom],
 pipeHeightsArray = [0.9, 0.75, 0.5, 0.25, -0.25, -0.75];
-
-console.log(pipeTop);
-console.log(new pipe.Pipe(1,0.75));
-console.log(pipes[0]);
-// var pipes = pipe.pipes;
-// var pipeGraphics = require("../graphics/pipe");
 
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
@@ -388,18 +348,9 @@ var GraphicsSystem = function(entities) {
 };
 
 GraphicsSystem.prototype.run = function(){
-	// Tick the graphics system a few times to see it in action
-	// for (var i=0; i<5; i++) {
-	// 	this.tick();
-	// }
-
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
 };
-
-// GraphicsSystem.prototype.create = function(){
-// 	window.setInterval(this.create.bind(this), 2000);
-// }
 
 GraphicsSystem.prototype.tick = function() {
 	// Set the canvas to the correct size if the window is resized
@@ -422,7 +373,6 @@ GraphicsSystem.prototype.tick = function() {
 		if (!"graphics" in entity.components){
 			continue;
 		}
-
 		entity.components.graphics.draw(this.context);
 	}
 
@@ -432,101 +382,19 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 GraphicsSystem.prototype.newPipes = function(){
-	// var pushPipe = function(pipe){
-	// 	this.entities.push(pipe);
-	// }
-	// var count = 1;
-	// var myLoop = function(){
-	// 	setTimeout(function(){
-	// 		pushPipe;
-	// 		count++;
-	// 		if (i<pipes.length){
-	// 			myLoop();
-	// 		}
-	// 	}, 2000);
-	// }
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
-	console.log(randomHeight);
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
 	if(this.entities.length>5){
-		console.log("splicing");
 		this.entities.splice(1, 1);
 	}
-	// for(var i=0; i<pipes.length; i++){
-	// 	var pipe = pipes[i];
-	// 	setTimeout(function(){
-	// 		this.entities.push(pipe);
-
-	// 		, 2000);
-	// 	console.log(this.entities);
-
-	// 	this.drawPipes()
-
-		// window.setInterval(this.drawPipes.bind(this), 2000);
-	// // 	// this.createPipes();
-	// }
-	// this.entities.push(pipe);
-
-	//Uncomment this below for the basic formula..
-	// this.entities.push(new pipe.Pipe(2.5,0.75));
-	// this.entities.push(new pipe.Pipe(2,-0.75));
-};
-
-GraphicsSystem.prototype.newPipe1 = function(){
-	this.entities.push(new pipe.Pipe(2,0.75));
-}
-
-GraphicsSystem.prototype.newPipe2 = function(){
-	this.entities.push(new pipe.Pipe(2.3,-0.75));
-}
-
-
-GraphicsSystem.prototype.createPipe3 = function(){
-	this.entities.push(pipes[0]);
-	console.log("created pipe 3");
-};
-
-GraphicsSystem.prototype.createPipe4 = function(){
-	this.entities.push(pipes[1]);
-	console.log("created pipe 4");
 };
 
 GraphicsSystem.prototype.createPipes = function(){
-	// for(var i=0; i<pipes.length; i++){
-		// var pipe = pipes[i];
-		// this.newPipes(pipes);
-
-		// window.setInterval(this.createPipe3.bind(this), 2000);
-		// window.setInterval(this.createPipe4.bind(this), 4000);
-		// window.setInterval(this.tick.bind(this), 2000);
-		// window.setInterval(this.newPipe1.bind(this), 2500);
-		// window.setInterval(this.newPipe2.bind(this), 4000);
-		//Possible solution
-	// var i = 1;
-		
-	// setTimeout(
-	// 	// function(){
-			// var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length) + 1);
-	// 		// console.log(randomHeight);
-	// 		this.newPipes();
-	// 		i++;
-	// 		if(i<10){
-	// 			this.createPipes();
-	// 		}
-	// }, 2000)
-	// console.log(this.entities);
-		// this.drawPipes();	
-		// Uncomment this below for the basic formula..
-		// this.newPipes();
-		// this.drawPipes();
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
-
-	// }
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
-	// window.setInterval(this.newPipes.bind(this), 2000);
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
 		if (!"graphics" in entity.components){
@@ -534,9 +402,6 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		console.log(this.entities);
-		console.log(this.entities.length);
-		// console.log("draw");
 	}
 };
 

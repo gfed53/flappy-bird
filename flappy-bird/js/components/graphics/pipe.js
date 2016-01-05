@@ -9,7 +9,6 @@ PipeGraphicsComponent.prototype.draw = function(context){
 	context.translate(position.x, position.y);
 	context.beginPath();
 	context.fillRect(0, 0, 0.25, 1);
-	// console.log("Drawing a pipe.");
 	context.restore();
 };
 
