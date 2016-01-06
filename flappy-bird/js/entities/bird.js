@@ -25,11 +25,13 @@ var Bird = function(){
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
 	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
+	var status = 0;
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
-		collision: collision
+		collision: collision,
+		status: status
 	};
 };
 
@@ -39,6 +41,7 @@ Bird.prototype.onCollision = function(entity) {
 	// GraphicsSystem.clearCanvas();
 	this.components.physics.position.x = 0;
 	this.components.physics.position.y = 0.5;
+	this.components.status = 1;
 	
 	
 };

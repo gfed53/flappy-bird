@@ -210,11 +210,13 @@ var Bird = function(){
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
 	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
+	var status = 0;
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
-		collision: collision
+		collision: collision,
+		status: status
 	};
 };
 
@@ -224,6 +226,7 @@ Bird.prototype.onCollision = function(entity) {
 	// GraphicsSystem.clearCanvas();
 	this.components.physics.position.x = 0;
 	this.components.physics.position.y = 0.5;
+	this.components.status = 1;
 	
 	
 };
@@ -287,6 +290,7 @@ FlappyBird.prototype.run = function(){
 	this.graphics.runClear();
 	this.physics.run();
 	this.input.run();
+	console.log(this.entities[0].components.status);
 };
 
 exports.FlappyBird = FlappyBird;
@@ -380,36 +384,20 @@ GraphicsSystem.prototype.tick = function() {
 
 	this.context.restore();
 	// Continue the render loop
-	window.requestAnimationFrame(this.tick.bind(this));	
+	window.requestAnimationFrame(this.tick.bind(this));
 };
 
 GraphicsSystem.prototype.runClear = function(){
-	window.setInterval(this.clearAll.bind(this), 10000);
+	window.setInterval(this.clearAll.bind(this), 1);
 }
 
 GraphicsSystem.prototype.clearAll = function(){
-	// Clear the canvas
-	// window.cancelAnimationFrame(this.run.bind(this));
-	// this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	// this.run();
-
-	// this.context.save();
-
-	//Reset entities
-	// this.entities = [new bird.Bird()];
-	this.entities.splice(1,4);
-
-	//Rendering goes here
-	// for(var i=0; i<this.entities.length; i++){
-	// 	var entity = this.entities[i];
-	// 	if (!"graphics" in entity.components){
-	// 		continue;
-	// 	}
-	// 	entity.components.graphics.draw(this.context);
-	// }
-
-	// this.context.restore();
-	console.log("should be clear");
+	if(this.entities[0].components.status === 1){
+		console.log("should be clear");
+		this.entities.splice(1,4);
+		this.entities[0].components.status = 0;
+	}
+	// console.log(this.entities[0]);
 }
 
 GraphicsSystem.prototype.newPipes = function(){
@@ -433,7 +421,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		console.log(this.entities);
+		console.log(this.entities[0].components.status);
 	}
 };
 

@@ -22,6 +22,7 @@ FlappyBird.prototype.run = function(){
 	this.graphics.runClear();
 	this.physics.run();
 	this.input.run();
+	console.log(this.entities[0].components.status);
 };
 
 exports.FlappyBird = FlappyBird;
