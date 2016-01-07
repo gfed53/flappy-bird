@@ -14,6 +14,9 @@ CircleCollisionComponent.prototype.collidesWith = function(entity){
     else if(entity.components.collision.type === "edge"){
         return this.collideEdge(entity);
     }
+    else if(entity.components.collision.type === "pipe-edge"){
+        return this.collidePipeEdge(entity);
+    }
 	return false;
 };
 
@@ -76,7 +79,13 @@ CircleCollisionComponent.prototype.collideEdge = function(entity){
     } else if(positionB === 0){
         return positionA < positionB;
     }
+}
 
+CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
+    var positionA = this.entity.components.physics.position.x;
+    var positionB = entity.components.physics.position.x;
+
+    return positionA > positionB;
 }
 
 exports.CircleCollisionComponent = CircleCollisionComponent;

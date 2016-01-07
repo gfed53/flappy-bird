@@ -26,10 +26,14 @@ var Bird = function(){
 Bird.prototype.onCollision = function(entity) {
 	// console.log("Bird collided with entity:", entity);
 	// console.log(this.components.physics);
-	// GraphicsSystem.clearCanvas();
-	this.components.physics.position.x = 0;
-	this.components.physics.position.y = 0.5;
-	this.components.status = 1;
+	if(entity.components.collision.type = "pipe-edge"){
+		console.log("Increase score by 1");
+	} else{
+		this.components.physics.position.x = 0;
+		this.components.physics.position.y = 0.5;
+		this.components.status = 1;
+	}
+	
 	
 	
 };

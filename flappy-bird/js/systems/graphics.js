@@ -1,4 +1,5 @@
 var pipe = require("../entities/pipe"),
+pipeEdge = require("../entities/pipe-edge"),
 bird = require("../entities/bird"),
 pipeTop = new pipe.Pipe(1,0.75),
 pipeBottom = new pipe.Pipe(1,-0.75),
@@ -62,9 +63,10 @@ GraphicsSystem.prototype.clearAll = function(){
 
 GraphicsSystem.prototype.newPipes = function(){
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
-	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
+	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
+	this.entities.push(new pipeEdge.PipeEdge(2));
 	if(this.entities.length>7){
-		this.entities.splice(3, 1);
+		this.entities.splice(3, 2);
 	}
 };
 

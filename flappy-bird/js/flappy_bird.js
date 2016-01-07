@@ -9,6 +9,7 @@ var bird = require("./entities/bird");
 var pipe = require("./entities/pipe");
 var topEdge = require("./entities/top-edge");
 var bottomEdge = require("./entities/bottom-edge");
+var pipeEdge = require("./entities/pipe-edge");
 
 var FlappyBird = function(){
 	this.entities = [new bird.Bird(), new topEdge.TopEdge(), new bottomEdge.BottomEdge()];
