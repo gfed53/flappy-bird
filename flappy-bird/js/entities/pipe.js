@@ -13,7 +13,7 @@ var Pipe = function(x,y){
 
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
-	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 1});
+	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 0.25});
 	collision.onCollision = this.onCollision.bind(this);
 
 

@@ -11,6 +11,9 @@ CircleCollisionComponent.prototype.collidesWith = function(entity){
 	else if(entity.components.collision.type === "rect"){
 		return this.collideRect(entity);
 	}
+    else if(entity.components.collision.type === "edge"){
+        return this.collideEdge(entity);
+    }
 	return false;
 };
 
@@ -63,6 +66,18 @@ CircleCollisionComponent.prototype.collideRect = function(entity) {
     var distanceSquared = diff.x * diff.x + diff.y * diff.y;
     return distanceSquared < radiusA * radiusA;
 };
+
+CircleCollisionComponent.prototype.collideEdge = function(entity){
+    var positionA = this.entity.components.physics.position.y;
+    var positionB = entity.components.physics.position.y;
+
+    if(positionB === 1){
+        return positionA > positionB;
+    } else if(positionB === 0){
+        return positionA < positionB;
+    }
+
+}
 
 exports.CircleCollisionComponent = CircleCollisionComponent;
 

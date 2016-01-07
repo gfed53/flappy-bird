@@ -1,20 +1,8 @@
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
-var graphicsSystem = require("../systems/graphics");
 //What is 'settings'?
 // var settings = require("../settings");
-
-// var GraphicsSystem = function() {
-// 	// Canvas is where we draw
-// 	this.canvas = document.getElementById('main-canvas');
-// 	// Context is what we draw to
-// 	this.context = this.canvas.getContext('2d');
-// };
-
-// GraphicsSystem.prototype.clearCanvas = function() {
-// 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-// }
 
 var Bird = function(){
 	var physics = new physicsComponent.PhysicsComponent(this);

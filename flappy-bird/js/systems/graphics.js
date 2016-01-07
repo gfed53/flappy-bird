@@ -54,7 +54,7 @@ GraphicsSystem.prototype.runClear = function(){
 GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.status === 1){
 		console.log("should be clear");
-		this.entities.splice(1,4);
+		this.entities.splice(3,6);
 		this.entities[0].components.status = 0;
 	}
 	// console.log(this.entities[0]);
@@ -63,8 +63,8 @@ GraphicsSystem.prototype.clearAll = function(){
 GraphicsSystem.prototype.newPipes = function(){
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight])); 
-	if(this.entities.length>5){
-		this.entities.splice(1, 1);
+	if(this.entities.length>7){
+		this.entities.splice(3, 1);
 	}
 };
 
@@ -81,7 +81,6 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		console.log(this.entities[0].components.status);
 	}
 };
 
