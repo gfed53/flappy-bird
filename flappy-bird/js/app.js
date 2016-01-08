@@ -305,14 +305,14 @@ var Bird = function(){
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
 	console.log(entity.components.collision.type);
-	// if(entity.components.collision.type = "pipe-edge"){
-	// 	console.log("Increase score by 1");
-	// } else {
+	if(entity.components.collision.type === "pipe-edge"){
+		console.log("Increase score by 1");
+	} else {
 		console.log("Should reset");
 		this.components.physics.position.x = 0;
 		this.components.physics.position.y = 0.5;
 		this.components.status = 1;
-	// }
+	}
 	
 	
 	
@@ -570,7 +570,7 @@ GraphicsSystem.prototype.clearAll = function(){
 GraphicsSystem.prototype.newPipes = function(){
 	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
-	// this.entities.push(new pipeEdge.PipeEdge(2));
+	this.entities.push(new pipeEdge.PipeEdge(2));
 	if(this.entities.length>10){
 		this.entities.splice(3, 2);
 	}
