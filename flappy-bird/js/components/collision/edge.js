@@ -1,4 +1,5 @@
-var EdgeCollisionComponent = function(){
+var EdgeCollisionComponent = function(entity){
+	this.entity = entity;
 	this.type = "edge";
 }
 

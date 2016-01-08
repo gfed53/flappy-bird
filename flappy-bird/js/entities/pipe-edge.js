@@ -1,10 +1,10 @@
-// var graphicsComponent = require("../components/graphics/pipe");
-// var physicsComponent = require("../components/physics/physics");
-// var collisionComponent = require("../components/collision/rect");
+var graphicsComponent = require("../components/graphics/pipe-edge");
+var physicsComponent = require("../components/physics/physics");
+var collisionComponent = require("../components/collision/pipe-edge");
 // var settings = require("../settings");
 
 var PipeEdge = function(x){
-	console.log("Creating pipe entity");
+	console.log("Creating pipe-edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = 0;
@@ -13,8 +13,8 @@ var PipeEdge = function(x){
 
 	var graphics = new graphicsComponent.PipeEdgeGraphicsComponent(this);
 
-	var collision = new collisionComponent.PipeCollisionComponent(this, {x: 0.25, y: 0.25});
-	collision.onCollision = this.onCollision.bind(this);
+	var collision = new collisionComponent.PipeEdgeCollisionComponent(this);
+	// collision.onCollision = this.onCollision.bind(this);
 
 
 	this.components= {

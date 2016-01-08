@@ -8,7 +8,7 @@ var TopEdge = function(){
 	physics.position.y = 1;
 
 	var graphics = new graphicsComponent.EdgeGraphicsComponent(this);
-	var collision = new collisionComponent.EdgeCollisionComponent();
+	var collision = new collisionComponent.EdgeCollisionComponent(this);
 
 	this.components= {
 		graphics: graphics,

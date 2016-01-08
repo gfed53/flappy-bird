@@ -1,4 +1,5 @@
-var PipeEdgeCollisionComponent = function(){
+var PipeEdgeCollisionComponent = function(entity){
+	this.entity = entity;
 	this.type = "pipe-edge";
 }
 
