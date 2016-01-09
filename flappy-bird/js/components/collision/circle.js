@@ -9,7 +9,7 @@ CircleCollisionComponent.prototype.collidesWith = function(entity){
 		return this.collideCircle(entity);
 	}
 	else if(entity.components.collision.type === "rect"){
-		return this.collideRect(entity);
+		return this.collideRect2(entity);
 	}
     else if(entity.components.collision.type === "edge"){
         return this.collideEdge(entity);
@@ -100,10 +100,10 @@ CircleCollisionComponent.prototype.collideRect2 = function(entity) {
     console.log(positionB);
     console.log(sizeB);
     var closest = {
-        x: clamp(positionA.x, positionB.x - sizeB.x / 2,
-                 positionB.x + sizeB.x / 2),
-        y: clamp(positionA.y, positionB.y - sizeB.y / 2,
-                 positionB.y + sizeB.y / 2)
+        x: clamp(positionA.x, positionB.x,
+                 positionB.x + sizeB.x),
+        y: clamp(positionA.y, positionB.y,
+                 positionB.y + sizeB.y)
     };
 
     var radiusA = this.radius;
