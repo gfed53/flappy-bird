@@ -83,7 +83,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		}
 
 		entity.components.graphics.draw(this.context);
-		console.log(this.entities);
+		// console.log(this.entities);
 	}
 };
 

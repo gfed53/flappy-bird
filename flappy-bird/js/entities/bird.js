@@ -26,12 +26,13 @@ var Bird = function(){
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
 	console.log(entity.components.collision.type);
-	if(entity.components.collision.type === "pipe-edge"){
+	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
 		console.log("Increase score by 1");
 	} else {
 		console.log("Should reset");
 		this.components.physics.position.x = 0;
 		this.components.physics.position.y = 0.5;
+		this.components.physics.velocity.y = 0;
 		this.components.status = 1;
 	}
 	
