@@ -357,11 +357,11 @@ Bird.prototype.onCollision = function(entity) {
 	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
 		console.log("Increase score by 1");
 		var score = $("#pipes-flown-through").text();
-		console.log(score);
+		// console.log(score);
 		var scoreInt = parseInt(score);
-		console.log(scoreInt);
+		// console.log(scoreInt);
 		scoreInt+=1;
-		console.log(scoreInt);
+		// console.log(scoreInt);
 		score = String(scoreInt);
 		$("#pipes-flown-through").text(score);
 	} else {
@@ -454,7 +454,7 @@ var Pipe = function(x,y){
 		if(y>0){
 			return 1-y;
 		} else{
-			return 1+y;
+			return 1;
 		}
 	};
 

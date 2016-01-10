@@ -19,7 +19,7 @@ var Pipe = function(x,y){
 		if(y>0){
 			return 1-y;
 		} else{
-			return 1+y;
+			return 1;
 		}
 	};
 
