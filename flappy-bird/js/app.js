@@ -358,9 +358,9 @@ Bird.prototype.onCollision = function(entity) {
 		console.log("Increase score by 1");
 		var score = $("#pipes-flown-through").text();
 		// console.log(score);
-		var scoreInt = parseInt(score);
+		var scoreInt = parseFloat(score);
 		// console.log(scoreInt);
-		scoreInt+=1;
+		scoreInt+=0.5;
 		// console.log(scoreInt);
 		score = String(scoreInt);
 		$("#pipes-flown-through").text(score);
