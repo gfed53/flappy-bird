@@ -5,6 +5,7 @@ var collisionComponent = require("../components/collision/circle");
 // var settings = require("../settings");
 
 var Bird = function(){
+	console.log("Creating bird entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
 	physics.acceleration.y = -2;
@@ -28,6 +29,14 @@ Bird.prototype.onCollision = function(entity) {
 	console.log(entity.components.collision.type);
 	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
 		console.log("Increase score by 1");
+		var score = $("#pipes-flown-through").text();
+		console.log(score);
+		var scoreInt = parseInt(score);
+		console.log(scoreInt);
+		scoreInt+=1;
+		console.log(scoreInt);
+		score = String(scoreInt);
+		$("#pipes-flown-through").text(score);
 	} else {
 		console.log("Should reset");
 		this.components.physics.position.x = 0;

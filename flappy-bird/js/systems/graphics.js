@@ -1,9 +1,9 @@
 var pipe = require("../entities/pipe"),
 pipeEdge = require("../entities/pipe-edge"),
 bird = require("../entities/bird"),
-pipeTop = new pipe.Pipe(1,0.75),
-pipeBottom = new pipe.Pipe(1,-0.75),
-pipes = [pipeTop, pipeBottom],
+// pipeTop = new pipe.Pipe(1,0.75),
+// pipeBottom = new pipe.Pipe(1,-0.75),
+// pipes = [pipeTop, pipeBottom],
 pipeHeightsArray = [0.9, 0.75, 0.5, 0.25, -0.25, -0.75];
 
 var GraphicsSystem = function(entities) {

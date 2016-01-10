@@ -96,9 +96,9 @@ CircleCollisionComponent.prototype.collideRect2 = function(entity) {
     var positionA = this.entity.components.physics.position;
     var positionB = entity.components.physics.position;
     var sizeB = entity.components.collision.size;
-    console.log(positionA);
-    console.log(positionB);
-    console.log(sizeB);
+    // console.log(positionA);
+    // console.log(positionB);
+    // console.log(sizeB);
     var closest = {
         x: clamp(positionA.x, positionB.x,
                  positionB.x + sizeB.x),
@@ -131,7 +131,7 @@ CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
     // var positionA = this.entity.components.physics.position.x;
     var positionB = entity.components.physics.position.x;
     // console.log(positionA+" a");
-    console.log(positionB+" b");
+    // console.log(positionB+" b");
 
     return positionB < 0.01 && positionB > -0.01;
 }

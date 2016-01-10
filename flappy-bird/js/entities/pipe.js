@@ -11,9 +11,21 @@ var Pipe = function(x,y){
 	physics.velocity.x = -0.2;
 	physics.acceleration.x = -0.1;
 
+	this.components = {
+		physics: physics
+	};
+
+	var rectHeightValue = function(y){
+		if(y>0){
+			return 1-y;
+		} else{
+			return 1+y;
+		}
+	};
+
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
-	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: 0.25});
+	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: rectHeightValue(this.components.physics.position.y)});
 	collision.onCollision = this.onCollision.bind(this);
 
 
@@ -22,6 +34,8 @@ var Pipe = function(x,y){
 		physics: physics,
 		collision: collision
 	};
+
+	console.log(this.components.physics.position.y);
 };
 
 Pipe.prototype.onCollision = function(entity) {
