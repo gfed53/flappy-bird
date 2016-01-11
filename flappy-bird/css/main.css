@@ -17,3 +17,7 @@ div#overlay {
     top: 0;
     left: 0;
 }
+
+#images {
+	display: none;
+}

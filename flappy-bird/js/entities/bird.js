@@ -43,6 +43,7 @@ Bird.prototype.onCollision = function(entity) {
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
 		this.components.status = 1;
+		$("#pipes-flown-through").text("0");
 	}
 	
 	

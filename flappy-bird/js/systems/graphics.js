@@ -1,9 +1,6 @@
 var pipe = require("../entities/pipe"),
 pipeEdge = require("../entities/pipe-edge"),
 bird = require("../entities/bird"),
-// pipeTop = new pipe.Pipe(1,0.75),
-// pipeBottom = new pipe.Pipe(1,-0.75),
-// pipes = [pipeTop, pipeBottom],
 pipeHeightsArray = [0.9, 0.75, 0.5, 0.25, -0.25, -0.75];
 
 var GraphicsSystem = function(entities) {
@@ -12,6 +9,7 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
+
 };
 
 GraphicsSystem.prototype.run = function(){
@@ -30,9 +28,14 @@ GraphicsSystem.prototype.tick = function() {
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+	var background = document.getElementById("ryu-stage");
+	this.context.drawImage(background, 0, 0, this.canvas.width, this.canvas.height);
+
 	this.context.save();
 	this.context.translate(this.canvas.width / 2, this.canvas.height);
 	this.context.scale(this.canvas.height, -this.canvas.height);
+
+	
 
 	//Rendering goes here
 	for(var i=0; i<this.entities.length; i++){
