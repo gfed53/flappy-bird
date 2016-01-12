@@ -6,7 +6,12 @@ var InputSystem = function(entities) {
 };
 
 InputSystem.prototype.run = function(){
+<<<<<<< HEAD
 	// this.canvas.addEventListener('click', this.onClick.bind(this));
+=======
+	// On mobile, leaving both of these active creates a doubling-effect on touch. 
+	this.canvas.addEventListener('click', this.onClick.bind(this));
+>>>>>>> master
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
 };
 

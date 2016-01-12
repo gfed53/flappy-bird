@@ -8,3 +8,17 @@ canvas#main-canvas {
     width: 100%;
     height: 100%;
 }
+
+div#overlay {
+	width: 25%;
+	height: 25%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    color: white;
+}
+
+#images {
+	display: none;
+}
