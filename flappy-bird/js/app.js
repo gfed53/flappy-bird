@@ -356,15 +356,19 @@ var Bird = function(){
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
 	console.log(entity.components.collision.type);
+	var score = $("#pipes-flown-through").text(),
+	scoreNumb = parseFloat(score),
+	highScore = $("#high-score").text(),
+	highScoreNumb = parseInt(highScore);
+
+
+
 	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
 		console.log("Increase score by 1");
-		var score = $("#pipes-flown-through").text();
-		// console.log(score);
-		var scoreInt = parseFloat(score);
 		// console.log(scoreInt);
-		scoreInt+=0.5;
+		scoreNumb+=0.5;
 		// console.log(scoreInt);
-		score = String(scoreInt);
+		score = String(scoreNumb);
 		$("#pipes-flown-through").text(score);
 	} else {
 		console.log("Should reset");
@@ -372,6 +376,10 @@ Bird.prototype.onCollision = function(entity) {
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
 		this.components.status = 1;
+
+		if(scoreNumb>highScoreNumb){
+			$("#high-score").text(score);
+		}
 		$("#pipes-flown-through").text("0");
 	}
 	
@@ -534,6 +542,11 @@ FlappyBird.prototype.run = function(){
 	console.log(this.entities[0].components.status);
 };
 
+FlappyBird.prototype.pause = function(){
+	window.clearInterval(this.physics.run.bind(this));
+	console.log("pause");
+}
+
 exports.FlappyBird = FlappyBird;
 
 },{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20}],16:[function(require,module,exports){
@@ -544,6 +557,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
 });
+
+// $(this).on('keydown', function(event) {
+// 		if (event.keyCode === 88) {
+// 			$('.ryu div').hide();
+// 			$('.ryu-cool').show();
+// 		}
+// 	});
 },{"./flappy_bird":15}],17:[function(require,module,exports){
 var CollisionSystem = function(entities) {
 	this.entities = entities;
@@ -697,6 +717,11 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
+	// this.addEventListener('keydown', function(e){
+	// 	if(e.keyCode === 32) {
+	// 		this.onSpace.bind(this);
+	// 	}
+	// });
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -704,6 +729,14 @@ InputSystem.prototype.onClick = function(e){
 	var bird = this.entities[0];
 	bird.components.physics.velocity.y = 0.7;
 };
+
+InputSystem.prototype.onSpace = function(e){
+	e.preventDefault();
+	window.clearInterval(this.physics.run.bind(this));
+	console.log("pause");
+};
+
+
 
 exports.InputSystem = InputSystem;
 },{}],20:[function(require,module,exports){

@@ -12,6 +12,11 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
+	// this.addEventListener('keydown', function(e){
+	// 	if(e.keyCode === 32) {
+	// 		this.onSpace.bind(this);
+	// 	}
+	// });
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -19,5 +24,13 @@ InputSystem.prototype.onClick = function(e){
 	var bird = this.entities[0];
 	bird.components.physics.velocity.y = 0.7;
 };
+
+InputSystem.prototype.onSpace = function(e){
+	e.preventDefault();
+	window.clearInterval(this.physics.run.bind(this));
+	console.log("pause");
+};
+
+
 
 exports.InputSystem = InputSystem;

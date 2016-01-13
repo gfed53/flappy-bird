@@ -27,15 +27,19 @@ var Bird = function(){
 Bird.prototype.onCollision = function(entity) {
 	console.log("Bird collided with entity:", entity);
 	console.log(entity.components.collision.type);
+	var score = $("#pipes-flown-through").text(),
+	scoreNumb = parseFloat(score),
+	highScore = $("#high-score").text(),
+	highScoreNumb = parseInt(highScore);
+
+
+
 	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
 		console.log("Increase score by 1");
-		var score = $("#pipes-flown-through").text();
-		// console.log(score);
-		var scoreInt = parseFloat(score);
 		// console.log(scoreInt);
-		scoreInt+=0.5;
+		scoreNumb+=0.5;
 		// console.log(scoreInt);
-		score = String(scoreInt);
+		score = String(scoreNumb);
 		$("#pipes-flown-through").text(score);
 	} else {
 		console.log("Should reset");
@@ -43,6 +47,10 @@ Bird.prototype.onCollision = function(entity) {
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
 		this.components.status = 1;
+
+		if(scoreNumb>highScoreNumb){
+			$("#high-score").text(score);
+		}
 		$("#pipes-flown-through").text("0");
 	}
 	
