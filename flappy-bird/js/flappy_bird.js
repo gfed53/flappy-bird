@@ -28,4 +28,9 @@ FlappyBird.prototype.run = function(){
 	console.log(this.entities[0].components.status);
 };
 
+FlappyBird.prototype.pause = function(){
+	window.clearInterval(this.physics.run.bind(this));
+	console.log("pause");
+}
+
 exports.FlappyBird = FlappyBird;
