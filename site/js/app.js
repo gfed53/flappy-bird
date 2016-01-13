@@ -18,8 +18,8 @@ $(function(){
 		// .velocity({"translateX": "0", "translateY": "0", "rotateZ": "15deg"});
 	});
 
-	$(".btn-action").on("click", function(e){
-		e.preventDefault();
+	$(".btn-action").on("click", function(){
+		// e.preventDefault();
 		console.log("this works?");
 		$(this)
 		.velocity({"translateX": "0.5em", "translateY": "-0.5em", "rotateZ": "25deg"}, {"duration": 100, "easing": "easeIn"})
