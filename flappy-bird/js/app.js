@@ -533,24 +533,15 @@ var FlappyBird = function(){
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
-	//Counter
-	this.count = 0;
 };
 
-FlappyBird.prototype.counter = function(){
-	this.count+=1;
-	// console.log(this.count);
-}
 
-FlappyBird.prototype.countDown = function(){
-	window.setInterval(this.counter.bind(this), 1000);
-}
 
 FlappyBird.prototype.run = function(){
-	this.countDown();
 	this.physics.run();
 	this.graphics.run();
-	this.graphics.createPipes();
+	// this.graphics.createPipes();
+	this.graphics.countDown();
 	this.graphics.runClear();
 	this.input.run();
 	// console.log(this.entities[0].components.status);
@@ -578,13 +569,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	var populateStorage = function(){
 		localStorage.setItem('high-score', highScoreElem.text());
 		var currentHighScore = localStorage.getItem('high-score');
-		console.log(currentHighScore);
+		// console.log(currentHighScore);
 		// setHighScore();
 	};
 
 	var setHighScore = function() {
 		var currentHighScore = localStorage.getItem('high-score');
-		console.log(currentHighScore);
+		// console.log(currentHighScore);
 		highScoreElem.text(currentHighScore);
 	};
 
@@ -659,12 +650,14 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
+	this.count = 0;
 
 };
 
 GraphicsSystem.prototype.run = function(){
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
+	this.createPipes();
 };
 
 GraphicsSystem.prototype.tick = function() {
@@ -701,6 +694,16 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));
 };
 
+//Counter
+GraphicsSystem.prototype.counter = function(){
+	this.count+=1;
+	console.log(this.count);
+}
+
+GraphicsSystem.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 1000);
+}
+
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);
 }
@@ -709,19 +712,23 @@ GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.status === 1){
 		// console.log("should be clear");
 		this.entities.splice(3,9);
-		//Clear the counter
+		//Clear the counter, bird "collision" status
 		this.count = 0;
+		// console.log(this);
+		// window.clearInterval(this.countDown);
 		this.entities[0].components.status = 0;
 	}
 	// console.log(this.entities[0]);
 }
 
 GraphicsSystem.prototype.newPipes = function(){
-	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
-	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
-	this.entities.push(new pipeEdge.PipeEdge(2));
-	if(this.entities.length>10){
-		this.entities.splice(3, 2);
+	if(this.count>5){
+		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
+		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
+		this.entities.push(new pipeEdge.PipeEdge(2));
+		if(this.entities.length>10){
+			this.entities.splice(3, 2);
+		}
 	}
 };
 

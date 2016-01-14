@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	var populateStorage = function(){
 		localStorage.setItem('high-score', highScoreElem.text());
 		var currentHighScore = localStorage.getItem('high-score');
-		console.log(currentHighScore);
+		// console.log(currentHighScore);
 		// setHighScore();
 	};
 
 	var setHighScore = function() {
 		var currentHighScore = localStorage.getItem('high-score');
-		console.log(currentHighScore);
+		// console.log(currentHighScore);
 		highScoreElem.text(currentHighScore);
 	};
 
