@@ -4,7 +4,7 @@ var collisionComponent = require("../components/collision/rect");
 // var settings = require("../settings");
 
 var Pipe = function(x,y){
-	console.log("Creating pipe entity");
+	// console.log("Creating pipe entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
@@ -35,7 +35,7 @@ var Pipe = function(x,y){
 		collision: collision
 	};
 
-	console.log(this.components.physics.position.y);
+	// console.log(this.components.physics.position.y);
 };
 
 Pipe.prototype.onCollision = function(entity) {

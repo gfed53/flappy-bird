@@ -334,7 +334,7 @@ var collisionComponent = require("../components/collision/circle");
 // var settings = require("../settings");
 
 var Bird = function(){
-	console.log("Creating bird entity");
+	// console.log("Creating bird entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
 	physics.acceleration.y = -2;
@@ -354,8 +354,8 @@ var Bird = function(){
 };
 
 Bird.prototype.onCollision = function(entity) {
-	console.log("Bird collided with entity:", entity);
-	console.log(entity.components.collision.type);
+	// console.log("Bird collided with entity:", entity);
+	// console.log(entity.components.collision.type);
 	var score = $("#pipes-flown-through").text(),
 	scoreNumb = parseFloat(score),
 	highScore = $("#high-score").text(),
@@ -364,14 +364,14 @@ Bird.prototype.onCollision = function(entity) {
 
 
 	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
-		console.log("Increase score by 1");
+		// console.log("Increase score by 1");
 		// console.log(scoreInt);
 		scoreNumb+=0.5;
 		// console.log(scoreInt);
 		score = String(scoreNumb);
 		$("#pipes-flown-through").text(score);
 	} else {
-		console.log("Should reset");
+		// console.log("Should reset");
 		this.components.physics.position.x = 0;
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
@@ -394,7 +394,7 @@ var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/edge");
 
 var BottomEdge = function(){
-	console.log("Creating bottom edge entity");
+	// console.log("Creating bottom edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0;
 
@@ -417,7 +417,7 @@ var collisionComponent = require("../components/collision/pipe-edge");
 // var settings = require("../settings");
 
 var PipeEdge = function(x){
-	console.log("Creating pipe-edge entity");
+	// console.log("Creating pipe-edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = 0;
@@ -450,7 +450,7 @@ var collisionComponent = require("../components/collision/rect");
 // var settings = require("../settings");
 
 var Pipe = function(x,y){
-	console.log("Creating pipe entity");
+	// console.log("Creating pipe entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
@@ -481,7 +481,7 @@ var Pipe = function(x,y){
 		collision: collision
 	};
 
-	console.log(this.components.physics.position.y);
+	// console.log(this.components.physics.position.y);
 };
 
 Pipe.prototype.onCollision = function(entity) {
@@ -496,7 +496,7 @@ var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/edge");
 
 var TopEdge = function(){
-	console.log("Creating top edge entity");
+	// console.log("Creating top edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 1;
 
@@ -525,21 +525,35 @@ var topEdge = require("./entities/top-edge");
 var bottomEdge = require("./entities/bottom-edge");
 var pipeEdge = require("./entities/pipe-edge");
 
+
+
 var FlappyBird = function(){
 	this.entities = [new bird.Bird(), new topEdge.TopEdge(), new bottomEdge.BottomEdge()];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
+	//Counter
+	this.count = 0;
 };
 
+FlappyBird.prototype.counter = function(){
+	this.count+=1;
+	// console.log(this.count);
+}
+
+FlappyBird.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 1000);
+}
+
 FlappyBird.prototype.run = function(){
+	this.countDown();
 	this.physics.run();
 	this.graphics.run();
 	this.graphics.createPipes();
 	this.graphics.runClear();
 	this.input.run();
-	console.log(this.entities[0].components.status);
+	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.pause = function(){
@@ -556,7 +570,42 @@ var flappyBird = require('./flappy_bird');
 document.addEventListener('DOMContentLoaded', function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
+
+	//Local Storage
+	var highScoreElem = $("#high-score");
+	var highScoreVal = $("#high-score").text();
+
+	var populateStorage = function(){
+		localStorage.setItem('high-score', highScoreElem.text());
+		var currentHighScore = localStorage.getItem('high-score');
+		console.log(currentHighScore);
+		// setHighScore();
+	};
+
+	var setHighScore = function() {
+		var currentHighScore = localStorage.getItem('high-score');
+		console.log(currentHighScore);
+		highScoreElem.text(currentHighScore);
+	};
+
+	$(document).on('click', function(){
+		populateStorage();
+	});
+
+	setHighScore();
+
+	// window.setInterval(populateStorage(), 500);
+
+	// $("span").on('change', function(){
+	// 	populateStorage();
+	// });
+
+	// highScoreVal.onchange = populateStorage();
 });
+
+
+
+
 
 // $(this).on('keydown', function(event) {
 // 		if (event.keyCode === 88) {
@@ -658,8 +707,10 @@ GraphicsSystem.prototype.runClear = function(){
 
 GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.status === 1){
-		console.log("should be clear");
+		// console.log("should be clear");
 		this.entities.splice(3,9);
+		//Clear the counter
+		this.count = 0;
 		this.entities[0].components.status = 0;
 	}
 	// console.log(this.entities[0]);

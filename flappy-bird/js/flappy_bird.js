@@ -11,21 +11,35 @@ var topEdge = require("./entities/top-edge");
 var bottomEdge = require("./entities/bottom-edge");
 var pipeEdge = require("./entities/pipe-edge");
 
+
+
 var FlappyBird = function(){
 	this.entities = [new bird.Bird(), new topEdge.TopEdge(), new bottomEdge.BottomEdge()];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
+	//Counter
+	this.count = 0;
 };
 
+FlappyBird.prototype.counter = function(){
+	this.count+=1;
+	// console.log(this.count);
+}
+
+FlappyBird.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 1000);
+}
+
 FlappyBird.prototype.run = function(){
+	this.countDown();
 	this.physics.run();
 	this.graphics.run();
 	this.graphics.createPipes();
 	this.graphics.runClear();
 	this.input.run();
-	console.log(this.entities[0].components.status);
+	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.pause = function(){
