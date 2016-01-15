@@ -56,7 +56,7 @@ GraphicsSystem.prototype.tick = function() {
 //Counter
 GraphicsSystem.prototype.counter = function(){
 	this.count+=1;
-	console.log(this.count);
+	// console.log(this.count);
 }
 
 GraphicsSystem.prototype.countDown = function(){

@@ -8,7 +8,7 @@ var Bird = function(){
 	// console.log("Creating bird entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
-	physics.acceleration.y = -2;
+	physics.acceleration.y = 0;
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
