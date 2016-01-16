@@ -1,8 +1,10 @@
 var collisionSystem = require("./collision");
+var score = require("./score");
 
 var PhysicsSystem = function(entities){
 	this.entities = entities;
 	this.collisionSystem = new collisionSystem.CollisionSystem(entities);
+	this.score = new score.Score(entities);
 	this.count = 0;
 };
 
@@ -10,6 +12,8 @@ PhysicsSystem.prototype.run = function(){
 	// Run the update loop
 	window.setInterval(this.tick.bind(this), 1000 /60);
 	this.runControlBird();
+	//Runs our check for a locally stored high score on startup
+	this.score.get();
 };
 
 //Counter
@@ -23,7 +27,7 @@ PhysicsSystem.prototype.countDown = function(){
 }
 
 PhysicsSystem.prototype.reset = function(){
-	if(this.entities[0].components.status === 1){
+	if(this.entities[0].components.status === "collide"){
 		console.log("reset");
 		this.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
@@ -57,6 +61,8 @@ PhysicsSystem.prototype.tick = function(){
 
 	this.collisionSystem.tick();
 	this.reset();
+	this.score.update();
+	
 };
 
 exports.PhysicsSystem = PhysicsSystem;

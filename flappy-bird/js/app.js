@@ -330,6 +330,7 @@ exports.PhysicsComponent = PhysicsComponent;
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
+// var score = require("../systems/score");
 //What is 'settings'?
 // var settings = require("../settings");
 
@@ -343,43 +344,55 @@ var Bird = function(){
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
 	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
-	var status = 0;
+	var status = "none";
+	var pipes = "in motion";
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
 		collision: collision,
-		status: status
+		status: status,
+		pipes: pipes
 	};
 };
 
 Bird.prototype.onCollision = function(entity) {
 	// console.log("Bird collided with entity:", entity);
 	// console.log(entity.components.collision.type);
-	var score = $("#pipes-flown-through").text(),
-	scoreNumb = parseFloat(score),
-	highScore = $("#high-score").text(),
-	highScoreNumb = parseInt(highScore);
+	// var scoreText = $("#pipes-flown-through").text(),
+	// scoreNumb = parseFloat(score),
+	// highScore = $("#high-score").text(),
+	// highScoreNumb = parseInt(highScore);
 
+	//New way using Score object:
+	// var scoreText = $("#pipes-flown-through").text(),
+	// scoreNumb = parseFloat(scoreText);
+	// score = new score.Score(scoreNumb);
+	// console.log(score);
 
-
-	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
+	if(entity.components.collision.type === "pipe-edge"){
 		// console.log("Increase score by 1");
 		// console.log(scoreInt);
-		scoreNumb+=0.5;
+		// scoreNumb+=0.5;
 		// console.log(scoreInt);
-		score = String(scoreNumb);
-		$("#pipes-flown-through").text(score);
+		// scoreText = String(scoreNumb);
+		// $("#pipes-flown-through").text(scoreText);
+		this.components.status = "point";
 	} else {
 		// console.log("Should reset");
 		this.components.physics.position.x = 0;
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
-		this.components.status = 1;
+		this.components.status = "collide";
+		this.components.pipes = "stopped";
 
-		if(scoreNumb>highScoreNumb){
-			$("#high-score").text(score);
-		}
+		// if(scoreNumb>highScoreNumb){
+		// 	$("#high-score").text(scoreText);
+		// }
+
+		//New Way:
+
+
 		$("#pipes-flown-through").text("0");
 	}
 	
@@ -517,6 +530,7 @@ var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
 var inputSystem = require("./systems/input");
 var collisionSystem = require("./systems/collision");
+var scoreSystem = require("./systems/score");
 
 // Entities
 var bird = require("./entities/bird");
@@ -533,6 +547,7 @@ var FlappyBird = function(){
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
+	// this.score = new scoreSystem.Score();
 };
 
 
@@ -555,7 +570,7 @@ FlappyBird.prototype.pause = function(){
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20}],16:[function(require,module,exports){
+},{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20,"./systems/score":21}],16:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
@@ -564,29 +579,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	app.run();
 
 	//Local Storage
-	var highScoreElem = $("#high-score");
-	var highScoreVal = $("#high-score").text();
+	// var highScoreElem = $("#high-score");
+	// // var highScoreVal = $("#high-score").text();
 
-	var populateStorage = function(){
-		localStorage.setItem('high-score', highScoreElem.text());
-		var currentHighScore = localStorage.getItem('high-score');
-		// console.log(currentHighScore);
-		// setHighScore();
-	};
+	// var populateStorage = function(){
+	// 	localStorage.setItem('high-score', highScoreElem.text());
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	// setHighScore();
+	// };
 
-	var setHighScore = function() {
-		var currentHighScore = localStorage.getItem('high-score');
-		// console.log(currentHighScore);
-		highScoreElem.text(currentHighScore);
-	};
+	// var setHighScore = function() {
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	highScoreElem.text(currentHighScore);
+	// };
 
-	$(document).on('click', function(){
-		populateStorage();
-	});
+	// $(document).on('click', function(){
+	// 	populateStorage();
+	// });
 
-	setHighScore();
+	// setHighScore();
 
-	// window.setInterval(populateStorage(), 500);
+	
+
+	// Score.get();
+
 
 	// $("span").on('change', function(){
 	// 	populateStorage();
@@ -594,6 +612,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// highScoreVal.onchange = populateStorage();
 });
+
+
 
 
 
@@ -710,14 +730,14 @@ GraphicsSystem.prototype.runClear = function(){
 }
 
 GraphicsSystem.prototype.clearAll = function(){
-	if(this.entities[0].components.status === 1){
-		// console.log("should be clear");
+	if(this.entities[0].components.pipes === "stopped"){
+		console.log("should be clear");
 		this.entities.splice(3,9);
 		//Clear the counter, bird "collision" status
 		this.count = 0;
 		// console.log(this);
 		// window.clearInterval(this.countDown);
-		this.entities[0].components.status = 0;
+		this.entities[0].components.pipes = "in motion";
 	}
 	// console.log(this.entities[0]);
 }
@@ -797,10 +817,12 @@ InputSystem.prototype.onSpace = function(e){
 exports.InputSystem = InputSystem;
 },{}],20:[function(require,module,exports){
 var collisionSystem = require("./collision");
+var score = require("./score");
 
 var PhysicsSystem = function(entities){
 	this.entities = entities;
 	this.collisionSystem = new collisionSystem.CollisionSystem(entities);
+	this.score = new score.Score(entities);
 	this.count = 0;
 };
 
@@ -808,6 +830,8 @@ PhysicsSystem.prototype.run = function(){
 	// Run the update loop
 	window.setInterval(this.tick.bind(this), 1000 /60);
 	this.runControlBird();
+	//Runs our check for a locally stored high score on startup
+	this.score.get();
 };
 
 //Counter
@@ -821,7 +845,7 @@ PhysicsSystem.prototype.countDown = function(){
 }
 
 PhysicsSystem.prototype.reset = function(){
-	if(this.entities[0].components.status === 1){
+	if(this.entities[0].components.status === "collide"){
 		console.log("reset");
 		this.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
@@ -855,7 +879,67 @@ PhysicsSystem.prototype.tick = function(){
 
 	this.collisionSystem.tick();
 	this.reset();
+	this.score.update();
+	
 };
 
 exports.PhysicsSystem = PhysicsSystem;
-},{"./collision":17}]},{},[16]);
+},{"./collision":17,"./score":21}],21:[function(require,module,exports){
+// Local Storage High Score Object
+var Score = function(entities){
+	this.entities = entities;
+	//Our current score
+	this.current = parseFloat($("#pipes-flown-through").text());
+	this.highScore = 0;	
+};
+
+Score.prototype.run = function(){
+	this.update();
+}
+
+//Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
+Score.prototype.get = function(){
+	console.log(this.current);
+	if(!localStorage.getItem('high-score')){
+		console.log("nothing");
+	} else {
+		this.highScore = localStorage.getItem('high-score');
+		this.highScore = parseInt(this.highScore);
+	}
+};
+
+//Checks to see if our current score is greater than our high score. If so, we return it.
+Score.prototype.high = function(){
+	if(this.current>this.highScore){
+		this.highScore = this.current;
+	}
+};
+
+//Checks to see if current HIGH score is greater than our locally-stored high score, and if so, sets the new high score.
+Score.prototype.set = function(){
+	// if(this.high()>this.get()){
+		localStorage.setItem('high-score', this.highScore);
+	// }
+};
+
+Score.prototype.update = function(){
+	if(this.entities[0].components.status === "point"){
+		console.log("scored point");
+		this.current+=0.5;
+		this.entities[0].components.status = "none";
+	} else if(this.entities[0].components.status === "collide"){
+		this.high();
+		this.current = 0;
+		this.entities[0].components.status = "none";
+	}
+	//Regardless, we will both set the inner HTML of the current score and high score at each update.
+	scoreText = String(this.current);
+	$("#pipes-flown-through").text(scoreText);
+	highScoreText = String(this.highScore);
+	console.log(highScoreText);
+	$("#high-score").text(highScoreText);
+	this.set();
+};
+
+exports.Score = Score;
+},{}]},{},[16]);

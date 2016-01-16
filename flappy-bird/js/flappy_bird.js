@@ -3,6 +3,7 @@ var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
 var inputSystem = require("./systems/input");
 var collisionSystem = require("./systems/collision");
+var scoreSystem = require("./systems/score");
 
 // Entities
 var bird = require("./entities/bird");
@@ -19,6 +20,7 @@ var FlappyBird = function(){
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
+	// this.score = new scoreSystem.Score();
 };
 
 

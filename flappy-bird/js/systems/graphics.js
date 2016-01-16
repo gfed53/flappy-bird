@@ -68,14 +68,14 @@ GraphicsSystem.prototype.runClear = function(){
 }
 
 GraphicsSystem.prototype.clearAll = function(){
-	if(this.entities[0].components.status === 1){
-		// console.log("should be clear");
+	if(this.entities[0].components.pipes === "stopped"){
+		console.log("should be clear");
 		this.entities.splice(3,9);
 		//Clear the counter, bird "collision" status
 		this.count = 0;
 		// console.log(this);
 		// window.clearInterval(this.countDown);
-		this.entities[0].components.status = 0;
+		this.entities[0].components.pipes = "in motion";
 	}
 	// console.log(this.entities[0]);
 }

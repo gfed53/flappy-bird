@@ -6,29 +6,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	app.run();
 
 	//Local Storage
-	var highScoreElem = $("#high-score");
-	var highScoreVal = $("#high-score").text();
+	// var highScoreElem = $("#high-score");
+	// // var highScoreVal = $("#high-score").text();
 
-	var populateStorage = function(){
-		localStorage.setItem('high-score', highScoreElem.text());
-		var currentHighScore = localStorage.getItem('high-score');
-		// console.log(currentHighScore);
-		// setHighScore();
-	};
+	// var populateStorage = function(){
+	// 	localStorage.setItem('high-score', highScoreElem.text());
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	// setHighScore();
+	// };
 
-	var setHighScore = function() {
-		var currentHighScore = localStorage.getItem('high-score');
-		// console.log(currentHighScore);
-		highScoreElem.text(currentHighScore);
-	};
+	// var setHighScore = function() {
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	highScoreElem.text(currentHighScore);
+	// };
 
-	$(document).on('click', function(){
-		populateStorage();
-	});
+	// $(document).on('click', function(){
+	// 	populateStorage();
+	// });
 
-	setHighScore();
+	// setHighScore();
 
-	// window.setInterval(populateStorage(), 500);
+	
+
+	// Score.get();
+
 
 	// $("span").on('change', function(){
 	// 	populateStorage();
@@ -36,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// highScoreVal.onchange = populateStorage();
 });
+
+
 
 
 
