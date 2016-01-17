@@ -61,6 +61,11 @@ GraphicsSystem.prototype.counter = function(){
 
 GraphicsSystem.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 1000);
+	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+GraphicsSystem.prototype.stopCount = function(){
+	window.clearInterval(8);
 }
 
 GraphicsSystem.prototype.runClear = function(){
@@ -94,6 +99,8 @@ GraphicsSystem.prototype.newPipes = function(){
 GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
+	// console.log(window.setInterval(this.newPipes.bind(this), 2000));
+	// console.log(window.setInterval(this.drawPipes.bind(this), 2000));
 };
 
 GraphicsSystem.prototype.drawPipes = function(){

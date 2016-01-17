@@ -570,10 +570,36 @@ FlappyBird.prototype.pauseListen = function(){
 }
 
 FlappyBird.prototype.onKeyDown = function(){
+	// for(var i=3; i<this.entities.length; i++){
+	// 		var entity = this.entities[i],
+	// 		entityV = entity.components.physics.velocity.x,
+	// 		entityA = entity.components.physics.acceleration.x;
+	// 		// console.log(entity);
+	// 		if(this.paused === false){
+	// 			console.log("paused");
+	// 			this.graphics.count = 0;
+	// 			this.physics.count = 0;
+	// 			entity.components.physics.acceleration.x = 0;
+	// 			entity.components.physics.velocity.x = 0;
+	// 			this.entities[0].components.physics.acceleration.y = 0;
+	// 			this.entities[0].components.physics.velocity.y = 0;
+	// 			this.paused = true;
+	// 		} else {
+	// 			console.log("unpaused");
+	// 			entity.components.physics.acceleration.x = entityA;
+	// 			entity.components.physics.velocity.x = entityV;
+	// 			this.paused = false;
+	// 		}
+	// 	}
+
 	if(this.paused === false){
 		console.log("pause");
 		this.graphics.count = 0;
 		this.physics.count = 0;
+		// window.setInterval(this.physics.stopCount.bind(this), 1);
+		// clearInterval(4);
+		// window.setInterval(this.graphics.stopCount.bind(this), 1);
+		// clearInterval(8);
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.physics.velocity.y = 0;
 		// console.log(this.graphics.count);
@@ -589,11 +615,13 @@ FlappyBird.prototype.onKeyDown = function(){
 		this.paused = false;
 		console.log("unpaused");
 		// this.entities[0].components.physics.acceleration.y = -2;
+		// this.physics.countDown();
+		// this.graphics.countDown();
 		for(var i=3; i<this.entities.length; i++){
 			var entity = this.entities[i];
 			console.log(entity);
-			entity.components.physics.acceleration.x = -0.01;
-			entity.components.physics.velocity.x = -0.02;
+			entity.components.physics.acceleration.x = -0.1;
+			entity.components.physics.velocity.x = -0.2;
 			// console.log(this.entities[i]);
 		}
 		// this.entities[0].components.physics.acceleration.y = -2;
@@ -759,6 +787,11 @@ GraphicsSystem.prototype.counter = function(){
 
 GraphicsSystem.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 1000);
+	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+GraphicsSystem.prototype.stopCount = function(){
+	window.clearInterval(8);
 }
 
 GraphicsSystem.prototype.runClear = function(){
@@ -792,6 +825,8 @@ GraphicsSystem.prototype.newPipes = function(){
 GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
+	// console.log(window.setInterval(this.newPipes.bind(this), 2000));
+	// console.log(window.setInterval(this.drawPipes.bind(this), 2000));
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
@@ -916,6 +951,11 @@ PhysicsSystem.prototype.counter = function(){
 
 PhysicsSystem.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 1000);
+	// console.log("physics ID "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+PhysicsSystem.prototype.stopCount = function(){
+	window.clearInterval(4);
 }
 
 PhysicsSystem.prototype.reset = function(){

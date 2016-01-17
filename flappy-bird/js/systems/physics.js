@@ -24,6 +24,11 @@ PhysicsSystem.prototype.counter = function(){
 
 PhysicsSystem.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 1000);
+	// console.log("physics ID "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+PhysicsSystem.prototype.stopCount = function(){
+	window.clearInterval(4);
 }
 
 PhysicsSystem.prototype.reset = function(){
