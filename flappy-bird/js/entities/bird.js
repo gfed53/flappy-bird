@@ -42,7 +42,7 @@ Bird.prototype.onCollision = function(entity) {
 	// console.log(score);
 
 	if(entity.components.collision.type === "pipe-edge"){
-		// console.log("Increase score by 1");
+		console.log("Increase score by 1");
 		// console.log(scoreInt);
 		// scoreNumb+=0.5;
 		// console.log(scoreInt);
@@ -64,7 +64,7 @@ Bird.prototype.onCollision = function(entity) {
 		//New Way:
 
 
-		$("#pipes-flown-through").text("0");
+		// $("#pipes-flown-through").text("0");
 	}
 	
 	

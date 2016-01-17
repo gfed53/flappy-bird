@@ -43,13 +43,14 @@ Score.prototype.update = function(){
 	} else if(this.entities[0].components.status === "collide"){
 		this.high();
 		this.current = 0;
-		this.entities[0].components.status = "none";
+		console.log("crashed");
+		// this.entities[0].components.status = "none";
 	}
 	//Regardless, we will both set the inner HTML of the current score and high score at each update.
 	scoreText = String(this.current);
 	$("#pipes-flown-through").text(scoreText);
 	highScoreText = String(this.highScore);
-	console.log(highScoreText);
+	// console.log(highScoreText);
 	$("#high-score").text(highScoreText);
 	this.set();
 };

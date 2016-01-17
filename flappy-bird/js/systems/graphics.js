@@ -24,8 +24,8 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-	this.canvas.height = this.canvas.offsetHeight;
-}
+		this.canvas.height = this.canvas.offsetHeight;
+	}
 
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -56,7 +56,7 @@ GraphicsSystem.prototype.tick = function() {
 //Counter
 GraphicsSystem.prototype.counter = function(){
 	this.count+=1;
-	// console.log(this.count);
+	console.log("graphics: "+this.count);
 }
 
 GraphicsSystem.prototype.countDown = function(){

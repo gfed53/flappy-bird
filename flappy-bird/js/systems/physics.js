@@ -19,7 +19,7 @@ PhysicsSystem.prototype.run = function(){
 //Counter
 PhysicsSystem.prototype.counter = function(){
 	this.count+=1;
-	console.log(this.count);
+	console.log("physics: "+this.count);
 }
 
 PhysicsSystem.prototype.countDown = function(){
@@ -31,16 +31,17 @@ PhysicsSystem.prototype.reset = function(){
 		console.log("reset");
 		this.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.status = "none";
 	}
 }
 
 PhysicsSystem.prototype.runControlBird = function(){
-	console.log(this.entities[0].components.physics.acceleration.y);
+	// console.log(this.entities[0].components.physics.acceleration.y);
 	window.setInterval(this.controlBird.bind(this), 1000);
 }
 
 PhysicsSystem.prototype.controlBird = function(){
-	console.log("running");
+	// console.log("running");
 	if(this.count>5){
 		this.entities[0].components.physics.acceleration.y = -2;
 		// console.log(this.entities[0].components.physics.acceleration.y);
@@ -60,8 +61,9 @@ PhysicsSystem.prototype.tick = function(){
 	}
 
 	this.collisionSystem.tick();
-	this.reset();
 	this.score.update();
+	this.reset();
+	
 	
 };
 
