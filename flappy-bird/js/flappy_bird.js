@@ -28,21 +28,88 @@ var FlappyBird = function(){
 
 FlappyBird.prototype.run = function(){
 	this.physics.run();
-	this.physics.countDown();
+	// this.physics.countDown();
 	this.graphics.run();
-	this.graphics.countDown();
+	// this.graphics.countDown();
 	this.graphics.runClear();
 	// this.graphics.createPipes();
 	this.input.run();
+	this.entities[0].countDown();
 	this.pauseListen();
 	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.pauseListen = function(){
-	this.html.addEventListener('keydown', this.onKeyDown.bind(this), false);
+	this.html.addEventListener('keydown', this.altPause.bind(this), false);
 }
 
-FlappyBird.prototype.onKeyDown = function(){
+FlappyBird.prototype.altPause = function(){
+	if(this.entities[0].components.paused === false){
+		this.entities[0].components.paused = true;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = 0;
+		// 	entity.components.physics.velocity.x = 0;
+		// }
+	} else {
+		this.entities[0].components.paused = false;
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = -0.1;
+		// 	entity.components.physics.velocity.x = -0.2;
+		// 	// console.log(this.entities[i]);
+		// }
+	}
+	console.log(this.entities[0].components.status);
+};
+
+FlappyBird.prototype.onKeyDown = function(){	
+	if(this.paused === false){
+		console.log("pause");
+		//To Change
+		// this.graphics.count = 0;
+		// this.physics.count = 0;
+		// window.setInterval(this.physics.stopCount.bind(this), 1);
+		// clearInterval(4);
+		// window.setInterval(this.graphics.stopCount.bind(this), 1);
+		// clearInterval(8);
+		this.entities[0].components.status = "pause";
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// console.log(this.graphics.count);
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = 0;
+			entity.components.physics.velocity.x = 0;
+		}
+
+		this.paused = true;
+	} else {
+		console.log("unpaused");
+		this.entities[0].components.status = "none";
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// this.physics.countDown();
+		// this.graphics.countDown();
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = -0.1;
+			entity.components.physics.velocity.x = -0.2;
+			// console.log(this.entities[i]);
+		}
+		// this.entities[0].components.physics.acceleration.y = -2;
+	}
+	this.paused = false;
+	// e.preventDefault();
+	// window.clearInterval(this.physics.run.bind(this));
+	
+	console.log(this.entities[0]);
 	// for(var i=3; i<this.entities.length; i++){
 	// 		var entity = this.entities[i],
 	// 		entityV = entity.components.physics.velocity.x,
@@ -64,45 +131,6 @@ FlappyBird.prototype.onKeyDown = function(){
 	// 			this.paused = false;
 	// 		}
 	// 	}
-
-	if(this.paused === false){
-		console.log("pause");
-		this.graphics.count = 0;
-		this.physics.count = 0;
-		// window.setInterval(this.physics.stopCount.bind(this), 1);
-		// clearInterval(4);
-		// window.setInterval(this.graphics.stopCount.bind(this), 1);
-		// clearInterval(8);
-		this.entities[0].components.physics.acceleration.y = 0;
-		this.entities[0].components.physics.velocity.y = 0;
-		// console.log(this.graphics.count);
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.x = 0;
-			entity.components.physics.velocity.x = 0;
-		}
-
-		this.paused = true;
-	} else {
-		this.paused = false;
-		console.log("unpaused");
-		// this.entities[0].components.physics.acceleration.y = -2;
-		// this.physics.countDown();
-		// this.graphics.countDown();
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.x = -0.1;
-			entity.components.physics.velocity.x = -0.2;
-			// console.log(this.entities[i]);
-		}
-		// this.entities[0].components.physics.acceleration.y = -2;
-	}
-	// e.preventDefault();
-	// window.clearInterval(this.physics.run.bind(this));
-	
-	console.log(this.entities[0]);
 };
 
 exports.FlappyBird = FlappyBird;

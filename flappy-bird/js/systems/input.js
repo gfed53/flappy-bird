@@ -29,42 +29,44 @@ InputSystem.prototype.run = function(){
 InputSystem.prototype.onClick = function(e){
 	e.preventDefault();
 	var bird = this.entities[0];
-	bird.components.physics.velocity.y = 0.7;
-};
-
-InputSystem.prototype.onKeyDown = function(){
-	if(this.paused === false){
-		console.log("pause");
-		//These are a new instance of "count". That's the problem?
-		this.graphics.count = 0;
-		this.physics.count = 0;
-		this.entities[0].components.physics.acceleration.y = 0;
-		this.entities[0].components.physics.velocity.y = 0;
-		console.log(this.graphics.count);
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.y = 0;
-			entity.components.physics.velocity.y = 0;
-		}
-
-		this.paused = true;
-	} else {
-		this.paused = false;
-		console.log("unpaused");
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.y = -0.01;
-			entity.components.physics.velocity.y = -0.02;
-		}
-		// this.entities[0].components.physics.acceleration.y = -2;
+	if(bird.components.count > 5){
+		bird.components.physics.velocity.y = 0.7;
 	}
-	// e.preventDefault();
-	// window.clearInterval(this.physics.run.bind(this));
-	
-	console.log(this.entities[0]);
 };
+
+// InputSystem.prototype.onKeyDown = function(){
+// 	if(this.paused === false){
+// 		console.log("pause");
+// 		//These are a new instance of "count". That's the problem?
+// 		this.graphics.count = 0;
+// 		this.physics.count = 0;
+// 		this.entities[0].components.physics.acceleration.y = 0;
+// 		this.entities[0].components.physics.velocity.y = 0;
+// 		console.log(this.graphics.count);
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = 0;
+// 			entity.components.physics.velocity.y = 0;
+// 		}
+
+// 		this.paused = true;
+// 	} else {
+// 		this.paused = false;
+// 		console.log("unpaused");
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = -0.01;
+// 			entity.components.physics.velocity.y = -0.02;
+// 		}
+// 		// this.entities[0].components.physics.acceleration.y = -2;
+// 	}
+// 	// e.preventDefault();
+// 	// window.clearInterval(this.physics.run.bind(this));
+	
+// 	console.log(this.entities[0]);
+// };
 
 
 

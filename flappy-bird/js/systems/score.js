@@ -18,6 +18,7 @@ Score.prototype.get = function(){
 	} else {
 		this.highScore = localStorage.getItem('high-score');
 		this.highScore = parseInt(this.highScore);
+		console.log(this.highScore);
 	}
 };
 
@@ -44,6 +45,7 @@ Score.prototype.update = function(){
 		this.high();
 		this.current = 0;
 		console.log("crashed");
+		//We do not reset the status to "none" because the physics reset method still relies on this status to work.
 		// this.entities[0].components.status = "none";
 	}
 	//Regardless, we will both set the inner HTML of the current score and high score at each update.
@@ -54,5 +56,10 @@ Score.prototype.update = function(){
 	$("#high-score").text(highScoreText);
 	this.set();
 };
+
+Score.prototype.clearLocalHigh = function(){
+	localStorage.setItem('high-score', 0);
+	console.log(this.highScore);
+}
 
 exports.Score = Score;

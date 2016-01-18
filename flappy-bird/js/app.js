@@ -346,13 +346,17 @@ var Bird = function(){
 	collision.onCollision = this.onCollision.bind(this);
 	var status = "none";
 	var pipes = "in motion";
+	var paused = false;
+	var count = 0;
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
 		collision: collision,
 		status: status,
-		pipes: pipes
+		pipes: pipes,
+		paused: paused,
+		count: count
 	};
 };
 
@@ -395,10 +399,26 @@ Bird.prototype.onCollision = function(entity) {
 
 		// $("#pipes-flown-through").text("0");
 	}
-	
-	
-	
 };
+
+//Maybe make a counter components on this entity instead of seperate ones?
+//Counter
+Bird.prototype.counter = function(){
+	if(this.components.paused === true){
+		this.components.count = 0;
+		console.log("paused");
+	} else{
+		this.components.count+=0.1;
+	}
+	console.log(this.components.count);
+}
+
+Bird.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 100);
+	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+
 
 exports.Bird = Bird;
 },{"../components/collision/circle":1,"../components/graphics/bird":5,"../components/physics/physics":9}],11:[function(require,module,exports){
@@ -555,21 +575,88 @@ var FlappyBird = function(){
 
 FlappyBird.prototype.run = function(){
 	this.physics.run();
-	this.physics.countDown();
+	// this.physics.countDown();
 	this.graphics.run();
-	this.graphics.countDown();
+	// this.graphics.countDown();
 	this.graphics.runClear();
 	// this.graphics.createPipes();
 	this.input.run();
+	this.entities[0].countDown();
 	this.pauseListen();
 	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.pauseListen = function(){
-	this.html.addEventListener('keydown', this.onKeyDown.bind(this), false);
+	this.html.addEventListener('keydown', this.altPause.bind(this), false);
 }
 
-FlappyBird.prototype.onKeyDown = function(){
+FlappyBird.prototype.altPause = function(){
+	if(this.entities[0].components.paused === false){
+		this.entities[0].components.paused = true;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = 0;
+		// 	entity.components.physics.velocity.x = 0;
+		// }
+	} else {
+		this.entities[0].components.paused = false;
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = -0.1;
+		// 	entity.components.physics.velocity.x = -0.2;
+		// 	// console.log(this.entities[i]);
+		// }
+	}
+	console.log(this.entities[0].components.status);
+};
+
+FlappyBird.prototype.onKeyDown = function(){	
+	if(this.paused === false){
+		console.log("pause");
+		//To Change
+		// this.graphics.count = 0;
+		// this.physics.count = 0;
+		// window.setInterval(this.physics.stopCount.bind(this), 1);
+		// clearInterval(4);
+		// window.setInterval(this.graphics.stopCount.bind(this), 1);
+		// clearInterval(8);
+		this.entities[0].components.status = "pause";
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// console.log(this.graphics.count);
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = 0;
+			entity.components.physics.velocity.x = 0;
+		}
+
+		this.paused = true;
+	} else {
+		console.log("unpaused");
+		this.entities[0].components.status = "none";
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// this.physics.countDown();
+		// this.graphics.countDown();
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = -0.1;
+			entity.components.physics.velocity.x = -0.2;
+			// console.log(this.entities[i]);
+		}
+		// this.entities[0].components.physics.acceleration.y = -2;
+	}
+	this.paused = false;
+	// e.preventDefault();
+	// window.clearInterval(this.physics.run.bind(this));
+	
+	console.log(this.entities[0]);
 	// for(var i=3; i<this.entities.length; i++){
 	// 		var entity = this.entities[i],
 	// 		entityV = entity.components.physics.velocity.x,
@@ -591,45 +678,6 @@ FlappyBird.prototype.onKeyDown = function(){
 	// 			this.paused = false;
 	// 		}
 	// 	}
-
-	if(this.paused === false){
-		console.log("pause");
-		this.graphics.count = 0;
-		this.physics.count = 0;
-		// window.setInterval(this.physics.stopCount.bind(this), 1);
-		// clearInterval(4);
-		// window.setInterval(this.graphics.stopCount.bind(this), 1);
-		// clearInterval(8);
-		this.entities[0].components.physics.acceleration.y = 0;
-		this.entities[0].components.physics.velocity.y = 0;
-		// console.log(this.graphics.count);
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.x = 0;
-			entity.components.physics.velocity.x = 0;
-		}
-
-		this.paused = true;
-	} else {
-		this.paused = false;
-		console.log("unpaused");
-		// this.entities[0].components.physics.acceleration.y = -2;
-		// this.physics.countDown();
-		// this.graphics.countDown();
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.x = -0.1;
-			entity.components.physics.velocity.x = -0.2;
-			// console.log(this.entities[i]);
-		}
-		// this.entities[0].components.physics.acceleration.y = -2;
-	}
-	// e.preventDefault();
-	// window.clearInterval(this.physics.run.bind(this));
-	
-	console.log(this.entities[0]);
 };
 
 exports.FlappyBird = FlappyBird;
@@ -735,7 +783,7 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
-	this.count = 0;
+	// this.count = 0;
 
 };
 
@@ -750,8 +798,8 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-		this.canvas.height = this.canvas.offsetHeight;
-	}
+	this.canvas.height = this.canvas.offsetHeight;
+}
 
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -781,7 +829,12 @@ GraphicsSystem.prototype.tick = function() {
 
 //Counter
 GraphicsSystem.prototype.counter = function(){
-	this.count+=1;
+	if(this.entities[0].components.status === "pause"){
+		this.count = 0;
+		console.log("graphics are paused");
+	} else{
+		this.count+=1;
+	}
 	console.log("graphics: "+this.count);
 }
 
@@ -803,7 +856,9 @@ GraphicsSystem.prototype.clearAll = function(){
 		console.log("should be clear");
 		this.entities.splice(3,9);
 		//Clear the counter, bird "collision" status
-		this.count = 0;
+		// this.count = 0;
+		//To change to--->
+		this.entities[0].components.count = 0;
 		// console.log(this);
 		// window.clearInterval(this.countDown);
 		this.entities[0].components.pipes = "in motion";
@@ -812,7 +867,8 @@ GraphicsSystem.prototype.clearAll = function(){
 }
 
 GraphicsSystem.prototype.newPipes = function(){
-	if(this.count>5){
+	//Changed..
+	if(this.entities[0].components.count>5){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
@@ -884,42 +940,44 @@ InputSystem.prototype.run = function(){
 InputSystem.prototype.onClick = function(e){
 	e.preventDefault();
 	var bird = this.entities[0];
-	bird.components.physics.velocity.y = 0.7;
-};
-
-InputSystem.prototype.onKeyDown = function(){
-	if(this.paused === false){
-		console.log("pause");
-		//These are a new instance of "count". That's the problem?
-		this.graphics.count = 0;
-		this.physics.count = 0;
-		this.entities[0].components.physics.acceleration.y = 0;
-		this.entities[0].components.physics.velocity.y = 0;
-		console.log(this.graphics.count);
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.y = 0;
-			entity.components.physics.velocity.y = 0;
-		}
-
-		this.paused = true;
-	} else {
-		this.paused = false;
-		console.log("unpaused");
-		for(var i=3; i<this.entities.length; i++){
-			var entity = this.entities[i];
-			console.log(entity);
-			entity.components.physics.acceleration.y = -0.01;
-			entity.components.physics.velocity.y = -0.02;
-		}
-		// this.entities[0].components.physics.acceleration.y = -2;
+	if(bird.components.count > 5){
+		bird.components.physics.velocity.y = 0.7;
 	}
-	// e.preventDefault();
-	// window.clearInterval(this.physics.run.bind(this));
-	
-	console.log(this.entities[0]);
 };
+
+// InputSystem.prototype.onKeyDown = function(){
+// 	if(this.paused === false){
+// 		console.log("pause");
+// 		//These are a new instance of "count". That's the problem?
+// 		this.graphics.count = 0;
+// 		this.physics.count = 0;
+// 		this.entities[0].components.physics.acceleration.y = 0;
+// 		this.entities[0].components.physics.velocity.y = 0;
+// 		console.log(this.graphics.count);
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = 0;
+// 			entity.components.physics.velocity.y = 0;
+// 		}
+
+// 		this.paused = true;
+// 	} else {
+// 		this.paused = false;
+// 		console.log("unpaused");
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = -0.01;
+// 			entity.components.physics.velocity.y = -0.02;
+// 		}
+// 		// this.entities[0].components.physics.acceleration.y = -2;
+// 	}
+// 	// e.preventDefault();
+// 	// window.clearInterval(this.physics.run.bind(this));
+	
+// 	console.log(this.entities[0]);
+// };
 
 
 
@@ -932,20 +990,26 @@ var PhysicsSystem = function(entities){
 	this.entities = entities;
 	this.collisionSystem = new collisionSystem.CollisionSystem(entities);
 	this.score = new score.Score(entities);
-	this.count = 0;
+	// this.count = 0;
 };
 
 PhysicsSystem.prototype.run = function(){
 	// Run the update loop
 	window.setInterval(this.tick.bind(this), 1000 /60);
-	this.runControlBird();
+	this.runControl();
 	//Runs our check for a locally stored high score on startup
+	// this.score.clearLocalHigh();
 	this.score.get();
+
 };
 
 //Counter
 PhysicsSystem.prototype.counter = function(){
-	this.count+=1;
+	if(this.entities[0].components.status === "pause"){
+		this.count = 0;
+	} else{
+		this.count+=1;
+	}
 	console.log("physics: "+this.count);
 }
 
@@ -961,24 +1025,50 @@ PhysicsSystem.prototype.stopCount = function(){
 PhysicsSystem.prototype.reset = function(){
 	if(this.entities[0].components.status === "collide"){
 		console.log("reset");
-		this.count = 0;
+		//To Change
+		this.entities[0].components.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.status = "none";
 	}
 }
 
-PhysicsSystem.prototype.runControlBird = function(){
+PhysicsSystem.prototype.runControl = function(){
 	// console.log(this.entities[0].components.physics.acceleration.y);
-	window.setInterval(this.controlBird.bind(this), 1000);
+	window.setInterval(this.controlBird.bind(this), 1/60);
+	window.setInterval(this.controlPipes.bind(this), 1/60);
 }
 
 PhysicsSystem.prototype.controlBird = function(){
 	// console.log("running");
-	if(this.count>5){
+	//To Change
+	if(this.entities[0].components.count>5){
 		this.entities[0].components.physics.acceleration.y = -2;
 		// console.log(this.entities[0].components.physics.acceleration.y);
+	} else {
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
 	}
+	// else {
+	// 	this.entities[0].components.physics.acceleration.y = 0;
+	// }
 	//Still need to reset counter to 0!
+};
+
+
+
+PhysicsSystem.prototype.controlPipes = function(){
+	for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			if(this.entities[0].components.count>5){
+				// entity.components.physics.acceleration.x = -0.1;
+				// entity.components.physics.velocity.x = -0.2;
+			} else{
+				entity.components.physics.acceleration.x = 0;
+				entity.components.physics.velocity.x = 0;
+			}
+			
+			// console.log(this.entities[i]);
+		}
 };
 
 
@@ -1021,6 +1111,7 @@ Score.prototype.get = function(){
 	} else {
 		this.highScore = localStorage.getItem('high-score');
 		this.highScore = parseInt(this.highScore);
+		console.log(this.highScore);
 	}
 };
 
@@ -1047,6 +1138,7 @@ Score.prototype.update = function(){
 		this.high();
 		this.current = 0;
 		console.log("crashed");
+		//We do not reset the status to "none" because the physics reset method still relies on this status to work.
 		// this.entities[0].components.status = "none";
 	}
 	//Regardless, we will both set the inner HTML of the current score and high score at each update.
@@ -1057,6 +1149,11 @@ Score.prototype.update = function(){
 	$("#high-score").text(highScoreText);
 	this.set();
 };
+
+Score.prototype.clearLocalHigh = function(){
+	localStorage.setItem('high-score', 0);
+	console.log(this.highScore);
+}
 
 exports.Score = Score;
 },{}]},{},[16]);

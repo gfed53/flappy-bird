@@ -17,13 +17,17 @@ var Bird = function(){
 	collision.onCollision = this.onCollision.bind(this);
 	var status = "none";
 	var pipes = "in motion";
+	var paused = false;
+	var count = 0;
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
 		collision: collision,
 		status: status,
-		pipes: pipes
+		pipes: pipes,
+		paused: paused,
+		count: count
 	};
 };
 
@@ -66,9 +70,25 @@ Bird.prototype.onCollision = function(entity) {
 
 		// $("#pipes-flown-through").text("0");
 	}
-	
-	
-	
 };
+
+//Maybe make a counter components on this entity instead of seperate ones?
+//Counter
+Bird.prototype.counter = function(){
+	if(this.components.paused === true){
+		this.components.count = 0;
+		console.log("paused");
+	} else{
+		this.components.count+=0.1;
+	}
+	console.log(this.components.count);
+}
+
+Bird.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 100);
+	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+}
+
+
 
 exports.Bird = Bird;

@@ -9,7 +9,7 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
-	this.count = 0;
+	// this.count = 0;
 
 };
 
@@ -24,8 +24,8 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-		this.canvas.height = this.canvas.offsetHeight;
-	}
+	this.canvas.height = this.canvas.offsetHeight;
+}
 
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -55,7 +55,12 @@ GraphicsSystem.prototype.tick = function() {
 
 //Counter
 GraphicsSystem.prototype.counter = function(){
-	this.count+=1;
+	if(this.entities[0].components.status === "pause"){
+		this.count = 0;
+		console.log("graphics are paused");
+	} else{
+		this.count+=1;
+	}
 	console.log("graphics: "+this.count);
 }
 
@@ -77,7 +82,9 @@ GraphicsSystem.prototype.clearAll = function(){
 		console.log("should be clear");
 		this.entities.splice(3,9);
 		//Clear the counter, bird "collision" status
-		this.count = 0;
+		// this.count = 0;
+		//To change to--->
+		this.entities[0].components.count = 0;
 		// console.log(this);
 		// window.clearInterval(this.countDown);
 		this.entities[0].components.pipes = "in motion";
@@ -86,7 +93,8 @@ GraphicsSystem.prototype.clearAll = function(){
 }
 
 GraphicsSystem.prototype.newPipes = function(){
-	if(this.count>5){
+	//Changed..
+	if(this.entities[0].components.count>5){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
