@@ -94,7 +94,7 @@ GraphicsSystem.prototype.clearAll = function(){
 
 GraphicsSystem.prototype.newPipes = function(){
 	//Changed..
-	if(this.entities[0].components.count>8){
+	if(this.entities[0].components.count>5){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));

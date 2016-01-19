@@ -73,13 +73,13 @@ PhysicsSystem.prototype.controlBird = function(){
 PhysicsSystem.prototype.controlPipes = function(){
 	for(var i=3; i<this.entities.length; i++){
 			var entity = this.entities[i];
-			// entityVeloc = this.entities[i].components.physics.velocity.x;
+			entityVeloc = this.entities[i].components.physics.velocity.x;
 			if(this.entities[0].components.count>5){
-				entity.components.physics.acceleration.x = -0.1;
-				// entity.components.physics.velocity.x = -0.2;
+				// entity.components.physics.acceleration.x = -0.1;
+				entity.components.physics.velocity.x = -0.5;
 
-			} else{
-				entity.components.physics.acceleration.x = 0;
+			} else if(this.entities[0].components.count<5) {
+				// entity.components.physics.acceleration.x = 0;
 				entity.components.physics.velocity.x = 0;
 			}
 			

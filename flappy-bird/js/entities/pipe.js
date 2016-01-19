@@ -8,8 +8,8 @@ var Pipe = function(x,y){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	this.components = {
 		physics: physics

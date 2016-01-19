@@ -454,8 +454,8 @@ var PipeEdge = function(x){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = 0;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	var graphics = new graphicsComponent.PipeEdgeGraphicsComponent(this);
 
@@ -487,8 +487,8 @@ var Pipe = function(x,y){
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	this.components = {
 		physics: physics
@@ -868,7 +868,7 @@ GraphicsSystem.prototype.clearAll = function(){
 
 GraphicsSystem.prototype.newPipes = function(){
 	//Changed..
-	if(this.entities[0].components.count>8){
+	if(this.entities[0].components.count>5){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
@@ -1058,13 +1058,13 @@ PhysicsSystem.prototype.controlBird = function(){
 PhysicsSystem.prototype.controlPipes = function(){
 	for(var i=3; i<this.entities.length; i++){
 			var entity = this.entities[i];
-			// entityVeloc = this.entities[i].components.physics.velocity.x;
+			entityVeloc = this.entities[i].components.physics.velocity.x;
 			if(this.entities[0].components.count>5){
-				entity.components.physics.acceleration.x = -0.1;
-				// entity.components.physics.velocity.x = -0.2;
+				// entity.components.physics.acceleration.x = -0.1;
+				entity.components.physics.velocity.x = -0.5;
 
-			} else{
-				entity.components.physics.acceleration.x = 0;
+			} else if(this.entities[0].components.count<5) {
+				// entity.components.physics.acceleration.x = 0;
 				entity.components.physics.velocity.x = 0;
 			}
 			
