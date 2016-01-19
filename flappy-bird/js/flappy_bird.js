@@ -21,7 +21,7 @@ var FlappyBird = function(){
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
 	this.html = document.querySelector('html');
-	this.paused = false;
+	// this.paused = false;
 };
 
 
@@ -41,7 +41,7 @@ FlappyBird.prototype.run = function(){
 
 FlappyBird.prototype.pauseListen = function(){
 	this.html.addEventListener('keydown', this.altPause.bind(this), false);
-}
+};
 
 FlappyBird.prototype.altPause = function(){
 	if(this.entities[0].components.paused === false){

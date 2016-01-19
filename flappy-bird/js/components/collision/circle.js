@@ -133,7 +133,7 @@ CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
     // console.log(positionA+" a");
     // console.log(positionB+" b");
 
-    return positionB < 0.01 && positionB > -0.01;
+    return positionB < 0.005 && positionB > -0.005;
 }
 
 exports.CircleCollisionComponent = CircleCollisionComponent;

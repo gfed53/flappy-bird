@@ -134,7 +134,7 @@ CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
     // console.log(positionA+" a");
     // console.log(positionB+" b");
 
-    return positionB < 0.01 && positionB > -0.01;
+    return positionB < 0.005 && positionB > -0.005;
 }
 
 exports.CircleCollisionComponent = CircleCollisionComponent;
@@ -568,7 +568,7 @@ var FlappyBird = function(){
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
 	this.html = document.querySelector('html');
-	this.paused = false;
+	// this.paused = false;
 };
 
 
@@ -588,7 +588,7 @@ FlappyBird.prototype.run = function(){
 
 FlappyBird.prototype.pauseListen = function(){
 	this.html.addEventListener('keydown', this.altPause.bind(this), false);
-}
+};
 
 FlappyBird.prototype.altPause = function(){
 	if(this.entities[0].components.paused === false){
@@ -868,7 +868,7 @@ GraphicsSystem.prototype.clearAll = function(){
 
 GraphicsSystem.prototype.newPipes = function(){
 	//Changed..
-	if(this.entities[0].components.count>5){
+	if(this.entities[0].components.count>8){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
@@ -1025,7 +1025,6 @@ PhysicsSystem.prototype.stopCount = function(){
 PhysicsSystem.prototype.reset = function(){
 	if(this.entities[0].components.status === "collide"){
 		console.log("reset");
-		//To Change
 		this.entities[0].components.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.status = "none";
@@ -1059,9 +1058,11 @@ PhysicsSystem.prototype.controlBird = function(){
 PhysicsSystem.prototype.controlPipes = function(){
 	for(var i=3; i<this.entities.length; i++){
 			var entity = this.entities[i];
+			// entityVeloc = this.entities[i].components.physics.velocity.x;
 			if(this.entities[0].components.count>5){
-				// entity.components.physics.acceleration.x = -0.1;
+				entity.components.physics.acceleration.x = -0.1;
 				// entity.components.physics.velocity.x = -0.2;
+
 			} else{
 				entity.components.physics.acceleration.x = 0;
 				entity.components.physics.velocity.x = 0;
@@ -1080,12 +1081,15 @@ PhysicsSystem.prototype.tick = function(){
 		}
 
 		entity.components.physics.update(1/60);
+		// console.log(entity.components.physics.acceleration.x);
+		// console.log(entity.components.physics.velocity.x);
 	}
 
 	this.collisionSystem.tick();
 	this.score.update();
 	this.reset();
-	
+	// console.log(this.entities[4].components.physics.acceleration.x);
+	// console.log(this.entities[4].components.physics.velocity.x);
 	
 };
 
@@ -1099,19 +1103,19 @@ var Score = function(entities){
 	this.highScore = 0;	
 };
 
-Score.prototype.run = function(){
-	this.update();
-}
+// Score.prototype.run = function(){
+// 	this.update();
+// }
 
 //Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
 Score.prototype.get = function(){
 	console.log(this.current);
-	if(!localStorage.getItem('high-score')){
-		console.log("nothing");
-	} else {
+	if(localStorage.getItem('high-score')){
 		this.highScore = localStorage.getItem('high-score');
 		this.highScore = parseInt(this.highScore);
 		console.log(this.highScore);
+	} else {
+		console.log("nothing");
 	}
 };
 
@@ -1132,7 +1136,7 @@ Score.prototype.set = function(){
 Score.prototype.update = function(){
 	if(this.entities[0].components.status === "point"){
 		console.log("scored point");
-		this.current+=0.5;
+		this.current+=1;
 		this.entities[0].components.status = "none";
 	} else if(this.entities[0].components.status === "collide"){
 		this.high();

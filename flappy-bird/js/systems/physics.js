@@ -40,7 +40,6 @@ PhysicsSystem.prototype.stopCount = function(){
 PhysicsSystem.prototype.reset = function(){
 	if(this.entities[0].components.status === "collide"){
 		console.log("reset");
-		//To Change
 		this.entities[0].components.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.status = "none";
@@ -74,9 +73,11 @@ PhysicsSystem.prototype.controlBird = function(){
 PhysicsSystem.prototype.controlPipes = function(){
 	for(var i=3; i<this.entities.length; i++){
 			var entity = this.entities[i];
+			// entityVeloc = this.entities[i].components.physics.velocity.x;
 			if(this.entities[0].components.count>5){
-				// entity.components.physics.acceleration.x = -0.1;
+				entity.components.physics.acceleration.x = -0.1;
 				// entity.components.physics.velocity.x = -0.2;
+
 			} else{
 				entity.components.physics.acceleration.x = 0;
 				entity.components.physics.velocity.x = 0;
@@ -95,12 +96,15 @@ PhysicsSystem.prototype.tick = function(){
 		}
 
 		entity.components.physics.update(1/60);
+		// console.log(entity.components.physics.acceleration.x);
+		// console.log(entity.components.physics.velocity.x);
 	}
 
 	this.collisionSystem.tick();
 	this.score.update();
 	this.reset();
-	
+	// console.log(this.entities[4].components.physics.acceleration.x);
+	// console.log(this.entities[4].components.physics.velocity.x);
 	
 };
 

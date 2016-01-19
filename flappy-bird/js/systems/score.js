@@ -6,19 +6,19 @@ var Score = function(entities){
 	this.highScore = 0;	
 };
 
-Score.prototype.run = function(){
-	this.update();
-}
+// Score.prototype.run = function(){
+// 	this.update();
+// }
 
 //Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
 Score.prototype.get = function(){
 	console.log(this.current);
-	if(!localStorage.getItem('high-score')){
-		console.log("nothing");
-	} else {
+	if(localStorage.getItem('high-score')){
 		this.highScore = localStorage.getItem('high-score');
 		this.highScore = parseInt(this.highScore);
 		console.log(this.highScore);
+	} else {
+		console.log("nothing");
 	}
 };
 
@@ -39,7 +39,7 @@ Score.prototype.set = function(){
 Score.prototype.update = function(){
 	if(this.entities[0].components.status === "point"){
 		console.log("scored point");
-		this.current+=0.5;
+		this.current+=1;
 		this.entities[0].components.status = "none";
 	} else if(this.entities[0].components.status === "collide"){
 		this.high();
