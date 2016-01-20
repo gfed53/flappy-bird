@@ -3,12 +3,14 @@ var PipeGraphicsComponent = function(entity) {
 };
 
 PipeGraphicsComponent.prototype.draw = function(context){
-	var position = this.entity.components.physics.position;
+	var position = this.entity.components.physics.position,
+	image = document.getElementById("wood");
 
 	context.save();
 	context.translate(position.x, position.y);
 	context.beginPath();
-	context.fillRect(0, 0, 0.25, 1);
+	context.drawImage(image, 0, 0, 0.25, 1);
+	// context.fillRect(0, 0, 0.25, 1);
 	context.restore();
 };
 
