@@ -10,8 +10,8 @@ canvas#main-canvas {
 }
 
 div#overlay {
-	width: 14%;
-	height: 35%;
+	width: 10em;
+	height: 9em;
     position: absolute;
     z-index: 1;
     top: 0;
