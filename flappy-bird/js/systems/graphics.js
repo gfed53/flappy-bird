@@ -9,12 +9,14 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
+	// this.count = 0;
 
 };
 
 GraphicsSystem.prototype.run = function(){
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
+	this.createPipes();
 };
 
 GraphicsSystem.prototype.tick = function() {
@@ -51,31 +53,62 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));
 };
 
+//Counter
+// GraphicsSystem.prototype.counter = function(){
+// 	if(this.entities[0].components.status === "pause"){
+// 		this.count = 0;
+// 		console.log("graphics are paused");
+// 	} else{
+// 		this.count+=1;
+// 	}
+// 	console.log("graphics: "+this.count);
+// }
+
+// GraphicsSystem.prototype.countDown = function(){
+// 	window.setInterval(this.counter.bind(this), 1000);
+// 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+// }
+
+// GraphicsSystem.prototype.stopCount = function(){
+// 	window.clearInterval(8);
+// }
+
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);
-}
+};
 
 GraphicsSystem.prototype.clearAll = function(){
-	if(this.entities[0].components.status === 1){
+	if(this.entities[0].components.pipes === "stopped"){
 		console.log("should be clear");
 		this.entities.splice(3,9);
-		this.entities[0].components.status = 0;
+		//Clear the counter, bird "collision" status
+		// this.count = 0;
+		//To change to--->
+		this.entities[0].components.count = 0;
+		// console.log(this);
+		// window.clearInterval(this.countDown);
+		this.entities[0].components.pipes = "in motion";
 	}
 	// console.log(this.entities[0]);
-}
+};
 
 GraphicsSystem.prototype.newPipes = function(){
-	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
-	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
-	this.entities.push(new pipeEdge.PipeEdge(2));
-	if(this.entities.length>10){
-		this.entities.splice(3, 2);
+	//Changed..
+	if(this.entities[0].components.count>5){
+		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
+		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
+		this.entities.push(new pipeEdge.PipeEdge(2));
+		if(this.entities.length>10){
+			this.entities.splice(3, 2);
+		}
 	}
 };
 
 GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
+	// console.log(window.setInterval(this.newPipes.bind(this), 2000));
+	// console.log(window.setInterval(this.drawPipes.bind(this), 2000));
 };
 
 GraphicsSystem.prototype.drawPipes = function(){

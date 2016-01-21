@@ -1,7 +1,7 @@
 var EdgeCollisionComponent = function(entity){
 	this.entity = entity;
 	this.type = "edge";
-}
+};
 
 EdgeCollisionComponent.prototype.collidesWith = function(entity){
 	if (entity.components.collision.type === "circle") {
@@ -12,6 +12,6 @@ EdgeCollisionComponent.prototype.collidesWith = function(entity){
 
 EdgeCollisionComponent.prototype.collideCircle = function(entity){
 	return entity.components.collision.collideEdge(this.entity);
-}
+};
 
 exports.EdgeCollisionComponent = EdgeCollisionComponent;

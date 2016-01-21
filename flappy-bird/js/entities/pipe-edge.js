@@ -4,12 +4,12 @@ var collisionComponent = require("../components/collision/pipe-edge");
 // var settings = require("../settings");
 
 var PipeEdge = function(x){
-	console.log("Creating pipe-edge entity");
+	// console.log("Creating pipe-edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = 0;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	var graphics = new graphicsComponent.PipeEdgeGraphicsComponent(this);
 

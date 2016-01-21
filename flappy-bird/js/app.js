@@ -134,8 +134,8 @@ CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
     // console.log(positionA+" a");
     // console.log(positionB+" b");
 
-    return positionB < 0.01 && positionB > -0.01;
-}
+    return positionB < 0.005 && positionB > -0.005;
+};
 
 exports.CircleCollisionComponent = CircleCollisionComponent;
 
@@ -153,7 +153,7 @@ exports.CircleCollisionComponent = CircleCollisionComponent;
 var EdgeCollisionComponent = function(entity){
 	this.entity = entity;
 	this.type = "edge";
-}
+};
 
 EdgeCollisionComponent.prototype.collidesWith = function(entity){
 	if (entity.components.collision.type === "circle") {
@@ -164,14 +164,14 @@ EdgeCollisionComponent.prototype.collidesWith = function(entity){
 
 EdgeCollisionComponent.prototype.collideCircle = function(entity){
 	return entity.components.collision.collideEdge(this.entity);
-}
+};
 
 exports.EdgeCollisionComponent = EdgeCollisionComponent;
 },{}],3:[function(require,module,exports){
 var PipeEdgeCollisionComponent = function(entity){
 	this.entity = entity;
 	this.type = "pipe-edge";
-}
+};
 
 PipeEdgeCollisionComponent.prototype.collidesWith = function(entity){
 	if (entity.components.collision.type === "circle") {
@@ -182,7 +182,7 @@ PipeEdgeCollisionComponent.prototype.collidesWith = function(entity){
 
 PipeEdgeCollisionComponent.prototype.collideCircle = function(entity){
 	return entity.components.collision.collidePipeEdge(this.entity);
-}
+};
 
 exports.PipeEdgeCollisionComponent = PipeEdgeCollisionComponent;
 },{}],4:[function(require,module,exports){
@@ -289,12 +289,14 @@ var PipeGraphicsComponent = function(entity) {
 };
 
 PipeGraphicsComponent.prototype.draw = function(context){
-	var position = this.entity.components.physics.position;
+	var position = this.entity.components.physics.position,
+	image = document.getElementById("wood");
 
 	context.save();
 	context.translate(position.x, position.y);
 	context.beginPath();
-	context.fillRect(0, 0, 0.25, 1);
+	context.drawImage(image, 0, 0, 0.25, 1);
+	// context.fillRect(0, 0, 0.25, 1);
 	context.restore();
 };
 
@@ -330,62 +332,107 @@ exports.PhysicsComponent = PhysicsComponent;
 var graphicsComponent = require("../components/graphics/bird");
 var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/circle");
+// var score = require("../systems/score");
 //What is 'settings'?
 // var settings = require("../settings");
 
 var Bird = function(){
-	console.log("Creating bird entity");
+	// console.log("Creating bird entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0.5;
-	physics.acceleration.y = -2;
+	physics.acceleration.y = 0;
 
 	var graphics = new graphicsComponent.BirdGraphicsComponent(this);
 	var collision = new collisionComponent.CircleCollisionComponent(this, 0.02);
 	//What exactly does this do? 
 	collision.onCollision = this.onCollision.bind(this);
-	var status = 0;
+	var status = "none";
+	var pipes = "in motion";
+	var paused = false;
+	var count = 0;
 
 	this.components= {
 		physics: physics,
 		graphics: graphics,
 		collision: collision,
-		status: status
+		status: status,
+		pipes: pipes,
+		paused: paused,
+		count: count
 	};
 };
 
 Bird.prototype.onCollision = function(entity) {
-	console.log("Bird collided with entity:", entity);
-	console.log(entity.components.collision.type);
-	var score = $("#pipes-flown-through").text(),
-	scoreNumb = parseFloat(score),
-	highScore = $("#high-score").text(),
-	highScoreNumb = parseInt(highScore);
+	// console.log("Bird collided with entity:", entity);
+	// console.log(entity.components.collision.type);
+	// var scoreText = $("#pipes-flown-through").text(),
+	// scoreNumb = parseFloat(score),
+	// highScore = $("#high-score").text(),
+	// highScoreNumb = parseInt(highScore);
 
+	//New way using Score object:
+	// var scoreText = $("#pipes-flown-through").text(),
+	// scoreNumb = parseFloat(scoreText);
+	// score = new score.Score(scoreNumb);
+	// console.log(score);
 
-
-	if(entity.components.collision.type === "pipe-edge"/*|| entity.components.collision.type === "edge"*/){
+	if(entity.components.collision.type === "pipe-edge"){
 		console.log("Increase score by 1");
 		// console.log(scoreInt);
-		scoreNumb+=0.5;
+		// scoreNumb+=0.5;
 		// console.log(scoreInt);
-		score = String(scoreNumb);
-		$("#pipes-flown-through").text(score);
+		// scoreText = String(scoreNumb);
+		// $("#pipes-flown-through").text(scoreText);
+		this.components.status = "point";
 	} else {
-		console.log("Should reset");
+		// console.log("Should reset");
 		this.components.physics.position.x = 0;
 		this.components.physics.position.y = 0.5;
 		this.components.physics.velocity.y = 0;
-		this.components.status = 1;
+		this.components.status = "collide";
+		this.components.pipes = "stopped";
 
-		if(scoreNumb>highScoreNumb){
-			$("#high-score").text(score);
-		}
-		$("#pipes-flown-through").text("0");
+		// if(scoreNumb>highScoreNumb){
+		// 	$("#high-score").text(scoreText);
+		// }
+
+		//New Way:
+
+
+		// $("#pipes-flown-through").text("0");
 	}
-	
-	
-	
 };
+
+
+//Counter
+Bird.prototype.counter = function(){
+	if(this.components.paused === true){
+		this.components.count = 0;
+		console.log("paused");
+	} else{
+		this.components.count+=0.1;
+	}
+	console.log(this.components.count);
+};
+
+Bird.prototype.uiCounterDisplay = function(){
+	if(this.components.paused === true){
+		$("#ready").html("Paused");
+	} else if(this.components.count<5){
+		var viewCount = parseInt(5-this.components.count);
+		$("#ready").html(viewCount);
+	} else {
+		$("#ready").html("Go!");
+	}
+};
+
+Bird.prototype.countDown = function(){
+	window.setInterval(this.counter.bind(this), 100);
+	window.setInterval(this.uiCounterDisplay.bind(this), 100);
+	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+};
+
+
 
 exports.Bird = Bird;
 },{"../components/collision/circle":1,"../components/graphics/bird":5,"../components/physics/physics":9}],11:[function(require,module,exports){
@@ -394,7 +441,7 @@ var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/edge");
 
 var BottomEdge = function(){
-	console.log("Creating bottom edge entity");
+	// console.log("Creating bottom edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 0;
 
@@ -417,12 +464,12 @@ var collisionComponent = require("../components/collision/pipe-edge");
 // var settings = require("../settings");
 
 var PipeEdge = function(x){
-	console.log("Creating pipe-edge entity");
+	// console.log("Creating pipe-edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = 0;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	var graphics = new graphicsComponent.PipeEdgeGraphicsComponent(this);
 
@@ -450,12 +497,12 @@ var collisionComponent = require("../components/collision/rect");
 // var settings = require("../settings");
 
 var Pipe = function(x,y){
-	console.log("Creating pipe entity");
+	// console.log("Creating pipe entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.x = x;
 	physics.position.y = y;
-	physics.velocity.x = -0.2;
-	physics.acceleration.x = -0.1;
+	physics.velocity.x = -0.5;
+	// physics.acceleration.x = -0.1;
 
 	this.components = {
 		physics: physics
@@ -481,7 +528,7 @@ var Pipe = function(x,y){
 		collision: collision
 	};
 
-	console.log(this.components.physics.position.y);
+	// console.log(this.components.physics.position.y);
 };
 
 Pipe.prototype.onCollision = function(entity) {
@@ -496,7 +543,7 @@ var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/edge");
 
 var TopEdge = function(){
-	console.log("Creating top edge entity");
+	// console.log("Creating top edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 1;
 
@@ -517,6 +564,7 @@ var graphicsSystem = require("./systems/graphics");
 var physicsSystem = require("./systems/physics");
 var inputSystem = require("./systems/input");
 var collisionSystem = require("./systems/collision");
+var scoreSystem = require("./systems/score");
 
 // Entities
 var bird = require("./entities/bird");
@@ -525,38 +573,177 @@ var topEdge = require("./entities/top-edge");
 var bottomEdge = require("./entities/bottom-edge");
 var pipeEdge = require("./entities/pipe-edge");
 
+
+
 var FlappyBird = function(){
 	this.entities = [new bird.Bird(), new topEdge.TopEdge(), new bottomEdge.BottomEdge()];
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
+	this.html = document.querySelector('html');
+	// this.paused = false;
 };
+
+
 
 FlappyBird.prototype.run = function(){
 	this.physics.run();
+	// this.physics.countDown();
 	this.graphics.run();
-	this.graphics.createPipes();
+	// this.graphics.countDown();
 	this.graphics.runClear();
+	// this.graphics.createPipes();
 	this.input.run();
+	this.entities[0].countDown();
+	this.pauseListen();
+	// console.log(this.entities[0].components.status);
+};
+
+FlappyBird.prototype.pauseListen = function(){
+	this.html.addEventListener('keydown', this.altPause.bind(this), false);
+};
+
+FlappyBird.prototype.altPause = function(){
+	if(this.entities[0].components.paused === false){
+		this.entities[0].components.paused = true;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = 0;
+		// 	entity.components.physics.velocity.x = 0;
+		// }
+	} else {
+		this.entities[0].components.paused = false;
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// for(var i=3; i<this.entities.length; i++){
+		// 	var entity = this.entities[i];
+		// 	// console.log(entity);
+		// 	entity.components.physics.acceleration.x = -0.1;
+		// 	entity.components.physics.velocity.x = -0.2;
+		// 	// console.log(this.entities[i]);
+		// }
+	}
 	console.log(this.entities[0].components.status);
 };
 
-FlappyBird.prototype.pause = function(){
-	window.clearInterval(this.physics.run.bind(this));
-	console.log("pause");
-}
+FlappyBird.prototype.onKeyDown = function(){	
+	if(this.paused === false){
+		console.log("pause");
+		//To Change
+		// this.graphics.count = 0;
+		// this.physics.count = 0;
+		// window.setInterval(this.physics.stopCount.bind(this), 1);
+		// clearInterval(4);
+		// window.setInterval(this.graphics.stopCount.bind(this), 1);
+		// clearInterval(8);
+		this.entities[0].components.status = "pause";
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+		// console.log(this.graphics.count);
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = 0;
+			entity.components.physics.velocity.x = 0;
+		}
+
+		this.paused = true;
+	} else {
+		console.log("unpaused");
+		this.entities[0].components.status = "none";
+		// this.entities[0].components.physics.acceleration.y = -2;
+		// this.physics.countDown();
+		// this.graphics.countDown();
+		for(var i=3; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			console.log(entity);
+			entity.components.physics.acceleration.x = -0.1;
+			entity.components.physics.velocity.x = -0.2;
+			// console.log(this.entities[i]);
+		}
+		// this.entities[0].components.physics.acceleration.y = -2;
+	}
+	this.paused = false;
+	// e.preventDefault();
+	// window.clearInterval(this.physics.run.bind(this));
+	
+	console.log(this.entities[0]);
+	// for(var i=3; i<this.entities.length; i++){
+	// 		var entity = this.entities[i],
+	// 		entityV = entity.components.physics.velocity.x,
+	// 		entityA = entity.components.physics.acceleration.x;
+	// 		// console.log(entity);
+	// 		if(this.paused === false){
+	// 			console.log("paused");
+	// 			this.graphics.count = 0;
+	// 			this.physics.count = 0;
+	// 			entity.components.physics.acceleration.x = 0;
+	// 			entity.components.physics.velocity.x = 0;
+	// 			this.entities[0].components.physics.acceleration.y = 0;
+	// 			this.entities[0].components.physics.velocity.y = 0;
+	// 			this.paused = true;
+	// 		} else {
+	// 			console.log("unpaused");
+	// 			entity.components.physics.acceleration.x = entityA;
+	// 			entity.components.physics.velocity.x = entityV;
+	// 			this.paused = false;
+	// 		}
+	// 	}
+};
 
 exports.FlappyBird = FlappyBird;
 
-},{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20}],16:[function(require,module,exports){
+},{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20,"./systems/score":21}],16:[function(require,module,exports){
 //On page load...
 var flappyBird = require('./flappy_bird');
 
 document.addEventListener('DOMContentLoaded', function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
+
+	//Local Storage
+	// var highScoreElem = $("#high-score");
+	// // var highScoreVal = $("#high-score").text();
+
+	// var populateStorage = function(){
+	// 	localStorage.setItem('high-score', highScoreElem.text());
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	// setHighScore();
+	// };
+
+	// var setHighScore = function() {
+	// 	var currentHighScore = localStorage.getItem('high-score');
+	// 	// console.log(currentHighScore);
+	// 	highScoreElem.text(currentHighScore);
+	// };
+
+	// $(document).on('click', function(){
+	// 	populateStorage();
+	// });
+
+	// setHighScore();
+
+	
+
+	// Score.get();
+
+
+	// $("span").on('change', function(){
+	// 	populateStorage();
+	// });
+
+	// highScoreVal.onchange = populateStorage();
 });
+
+
+
+
+
+
 
 // $(this).on('keydown', function(event) {
 // 		if (event.keyCode === 88) {
@@ -610,12 +797,14 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
+	// this.count = 0;
 
 };
 
 GraphicsSystem.prototype.run = function(){
 	// Run the render loop
 	window.requestAnimationFrame(this.tick.bind(this));
+	this.createPipes();
 };
 
 GraphicsSystem.prototype.tick = function() {
@@ -652,31 +841,62 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));
 };
 
+//Counter
+// GraphicsSystem.prototype.counter = function(){
+// 	if(this.entities[0].components.status === "pause"){
+// 		this.count = 0;
+// 		console.log("graphics are paused");
+// 	} else{
+// 		this.count+=1;
+// 	}
+// 	console.log("graphics: "+this.count);
+// }
+
+// GraphicsSystem.prototype.countDown = function(){
+// 	window.setInterval(this.counter.bind(this), 1000);
+// 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+// }
+
+// GraphicsSystem.prototype.stopCount = function(){
+// 	window.clearInterval(8);
+// }
+
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);
-}
+};
 
 GraphicsSystem.prototype.clearAll = function(){
-	if(this.entities[0].components.status === 1){
+	if(this.entities[0].components.pipes === "stopped"){
 		console.log("should be clear");
 		this.entities.splice(3,9);
-		this.entities[0].components.status = 0;
+		//Clear the counter, bird "collision" status
+		// this.count = 0;
+		//To change to--->
+		this.entities[0].components.count = 0;
+		// console.log(this);
+		// window.clearInterval(this.countDown);
+		this.entities[0].components.pipes = "in motion";
 	}
 	// console.log(this.entities[0]);
-}
+};
 
 GraphicsSystem.prototype.newPipes = function(){
-	var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
-	this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
-	this.entities.push(new pipeEdge.PipeEdge(2));
-	if(this.entities.length>10){
-		this.entities.splice(3, 2);
+	//Changed..
+	if(this.entities[0].components.count>5){
+		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
+		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
+		this.entities.push(new pipeEdge.PipeEdge(2));
+		if(this.entities.length>10){
+			this.entities.splice(3, 2);
+		}
 	}
 };
 
 GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
+	// console.log(window.setInterval(this.newPipes.bind(this), 2000));
+	// console.log(window.setInterval(this.drawPipes.bind(this), 2000));
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
@@ -703,13 +923,21 @@ exports.GraphicsSystem = GraphicsSystem;
 
 
 },{"../entities/bird":10,"../entities/pipe":13,"../entities/pipe-edge":12}],19:[function(require,module,exports){
+// Systems
+var graphicsSystem = require("./graphics");
+var physicsSystem = require("./physics");
+
 var InputSystem = function(entities) {
 	this.entities = entities;
-
+	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
+	this.physics = new physicsSystem.PhysicsSystem(this.entities);
+	this.html = document.querySelector('html');
 	//Canvas is where we get input from
 	this.canvas = document.getElementById('main-canvas');
+	this.paused = false;
 };
 
+//On click(or touch, if mobile) the bird entity's acceleration will increase vertically (a 'hopping' motion)
 InputSystem.prototype.run = function(){
 	// this.canvas.addEventListener('click', this.onClick.bind(this));
 
@@ -717,8 +945,11 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
-	// this.addEventListener('keydown', function(e){
+	// this.html.addEventListener('keydown', this.onKeyDown.bind(this), false);
+	//Why doesn't below work?
+	// this.html.addEventListener('keydown', function(e){
 	// 	if(e.keyCode === 32) {
+	// 		console.log(this);
 	// 		this.onSpace.bind(this);
 	// 	}
 	// });
@@ -727,43 +958,229 @@ InputSystem.prototype.run = function(){
 InputSystem.prototype.onClick = function(e){
 	e.preventDefault();
 	var bird = this.entities[0];
-	bird.components.physics.velocity.y = 0.7;
+	if(bird.components.count > 5){
+		bird.components.physics.velocity.y = 0.7;
+	}
 };
 
-InputSystem.prototype.onSpace = function(e){
-	e.preventDefault();
-	window.clearInterval(this.physics.run.bind(this));
-	console.log("pause");
-};
+// InputSystem.prototype.onKeyDown = function(){
+// 	if(this.paused === false){
+// 		console.log("pause");
+// 		//These are a new instance of "count". That's the problem?
+// 		this.graphics.count = 0;
+// 		this.physics.count = 0;
+// 		this.entities[0].components.physics.acceleration.y = 0;
+// 		this.entities[0].components.physics.velocity.y = 0;
+// 		console.log(this.graphics.count);
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = 0;
+// 			entity.components.physics.velocity.y = 0;
+// 		}
+
+// 		this.paused = true;
+// 	} else {
+// 		this.paused = false;
+// 		console.log("unpaused");
+// 		for(var i=3; i<this.entities.length; i++){
+// 			var entity = this.entities[i];
+// 			console.log(entity);
+// 			entity.components.physics.acceleration.y = -0.01;
+// 			entity.components.physics.velocity.y = -0.02;
+// 		}
+// 		// this.entities[0].components.physics.acceleration.y = -2;
+// 	}
+// 	// e.preventDefault();
+// 	// window.clearInterval(this.physics.run.bind(this));
+	
+// 	console.log(this.entities[0]);
+// };
 
 
 
 exports.InputSystem = InputSystem;
-},{}],20:[function(require,module,exports){
+},{"./graphics":18,"./physics":20}],20:[function(require,module,exports){
 var collisionSystem = require("./collision");
+var score = require("./score");
 
 var PhysicsSystem = function(entities){
 	this.entities = entities;
 	this.collisionSystem = new collisionSystem.CollisionSystem(entities);
+	this.score = new score.Score(entities);
 };
 
 PhysicsSystem.prototype.run = function(){
-	// Run the update loop
+	// Run the update loop, control loop for our entities
 	window.setInterval(this.tick.bind(this), 1000 /60);
+	this.runControl();
+	//Runs our check for a locally stored high score on startup
+	// this.score.clearLocalHigh();
+	this.score.get();
+
 };
 
-PhysicsSystem.prototype.tick = function(){
-	for(var i=0; i<this.entities.length; i++){
-		var entity = this.entities[i];
-		if (!"physics" in entity.components){
-			continue;
-		}
+//Counter(unused)
+// PhysicsSystem.prototype.counter = function(){
+// 	if(this.entities[0].components.status === "pause"){
+// 		this.count = 0;
+// 	} else{
+// 		this.count+=1;
+// 	}
+// 	console.log("physics: "+this.count);
+// }
 
-		entity.components.physics.update(1/60);
+// PhysicsSystem.prototype.countDown = function(){
+// 	window.setInterval(this.counter.bind(this), 1000);
+// 	// console.log("physics ID "+window.setInterval(this.counter.bind(this), 1000));
+// }
+
+// PhysicsSystem.prototype.stopCount = function(){
+// 	window.clearInterval(4);
+// }
+
+//Upon collision, bird entity resets its position and count
+PhysicsSystem.prototype.reset = function(){
+	if(this.entities[0].components.status === "collide"){
+		console.log("reset");
+		this.entities[0].components.count = 0;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.status = "none";
+	}
+};
+
+//Control loop that bases velocity/acceleration on count
+PhysicsSystem.prototype.runControl = function(){
+	// console.log(this.entities[0].components.physics.acceleration.y);
+	window.setInterval(this.controlBird.bind(this), 1/60);
+	window.setInterval(this.controlPipes.bind(this), 1/60);
+};
+
+//Control loop for bird
+PhysicsSystem.prototype.controlBird = function(){
+	// console.log("running");
+	//To Change
+	if(this.entities[0].components.count>5){
+		this.entities[0].components.physics.acceleration.y = -2;
+		// console.log(this.entities[0].components.physics.acceleration.y);
+	} else {
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+	}
+	// else {
+	// 	this.entities[0].components.physics.acceleration.y = 0;
+	// }
+	//Still need to reset counter to 0!
+};
+
+//Control loop for pipes
+//In refactoring, maybe use a switch?
+PhysicsSystem.prototype.controlPipes = function(){
+	for(var i=3; i<this.entities.length; i++){
+		var entity = this.entities[i];
+		entityVeloc = this.entities[i].components.physics.velocity.x;
+		if(this.entities[0].components.count>35){
+			entity.components.physics.velocity.x = -0.8;
+		}
+		else if(this.entities[0].components.count>5){
+				// entity.components.physics.acceleration.x = -0.1;
+				entity.components.physics.velocity.x = -0.5;
+
+			} else if(this.entities[0].components.count<5) {
+				// entity.components.physics.acceleration.x = 0;
+				entity.components.physics.velocity.x = 0;
+			}
+			
+			// console.log(this.entities[i]);
+		}
+	};
+
+	//Tick loop that updates physics of entities, as well as score. frequently. Also, constant check for any collision is run.
+	PhysicsSystem.prototype.tick = function(){
+		for(var i=0; i<this.entities.length; i++){
+			var entity = this.entities[i];
+			if (!"physics" in entity.components){
+				continue;
+			}
+
+			entity.components.physics.update(1/60);
+		// console.log(entity.components.physics.acceleration.x);
+		// console.log(entity.components.physics.velocity.x);
 	}
 
 	this.collisionSystem.tick();
+	this.score.update();
+	this.reset();
+	// console.log(this.entities[4].components.physics.acceleration.x);
+	// console.log(this.entities[4].components.physics.velocity.x);
+	
 };
 
 exports.PhysicsSystem = PhysicsSystem;
-},{"./collision":17}]},{},[16]);
+},{"./collision":17,"./score":21}],21:[function(require,module,exports){
+// Local Storage High Score Object
+var Score = function(entities){
+	this.entities = entities;
+	//Our current score
+	this.current = parseFloat($("#pipes-flown-through").text());
+	this.highScore = 0;	
+};
+
+// Score.prototype.run = function(){
+// 	this.update();
+// }
+
+//Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
+Score.prototype.get = function(){
+	console.log(this.current);
+	if(localStorage.getItem('high-score')){
+		this.highScore = localStorage.getItem('high-score');
+		this.highScore = parseInt(this.highScore);
+		console.log(this.highScore);
+	} else {
+		console.log("nothing");
+	}
+};
+
+//Checks to see if our current score is greater than our high score. If so, we return it.
+Score.prototype.high = function(){
+	if(this.current>this.highScore){
+		this.highScore = this.current;
+	}
+};
+
+//Checks to see if current HIGH score is greater than our locally-stored high score, and if so, sets the new high score.
+Score.prototype.set = function(){
+	// if(this.high()>this.get()){
+		localStorage.setItem('high-score', this.highScore);
+	// }
+};
+
+Score.prototype.update = function(){
+	if(this.entities[0].components.status === "point"){
+		console.log("scored point");
+		this.current+=1;
+		this.entities[0].components.status = "none";
+	} else if(this.entities[0].components.status === "collide"){
+		this.high();
+		this.current = 0;
+		console.log("crashed");
+		//We do not reset the status to "none" because the physics reset method still relies on this status to work.
+		// this.entities[0].components.status = "none";
+	}
+	//Regardless, we will both set the inner HTML of the current score and high score at each update.
+	scoreText = String(this.current);
+	$("#pipes-flown-through").text(scoreText);
+	highScoreText = String(this.highScore);
+	// console.log(highScoreText);
+	$("#high-score").text(highScoreText);
+	this.set();
+};
+
+Score.prototype.clearLocalHigh = function(){
+	localStorage.setItem('high-score', 0);
+	console.log(this.highScore);
+};
+
+exports.Score = Score;
+},{}]},{},[16]);

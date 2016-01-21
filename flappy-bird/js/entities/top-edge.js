@@ -3,7 +3,7 @@ var physicsComponent = require("../components/physics/physics");
 var collisionComponent = require("../components/collision/edge");
 
 var TopEdge = function(){
-	console.log("Creating top edge entity");
+	// console.log("Creating top edge entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
 	physics.position.y = 1;
 

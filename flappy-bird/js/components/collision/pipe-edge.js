@@ -1,7 +1,7 @@
 var PipeEdgeCollisionComponent = function(entity){
 	this.entity = entity;
 	this.type = "pipe-edge";
-}
+};
 
 PipeEdgeCollisionComponent.prototype.collidesWith = function(entity){
 	if (entity.components.collision.type === "circle") {
@@ -12,6 +12,6 @@ PipeEdgeCollisionComponent.prototype.collidesWith = function(entity){
 
 PipeEdgeCollisionComponent.prototype.collideCircle = function(entity){
 	return entity.components.collision.collidePipeEdge(this.entity);
-}
+};
 
 exports.PipeEdgeCollisionComponent = PipeEdgeCollisionComponent;
