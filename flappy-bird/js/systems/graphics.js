@@ -54,24 +54,24 @@ GraphicsSystem.prototype.tick = function() {
 };
 
 //Counter
-GraphicsSystem.prototype.counter = function(){
-	if(this.entities[0].components.status === "pause"){
-		this.count = 0;
-		console.log("graphics are paused");
-	} else{
-		this.count+=1;
-	}
-	console.log("graphics: "+this.count);
-}
+// GraphicsSystem.prototype.counter = function(){
+// 	if(this.entities[0].components.status === "pause"){
+// 		this.count = 0;
+// 		console.log("graphics are paused");
+// 	} else{
+// 		this.count+=1;
+// 	}
+// 	console.log("graphics: "+this.count);
+// }
 
-GraphicsSystem.prototype.countDown = function(){
-	window.setInterval(this.counter.bind(this), 1000);
-	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
-}
+// GraphicsSystem.prototype.countDown = function(){
+// 	window.setInterval(this.counter.bind(this), 1000);
+// 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
+// }
 
-GraphicsSystem.prototype.stopCount = function(){
-	window.clearInterval(8);
-}
+// GraphicsSystem.prototype.stopCount = function(){
+// 	window.clearInterval(8);
+// }
 
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);

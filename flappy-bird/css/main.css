@@ -10,13 +10,14 @@ canvas#main-canvas {
 }
 
 div#overlay {
-	width: 25%;
-	height: 25%;
+	width: 14%;
+	height: 35%;
     position: absolute;
     z-index: 1;
     top: 0;
     left: 0;
     color: white;
+    background-color: black;
 }
 
 #images {

@@ -72,7 +72,7 @@ Bird.prototype.onCollision = function(entity) {
 	}
 };
 
-//Maybe make a counter components on this entity instead of seperate ones?
+
 //Counter
 Bird.prototype.counter = function(){
 	if(this.components.paused === true){
@@ -84,8 +84,20 @@ Bird.prototype.counter = function(){
 	console.log(this.components.count);
 }
 
+Bird.prototype.uiCounterDisplay = function(){
+	if(this.components.paused === true){
+		$("#ready").html("Paused");
+	} else if(this.components.count<5){
+		var viewCount = parseInt(5-this.components.count);
+		$("#ready").html(viewCount);
+	} else {
+		$("#ready").html("Go!");
+	}
+};
+
 Bird.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 100);
+	window.setInterval(this.uiCounterDisplay.bind(this), 100);
 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
 }
 
