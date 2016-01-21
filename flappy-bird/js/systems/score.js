@@ -60,6 +60,6 @@ Score.prototype.update = function(){
 Score.prototype.clearLocalHigh = function(){
 	localStorage.setItem('high-score', 0);
 	console.log(this.highScore);
-}
+};
 
 exports.Score = Score;

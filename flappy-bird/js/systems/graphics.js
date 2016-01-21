@@ -75,7 +75,7 @@ GraphicsSystem.prototype.tick = function() {
 
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);
-}
+};
 
 GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.pipes === "stopped"){
@@ -90,7 +90,7 @@ GraphicsSystem.prototype.clearAll = function(){
 		this.entities[0].components.pipes = "in motion";
 	}
 	// console.log(this.entities[0]);
-}
+};
 
 GraphicsSystem.prototype.newPipes = function(){
 	//Changed..

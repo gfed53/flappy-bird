@@ -82,7 +82,7 @@ Bird.prototype.counter = function(){
 		this.components.count+=0.1;
 	}
 	console.log(this.components.count);
-}
+};
 
 Bird.prototype.uiCounterDisplay = function(){
 	if(this.components.paused === true){
@@ -99,7 +99,7 @@ Bird.prototype.countDown = function(){
 	window.setInterval(this.counter.bind(this), 100);
 	window.setInterval(this.uiCounterDisplay.bind(this), 100);
 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
-}
+};
 
 
 
