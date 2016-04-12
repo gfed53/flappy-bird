@@ -10,6 +10,7 @@ canvas#main-canvas {
 }
 
 div#overlay {
+    /*Layout*/
 	width: 10em;
 	height: 9em;
     position: absolute;
@@ -17,7 +18,11 @@ div#overlay {
     top: 0;
     left: 0;
     color: white;
-    background-color: black;
+    background-color: rgba(51, 51, 51, 0.68);
+    border: 2px solid black;
+    border-radius: 1em;
+    /*Typography*/
+    font-family: 'Roboto', sans-serif;
 }
 
 #images {
