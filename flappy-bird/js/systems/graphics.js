@@ -68,7 +68,7 @@ GraphicsSystem.prototype.newPipes = function(){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
-		if(this.entities.length>10){
+		if(this.entities.length>20){
 			this.entities.splice(3, 2);
 		}
 	}
