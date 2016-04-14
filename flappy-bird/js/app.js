@@ -797,8 +797,6 @@ var GraphicsSystem = function(entities) {
 	this.canvas = document.getElementById('main-canvas');
 	// Context is what we draw to
 	this.context = this.canvas.getContext('2d');
-	// this.count = 0;
-
 };
 
 GraphicsSystem.prototype.run = function(){
@@ -841,52 +839,24 @@ GraphicsSystem.prototype.tick = function() {
 	window.requestAnimationFrame(this.tick.bind(this));
 };
 
-//Counter
-// GraphicsSystem.prototype.counter = function(){
-// 	if(this.entities[0].components.status === "pause"){
-// 		this.count = 0;
-// 		console.log("graphics are paused");
-// 	} else{
-// 		this.count+=1;
-// 	}
-// 	console.log("graphics: "+this.count);
-// }
-
-// GraphicsSystem.prototype.countDown = function(){
-// 	window.setInterval(this.counter.bind(this), 1000);
-// 	// console.log("graphics ID: "+window.setInterval(this.counter.bind(this), 1000));
-// }
-
-// GraphicsSystem.prototype.stopCount = function(){
-// 	window.clearInterval(8);
-// }
-
 GraphicsSystem.prototype.runClear = function(){
 	window.setInterval(this.clearAll.bind(this), 1);
 };
 
 GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.pipes === "stopped"){
-		console.log("should be clear");
 		this.entities.splice(3,9);
-		//Clear the counter, bird "collision" status
-		// this.count = 0;
-		//To change to--->
 		this.entities[0].components.count = 0;
-		// console.log(this);
-		// window.clearInterval(this.countDown);
 		this.entities[0].components.pipes = "in motion";
 	}
-	// console.log(this.entities[0]);
 };
 
 GraphicsSystem.prototype.newPipes = function(){
-	//Changed..
 	if(this.entities[0].components.count>5){
 		var randomHeight = Math.floor((Math.random() * pipeHeightsArray.length));
 		this.entities.push(new pipe.Pipe(2, pipeHeightsArray[randomHeight]));
 		this.entities.push(new pipeEdge.PipeEdge(2));
-		if(this.entities.length>10){
+		if(this.entities.length>20){
 			this.entities.splice(3, 2);
 		}
 	}
@@ -895,8 +865,6 @@ GraphicsSystem.prototype.newPipes = function(){
 GraphicsSystem.prototype.createPipes = function(){
 	window.setInterval(this.newPipes.bind(this), 2000);
 	window.setInterval(this.drawPipes.bind(this), 2000);
-	// console.log(window.setInterval(this.newPipes.bind(this), 2000));
-	// console.log(window.setInterval(this.drawPipes.bind(this), 2000));
 };
 
 GraphicsSystem.prototype.drawPipes = function(){
@@ -905,9 +873,7 @@ GraphicsSystem.prototype.drawPipes = function(){
 		if (!"graphics" in entity.components){
 			continue;
 		}
-
 		entity.components.graphics.draw(this.context);
-		// console.log(this.entities);
 	}
 };
 
@@ -942,14 +908,6 @@ InputSystem.prototype.run = function(){
 	// On mobile, leaving both of these active creates a doubling-effect on touch. 
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
-	// this.html.addEventListener('keydown', this.onKeyDown.bind(this), false);
-	//Why doesn't below work?
-	// this.html.addEventListener('keydown', function(e){
-	// 	if(e.keyCode === 32) {
-	// 		console.log(this);
-	// 		this.onSpace.bind(this);
-	// 	}
-	// });
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -959,42 +917,6 @@ InputSystem.prototype.onClick = function(e){
 		bird.components.physics.velocity.y = 0.7;
 	}
 };
-
-// InputSystem.prototype.onKeyDown = function(){
-// 	if(this.paused === false){
-// 		console.log("pause");
-// 		//These are a new instance of "count". That's the problem?
-// 		this.graphics.count = 0;
-// 		this.physics.count = 0;
-// 		this.entities[0].components.physics.acceleration.y = 0;
-// 		this.entities[0].components.physics.velocity.y = 0;
-// 		console.log(this.graphics.count);
-// 		for(var i=3; i<this.entities.length; i++){
-// 			var entity = this.entities[i];
-// 			console.log(entity);
-// 			entity.components.physics.acceleration.y = 0;
-// 			entity.components.physics.velocity.y = 0;
-// 		}
-
-// 		this.paused = true;
-// 	} else {
-// 		this.paused = false;
-// 		console.log("unpaused");
-// 		for(var i=3; i<this.entities.length; i++){
-// 			var entity = this.entities[i];
-// 			console.log(entity);
-// 			entity.components.physics.acceleration.y = -0.01;
-// 			entity.components.physics.velocity.y = -0.02;
-// 		}
-// 		// this.entities[0].components.physics.acceleration.y = -2;
-// 	}
-// 	// e.preventDefault();
-// 	// window.clearInterval(this.physics.run.bind(this));
-	
-// 	console.log(this.entities[0]);
-// };
-
-
 
 exports.InputSystem = InputSystem;
 },{"./graphics":18,"./physics":20}],20:[function(require,module,exports){
@@ -1012,29 +934,9 @@ PhysicsSystem.prototype.run = function(){
 	window.setInterval(this.tick.bind(this), 1000 /60);
 	this.runControl();
 	//Runs our check for a locally stored high score on startup
-	// this.score.clearLocalHigh();
 	this.score.get();
 
 };
-
-//Counter(unused)
-// PhysicsSystem.prototype.counter = function(){
-// 	if(this.entities[0].components.status === "pause"){
-// 		this.count = 0;
-// 	} else{
-// 		this.count+=1;
-// 	}
-// 	console.log("physics: "+this.count);
-// }
-
-// PhysicsSystem.prototype.countDown = function(){
-// 	window.setInterval(this.counter.bind(this), 1000);
-// 	// console.log("physics ID "+window.setInterval(this.counter.bind(this), 1000));
-// }
-
-// PhysicsSystem.prototype.stopCount = function(){
-// 	window.clearInterval(4);
-// }
 
 //Upon collision, bird entity resets its position and count
 PhysicsSystem.prototype.reset = function(){
@@ -1048,47 +950,32 @@ PhysicsSystem.prototype.reset = function(){
 
 //Control loop that bases velocity/acceleration on count
 PhysicsSystem.prototype.runControl = function(){
-	// console.log(this.entities[0].components.physics.acceleration.y);
 	window.setInterval(this.controlBird.bind(this), 1/60);
 	window.setInterval(this.controlPipes.bind(this), 1/60);
 };
 
 //Control loop for bird
 PhysicsSystem.prototype.controlBird = function(){
-	// console.log("running");
-	//To Change
 	if(this.entities[0].components.count>5){
 		this.entities[0].components.physics.acceleration.y = -2;
-		// console.log(this.entities[0].components.physics.acceleration.y);
 	} else {
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.physics.velocity.y = 0;
 	}
-	// else {
-	// 	this.entities[0].components.physics.acceleration.y = 0;
-	// }
-	//Still need to reset counter to 0!
 };
 
 //Control loop for pipes
-//In refactoring, maybe use a switch?
 PhysicsSystem.prototype.controlPipes = function(){
 	for(var i=3; i<this.entities.length; i++){
 		var entity = this.entities[i];
 		entityVeloc = this.entities[i].components.physics.velocity.x;
 		if(this.entities[0].components.count>35){
 			entity.components.physics.velocity.x = -0.8;
-		}
-		else if(this.entities[0].components.count>5){
-				// entity.components.physics.acceleration.x = -0.1;
+		} else if(this.entities[0].components.count>5){
 				entity.components.physics.velocity.x = -0.5;
-
 			} else if(this.entities[0].components.count<5) {
-				// entity.components.physics.acceleration.x = 0;
 				entity.components.physics.velocity.x = 0;
 			}
-			
-			// console.log(this.entities[i]);
 		}
 	};
 
@@ -1101,16 +988,11 @@ PhysicsSystem.prototype.controlPipes = function(){
 			}
 
 			entity.components.physics.update(1/60);
-		// console.log(entity.components.physics.acceleration.x);
-		// console.log(entity.components.physics.velocity.x);
 	}
 
 	this.collisionSystem.tick();
 	this.score.update();
 	this.reset();
-	// console.log(this.entities[4].components.physics.acceleration.x);
-	// console.log(this.entities[4].components.physics.velocity.x);
-	
 };
 
 exports.PhysicsSystem = PhysicsSystem;
