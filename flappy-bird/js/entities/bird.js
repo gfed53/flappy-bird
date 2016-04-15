@@ -77,11 +77,11 @@ Bird.prototype.onCollision = function(entity) {
 Bird.prototype.counter = function(){
 	if(this.components.paused === true){
 		this.components.count = 0;
-		console.log("paused");
+		// console.log("paused");
 	} else{
 		this.components.count+=0.1;
 	}
-	console.log(this.components.count);
+	// console.log(this.components.count);
 };
 
 Bird.prototype.uiCounterDisplay = function(){

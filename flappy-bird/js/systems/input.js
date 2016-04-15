@@ -9,6 +9,7 @@ var InputSystem = function(entities) {
 	this.html = document.querySelector('html');
 	//Canvas is where we get input from
 	this.canvas = document.getElementById('main-canvas');
+	this.pauseButton = document.getElementById('btn-pause');
 	this.paused = false;
 };
 
@@ -20,6 +21,7 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
+	this.pauseButton.addEventListener('click', this.pauseGame.bind(this), false);
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -29,5 +31,17 @@ InputSystem.prototype.onClick = function(e){
 		bird.components.physics.velocity.y = 0.7;
 	}
 };
+
+InputSystem.prototype.pauseGame = function(){
+		// console.log("alt pause");
+	if(this.entities[0].components.paused === false){
+		this.entities[0].components.paused = true;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+	} else {
+		this.entities[0].components.paused = false;
+	}
+	// console.log(this.entities[0].components.status);
+}
 
 exports.InputSystem = InputSystem;

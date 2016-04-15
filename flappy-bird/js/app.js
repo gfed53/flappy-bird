@@ -408,11 +408,11 @@ Bird.prototype.onCollision = function(entity) {
 Bird.prototype.counter = function(){
 	if(this.components.paused === true){
 		this.components.count = 0;
-		console.log("paused");
+		// console.log("paused");
 	} else{
 		this.components.count+=0.1;
 	}
-	console.log(this.components.count);
+	// console.log(this.components.count);
 };
 
 Bird.prototype.uiCounterDisplay = function(){
@@ -597,6 +597,7 @@ FlappyBird.prototype.run = function(){
 	this.input.run();
 	this.entities[0].countDown();
 	this.pauseListen();
+	this.pauseMobile();
 	// console.log(this.entities[0].components.status);
 };
 
@@ -604,7 +605,13 @@ FlappyBird.prototype.pauseListen = function(){
 	this.html.addEventListener('keydown', this.altPause.bind(this), false);
 };
 
+FlappyBird.prototype.pauseMobile = function(){
+	console.log(this.html);
+};
+
+
 FlappyBird.prototype.altPause = function(){
+	console.log("alt pause");
 	if(this.entities[0].components.paused === false){
 		this.entities[0].components.paused = true;
 		this.entities[0].components.physics.acceleration.y = 0;
@@ -626,12 +633,12 @@ FlappyBird.prototype.altPause = function(){
 		// 	// console.log(this.entities[i]);
 		// }
 	}
-	console.log(this.entities[0].components.status);
+	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.onKeyDown = function(){	
 	if(this.paused === false){
-		console.log("pause");
+		// console.log("pause");
 		//To Change
 		// this.graphics.count = 0;
 		// this.physics.count = 0;
@@ -652,7 +659,7 @@ FlappyBird.prototype.onKeyDown = function(){
 
 		this.paused = true;
 	} else {
-		console.log("unpaused");
+		// console.log("unpaused");
 		this.entities[0].components.status = "none";
 		// this.entities[0].components.physics.acceleration.y = -2;
 		// this.physics.countDown();
@@ -900,6 +907,7 @@ var InputSystem = function(entities) {
 	this.html = document.querySelector('html');
 	//Canvas is where we get input from
 	this.canvas = document.getElementById('main-canvas');
+	this.pauseButton = document.getElementById('btn-pause');
 	this.paused = false;
 };
 
@@ -911,6 +919,7 @@ InputSystem.prototype.run = function(){
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
+	this.pauseButton.addEventListener('click', this.pauseGame.bind(this), false);
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -920,6 +929,18 @@ InputSystem.prototype.onClick = function(e){
 		bird.components.physics.velocity.y = 0.7;
 	}
 };
+
+InputSystem.prototype.pauseGame = function(){
+		// console.log("alt pause");
+	if(this.entities[0].components.paused === false){
+		this.entities[0].components.paused = true;
+		this.entities[0].components.physics.acceleration.y = 0;
+		this.entities[0].components.physics.velocity.y = 0;
+	} else {
+		this.entities[0].components.paused = false;
+	}
+	// console.log(this.entities[0].components.status);
+}
 
 exports.InputSystem = InputSystem;
 },{"./graphics":18,"./physics":20}],20:[function(require,module,exports){

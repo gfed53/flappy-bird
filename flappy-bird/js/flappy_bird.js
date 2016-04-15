@@ -36,6 +36,7 @@ FlappyBird.prototype.run = function(){
 	this.input.run();
 	this.entities[0].countDown();
 	this.pauseListen();
+	this.pauseMobile();
 	// console.log(this.entities[0].components.status);
 };
 
@@ -43,7 +44,13 @@ FlappyBird.prototype.pauseListen = function(){
 	this.html.addEventListener('keydown', this.altPause.bind(this), false);
 };
 
+FlappyBird.prototype.pauseMobile = function(){
+	console.log(this.html);
+};
+
+
 FlappyBird.prototype.altPause = function(){
+	console.log("alt pause");
 	if(this.entities[0].components.paused === false){
 		this.entities[0].components.paused = true;
 		this.entities[0].components.physics.acceleration.y = 0;
@@ -65,12 +72,12 @@ FlappyBird.prototype.altPause = function(){
 		// 	// console.log(this.entities[i]);
 		// }
 	}
-	console.log(this.entities[0].components.status);
+	// console.log(this.entities[0].components.status);
 };
 
 FlappyBird.prototype.onKeyDown = function(){	
 	if(this.paused === false){
-		console.log("pause");
+		// console.log("pause");
 		//To Change
 		// this.graphics.count = 0;
 		// this.physics.count = 0;
@@ -91,7 +98,7 @@ FlappyBird.prototype.onKeyDown = function(){
 
 		this.paused = true;
 	} else {
-		console.log("unpaused");
+		// console.log("unpaused");
 		this.entities[0].components.status = "none";
 		// this.entities[0].components.physics.acceleration.y = -2;
 		// this.physics.countDown();
