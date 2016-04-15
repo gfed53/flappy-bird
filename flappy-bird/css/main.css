@@ -25,6 +25,16 @@ div#overlay {
     font-family: 'Roboto', sans-serif;
 }
 
+/*#btn-pause {
+    display: none;
+}*/
+
 #images {
 	display: none;
+}
+
+@media and screen(min-width: 768px){
+    #btn-pause {
+        display: none;
+    }
 }
