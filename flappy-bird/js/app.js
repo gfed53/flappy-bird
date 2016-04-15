@@ -845,7 +845,7 @@ GraphicsSystem.prototype.runClear = function(){
 
 GraphicsSystem.prototype.clearAll = function(){
 	if(this.entities[0].components.pipes === "stopped"){
-		this.entities.splice(3,9);
+		this.entities.splice(3,18);
 		this.entities[0].components.count = 0;
 		this.entities[0].components.pipes = "in motion";
 	}
