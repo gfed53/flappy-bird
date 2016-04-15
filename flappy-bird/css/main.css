@@ -25,9 +25,12 @@ div#overlay {
     font-family: 'Roboto', sans-serif;
 }
 
-/*#btn-pause {
-    display: none;
-}*/
+#btn-pause {
+    padding: 2em;
+    border-radius: 5em;
+    font-size: 1em;
+    background-color: whitesmoke;
+}
 
 #images {
 	display: none;
