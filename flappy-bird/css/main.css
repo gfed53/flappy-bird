@@ -36,7 +36,7 @@ div#overlay {
 	display: none;
 }
 
-@media and screen(min-width: 768px){
+@media screen and (min-width: 1024px){
     #btn-pause {
         display: none;
     }
