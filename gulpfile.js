@@ -11,6 +11,8 @@ var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
+var html = ['site/index.html', 'site/about.html'];
+
 // JavaScript linting task
 gulp.task('jshint', function(){
 	return gulp.src('site/js/*.js')
