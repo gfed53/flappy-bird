@@ -38,7 +38,7 @@ gulp.task('default', ['jshint', 'sass', 'watch']);
 
 // Minify index
 gulp.task('html', function(){
-	return gulp.src('site/index.html')
+	return gulp.src(html)
 		.pipe(minifyHTML())
 		.pipe(gulp.dest('build/'));
 });
