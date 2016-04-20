@@ -19,7 +19,6 @@ PhysicsSystem.prototype.run = function(){
 //Upon collision, bird entity resets its position and count
 PhysicsSystem.prototype.reset = function(){
 	if(this.entities[0].components.status === "collide"){
-		console.log("reset");
 		this.entities[0].components.count = 0;
 		this.entities[0].components.physics.acceleration.y = 0;
 		this.entities[0].components.status = "none";
@@ -57,7 +56,7 @@ PhysicsSystem.prototype.controlPipes = function(){
 		}
 	};
 
-	//Tick loop that updates physics of entities, as well as score. frequently. Also, constant check for any collision is run.
+	//Tick loop that updates physics of entities, as well as score. Also, a constant check for any collision.
 	PhysicsSystem.prototype.tick = function(){
 		for(var i=0; i<this.entities.length; i++){
 			var entity = this.entities[i];

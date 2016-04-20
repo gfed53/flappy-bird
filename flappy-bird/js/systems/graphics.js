@@ -35,8 +35,6 @@ GraphicsSystem.prototype.tick = function() {
 	this.context.translate(this.canvas.width / 2, this.canvas.height);
 	this.context.scale(this.canvas.height, -this.canvas.height);
 
-	
-
 	//Rendering goes here
 	for(var i=0; i<this.entities.length; i++){
 		var entity = this.entities[i];
@@ -88,8 +86,6 @@ GraphicsSystem.prototype.drawPipes = function(){
 		entity.components.graphics.draw(this.context);
 	}
 };
-
-
 
 exports.GraphicsSystem = GraphicsSystem;
 

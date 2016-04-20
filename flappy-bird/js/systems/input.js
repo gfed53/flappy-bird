@@ -15,8 +15,6 @@ var InputSystem = function(entities) {
 
 //On click(or touch, if mobile) the bird entity's acceleration will increase vertically (a 'hopping' motion)
 InputSystem.prototype.run = function(){
-	// this.canvas.addEventListener('click', this.onClick.bind(this));
-
 	// On mobile, leaving both of these active creates a doubling-effect on touch. 
 	this.canvas.addEventListener('click', this.onClick.bind(this));
 	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
@@ -46,7 +44,6 @@ InputSystem.prototype.pauseGame = function(){
 	} else {
 		this.entities[0].components.paused = false;
 	}
-	// console.log(this.entities[0].components.status);
 }
 
 exports.InputSystem = InputSystem;

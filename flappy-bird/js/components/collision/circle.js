@@ -52,25 +52,12 @@ CircleCollisionComponent.prototype.collideRect = function(entity) {
     var positionA = this.entity.components.physics.position;
     var positionB = entity.components.physics.position;
     var sizeB = entity.components.collision.size;
-    // console.log(positionA);
-    // console.log(positionB);
-    // console.log(sizeB);
     var closest = {
         x: clamp(positionA.x, positionB.x - sizeB.x / 2,
                  positionB.x + sizeB.x / 2),
         y: clamp(positionA.y, positionB.y - sizeB.y / 2,
                  positionB.y + sizeB.y / 2)
     };
-    // if (positionB.x === 0) {
-    //     if(positionA.y >= positionB.y){
-    //         console.log("collide");
-    //     }
-    //     else{
-    //         console.log("no collision");
-    //     }
-    // } else {
-    //     console.log("not on edge yet");
-    // }
 
     var radiusA = this.radius;
 
@@ -96,9 +83,6 @@ CircleCollisionComponent.prototype.collideRect2 = function(entity) {
     var positionA = this.entity.components.physics.position;
     var positionB = entity.components.physics.position;
     var sizeB = entity.components.collision.size;
-    // console.log(positionA);
-    // console.log(positionB);
-    // console.log(sizeB);
     var closest = {
         x: clamp(positionA.x, positionB.x,
                  positionB.x + sizeB.x),
@@ -128,11 +112,7 @@ CircleCollisionComponent.prototype.collideEdge = function(entity){
 }
 
 CircleCollisionComponent.prototype.collidePipeEdge = function(entity){
-    // var positionA = this.entity.components.physics.position.x;
     var positionB = entity.components.physics.position.x;
-    // console.log(positionA+" a");
-    // console.log(positionB+" b");
-
     return positionB < 0.005 && positionB > -0.005;
 };
 

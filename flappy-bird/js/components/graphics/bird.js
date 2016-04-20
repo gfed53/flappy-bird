@@ -9,7 +9,6 @@ BirdGraphicsComponent.prototype.draw = function(context){
 	context.save();
 	context.translate(position.x, position.y);
 	context.beginPath();
-	// context.arc(0, 0, 0.02, 0, 2 * Math.PI);
 	context.drawImage(image, 0, 0, 0.1, 0.1);
 	context.fill();
 	context.closePath();

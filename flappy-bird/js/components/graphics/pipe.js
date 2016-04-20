@@ -10,7 +10,6 @@ PipeGraphicsComponent.prototype.draw = function(context){
 	context.translate(position.x, position.y);
 	context.beginPath();
 	context.drawImage(image, 0, 0, 0.25, 1);
-	// context.fillRect(0, 0, 0.25, 1);
 	context.restore();
 };
 
