@@ -5,6 +5,9 @@ html {
 *, *::after, *::before {
   box-sizing: inherit; }
 
+.social-link {
+  color: black; }
+
 .jssorb05 {
   position: absolute; }
 
@@ -65,3 +68,6 @@ html {
 
 .jssora12r.jssora12rdn {
   background-position: -315px -37px; }
+
+.fa {
+  font-size: 1.5em; }

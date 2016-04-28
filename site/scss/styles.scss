@@ -2,8 +2,10 @@
 @import "../../node_modules/bourbon/app/assets/stylesheets/bourbon";
 @import "../../node_modules/bourbon-neat/app/assets/stylesheets/neat";
 @import "../template.css";
-@import "variables";
-@import "carousel";
+@import "base";
+// @import "variables";
+// @import "carousel";
+@import "font-awesome";
 // @import "layout";
 // @import "lists";
 // @import "hero";
