@@ -40,3 +40,36 @@
         .jssora12r:hover { background-position: -195px -37px; }
         .jssora12l.jssora12ldn { background-position: -256px -37px; }
         .jssora12r.jssora12rdn { background-position: -315px -37px; }
+
+
+        /* jssor slider arrow navigator skin 08 css */
+        /*
+        .jssora08l                  (normal)
+        .jssora08r                  (normal)
+        .jssora08l:hover            (normal mouseover)
+        .jssora08r:hover            (normal mouseover)
+        .jssora08l.jssora08ldn      (mousedown)
+        .jssora08r.jssora08rdn      (mousedown)
+        */
+        .jssora08l, .jssora08r {
+            display: block;
+            position: absolute;
+            /* size of arrow element */
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background: url('../img/a08.png') no-repeat;
+            overflow: hidden;
+            opacity: .4;
+            filter: alpha(opacity=40);
+        }
+        .jssora08l { background-position: -5px -35px; }
+        .jssora08r { background-position: -65px -35px; }
+        .jssora08l:hover { background-position: -5px -35px; opacity: .8; filter:alpha(opacity=80); }
+        .jssora08r:hover { background-position: -65px -35px; opacity: .8; filter:alpha(opacity=80); }
+        .jssora08l.jssora08ldn { background-position: -5px -35px; opacity: .3; filter:alpha(opacity=30); }
+        .jssora08r.jssora08rdn { background-position: -65px -35px; opacity: .3; filter:alpha(opacity=30); }
+
+
+
+
