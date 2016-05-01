@@ -15,8 +15,16 @@ body .section-4 .sf-image {
 .social-link {
   color: black; }
 
-#about h1 {
-  text-align: center; }
+body .my-sub-header {
+  margin-bottom: 1em; }
+
+#about {
+  margin: 1em; }
+  #about h1 {
+    text-align: center; }
+  #about p {
+    margin: 0 auto;
+    max-width: 75em; }
 
 .jssorb05 {
   position: absolute; }
@@ -125,6 +133,10 @@ body .section-4 .sf-image {
   background-position: -65px -35px;
   opacity: .3;
   filter: alpha(opacity=30); }
+
+.my-para {
+  font-size: 1.2em;
+  margin: 1em; }
 
 .fa {
   font-size: 1.5em; }
