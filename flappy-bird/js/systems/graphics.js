@@ -22,7 +22,7 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-	this.canvas.height = this.canvas.offsetHeight;
+		this.canvas.height = this.canvas.offsetHeight;
 }
 
 	// Clear the canvas

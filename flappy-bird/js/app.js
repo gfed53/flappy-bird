@@ -359,12 +359,16 @@ Bird.prototype.counter = function(){
 
 Bird.prototype.uiCounterDisplay = function(){
 	if(this.components.paused === true){
-		$("#ready").html("Paused");
+		$("div#obs-countdown").show();
+		$(".ready").html("Paused");
 	} else if(this.components.count<5){
 		var viewCount = parseInt(5-this.components.count);
-		$("#ready").html(viewCount);
+		$("div#obs-countdown").show();
+		$(".ready").html(viewCount);
+
 	} else {
-		$("#ready").html("Go!");
+		$(".ready").html("Go!");
+		$("div#obs-countdown").hide();
 	}
 };
 
@@ -446,7 +450,6 @@ var Pipe = function(x,y){
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
 	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: rectHeightValue(this.components.physics.position.y)});
-	collision.onCollision = this.onCollision.bind(this);
 
 
 	this.components= {
@@ -454,10 +457,6 @@ var Pipe = function(x,y){
 		physics: physics,
 		collision: collision
 	};
-};
-
-Pipe.prototype.onCollision = function(entity) {
-
 };
 
 exports.Pipe = Pipe;
@@ -584,7 +583,7 @@ GraphicsSystem.prototype.tick = function() {
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
-	this.canvas.height = this.canvas.offsetHeight;
+		this.canvas.height = this.canvas.offsetHeight;
 }
 
 	// Clear the canvas
@@ -761,7 +760,7 @@ PhysicsSystem.prototype.controlPipes = function(){
 			entity.components.physics.velocity.x = -0.8;
 		} else if(this.entities[0].components.count>5){
 				entity.components.physics.velocity.x = -0.5;
-			} else if(this.entities[0].components.count<5) {
+			} else if(this.entities[0].components.count<=5) {
 				entity.components.physics.velocity.x = 0;
 			}
 		}

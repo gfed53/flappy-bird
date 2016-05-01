@@ -9,10 +9,27 @@ canvas#main-canvas {
     height: 100%;
 }
 
+div#obs-countdown {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: grey;
+    opacity: 0.5;
+}
+
+.obs-text {
+    font-size: 7em;
+    text-align: center;
+    color: white;
+}
+
 div#overlay {
     /*Layout*/
 	width: 10em;
-	height: 9em;
+	/*height: 9em;*/
     position: absolute;
     z-index: 1;
     top: 0;
@@ -36,7 +53,7 @@ div#overlay {
 	display: none;
 }
 
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1025px){
     #btn-pause {
         display: none;
     }

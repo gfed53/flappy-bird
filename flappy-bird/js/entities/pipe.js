@@ -23,7 +23,6 @@ var Pipe = function(x,y){
 	var graphics = new graphicsComponent.PipeGraphicsComponent(this);
 
 	var collision = new collisionComponent.RectCollisionComponent(this, {x: 0.25, y: rectHeightValue(this.components.physics.position.y)});
-	collision.onCollision = this.onCollision.bind(this);
 
 
 	this.components= {
@@ -31,10 +30,6 @@ var Pipe = function(x,y){
 		physics: physics,
 		collision: collision
 	};
-};
-
-Pipe.prototype.onCollision = function(entity) {
-
 };
 
 exports.Pipe = Pipe;

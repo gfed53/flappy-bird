@@ -50,12 +50,16 @@ Bird.prototype.counter = function(){
 
 Bird.prototype.uiCounterDisplay = function(){
 	if(this.components.paused === true){
-		$("#ready").html("Paused");
+		$("div#obs-countdown").show();
+		$(".ready").html("Paused");
 	} else if(this.components.count<5){
 		var viewCount = parseInt(5-this.components.count);
-		$("#ready").html(viewCount);
+		$("div#obs-countdown").show();
+		$(".ready").html(viewCount);
+
 	} else {
-		$("#ready").html("Go!");
+		$(".ready").html("Go!");
+		$("div#obs-countdown").hide();
 	}
 };
 

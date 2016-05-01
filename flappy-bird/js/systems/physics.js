@@ -50,7 +50,7 @@ PhysicsSystem.prototype.controlPipes = function(){
 			entity.components.physics.velocity.x = -0.8;
 		} else if(this.entities[0].components.count>5){
 				entity.components.physics.velocity.x = -0.5;
-			} else if(this.entities[0].components.count<5) {
+			} else if(this.entities[0].components.count<=5) {
 				entity.components.physics.velocity.x = 0;
 			}
 		}
