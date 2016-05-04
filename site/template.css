@@ -193,7 +193,6 @@
  .android-screen-section {
  	position: relative;
  	padding-top: 60px;
- 	padding-bottom: 80px;
  }
 
  .android-screens {
@@ -285,9 +284,8 @@
 
  .android-wear-section {
  	position: relative;
- 	/*background: url('images/wear.png') center top no-repeat;*/
  	background-size: cover;
- 	height: 475px;
+     height: 450px;
  }
 
  .android-wear-band {
@@ -356,8 +354,7 @@
  }
 
  .android-customized-section-image {
- 	/*background: url('images/devices.jpg') center top no-repeat;*/
- 	background-size: cover;
+     background-size: cover;
  	height: 400px;
  }
 
@@ -371,9 +368,6 @@
  .android-more-section .android-section-title {
  	margin-left: 12px;
  	padding-bottom: 24px;
- }
-
- .android-card-container {
  }
 
  .android-card-container .mdl-card__media {
@@ -441,19 +435,9 @@
  	top: 6px;
  }
 
-
  .android-link-menu:hover {
  	cursor: pointer;
  }
-
- .my-para {
- 	font-size: 1.2em;
- }
-
- .my-sub-header {
- 	margin-bottom: 1em;
- }
-
 
  /**** Mobile layout ****/
  @media (max-width: 900px) {
