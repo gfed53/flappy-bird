@@ -5,6 +5,9 @@ html {
 *, *::after, *::before {
   box-sizing: inherit; }
 
+.fa {
+  font-size: 1.5em; }
+
 body .section-4 .sf-image {
   max-width: 20em; }
 
@@ -137,6 +140,3 @@ body .my-sub-header {
 .my-para {
   font-size: 1.2em;
   margin: 1em; }
-
-.fa {
-  font-size: 1.5em; }

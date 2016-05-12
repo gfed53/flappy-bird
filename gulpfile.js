@@ -16,15 +16,15 @@ var html = ['site/index.html', 'site/about.html'];
 // JavaScript linting task
 gulp.task('jshint', function(){
 	return gulp.src('site/js/*.js')
-		.pipe(jshint())
-		.pipe(jshint.reporter('default'));
+	.pipe(jshint())
+	.pipe(jshint.reporter('default'));
 });
 
 // Compile SASS task
 gulp.task('sass', function(){
 	return gulp.src('site/scss/*.scss')
-		.pipe(sass())
-		.pipe(gulp.dest('site/css'));
+	.pipe(sass())
+	.pipe(gulp.dest('site/css'));
 });
 
 // Watch task
@@ -39,32 +39,32 @@ gulp.task('default', ['jshint', 'sass', 'watch']);
 // Minify index
 gulp.task('html', function(){
 	return gulp.src(html)
-		.pipe(minifyHTML())
-		.pipe(gulp.dest('build/'));
+	.pipe(minifyHTML())
+	.pipe(gulp.dest('build/'));
 });
 
 // JavaScript build task, removes whitespace and concatenates all files
 gulp.task('scripts', function() {
-  return browserify('site/js/app.js')
-    .bundle()
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('build/js'));
+	return browserify('site/js/app.js')
+	.bundle()
+	.pipe(source('app.js'))
+	.pipe(buffer())
+	.pipe(uglify())
+	.pipe(gulp.dest('build/js'));
 });
 
 // Styles build task, concatenates all the files
 gulp.task('styles', function() {
-  return gulp.src('site/css/*.css')
-    .pipe(concat('styles.css'))
-    .pipe(gulp.dest('build/css'));
+	return gulp.src('site/css/*.css')
+	.pipe(concat('styles.css'))
+	.pipe(gulp.dest('build/css'));
 });
 
 // Image optimization task
 gulp.task('images', function() {
-  return gulp.src('site/img/*')
-    .pipe(imagemin())
-    .pipe(gulp.dest('build/img'));
+	return gulp.src('site/img/*')
+	.pipe(imagemin())
+	.pipe(gulp.dest('build/img'));
 });
 
 // Build task

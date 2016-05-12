@@ -29,7 +29,6 @@ div#obs-countdown {
 div#overlay {
     /*Layout*/
 	width: 10em;
-	/*height: 9em;*/
     position: absolute;
     z-index: 1;
     top: 0;

@@ -144,8 +144,6 @@
 
  .android-drawer .mdl-layout-title {
  	position: relative;
- 	/*background: #6ab344;*/
- 	/*height: 160px;*/
  }
 
  .android-drawer .android-logo-image {
@@ -158,7 +156,6 @@
  	height: 800px;
  	width: auto;
  	background-color: #f3f3f3;
- 	/*background: url('images/slide01.jpg') center 30% no-repeat;*/
  	background-size: cover;
  }
 
