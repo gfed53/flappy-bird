@@ -1,7 +1,7 @@
 //On page load...
-var flappyBird = require('./flappy_bird');
+var flappyBird = require("./flappy_bird");
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
 });

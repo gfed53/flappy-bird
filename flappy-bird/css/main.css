@@ -38,7 +38,7 @@ div#overlay {
     border: 2px solid black;
     border-radius: 1em;
     /*Typography*/
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 #btn-pause {

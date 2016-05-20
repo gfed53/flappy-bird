@@ -39,37 +39,6 @@ CircleCollisionComponent.prototype.collideCircle = function(entity){
 	return distanceSquared < radiusSum * radiusSum;
 };
 
-// CircleCollisionComponent.prototype.collideRect = function(entity) {
-//     var clamp = function(value, low, high) {
-//         if (value < low) {
-//             return low;
-//         }
-//         if (value > high) {
-//             return high;
-//         }
-//         return value;
-//     };
-
-//     var positionA = this.entity.components.physics.position;
-//     var positionB = entity.components.physics.position;
-//     var sizeB = entity.components.collision.size;
-//     var closest = {
-//         x: clamp(positionA.x, positionB.x - sizeB.x / 2,
-//                  positionB.x + sizeB.x / 2),
-//         y: clamp(positionA.y, positionB.y - sizeB.y / 2,
-//                  positionB.y + sizeB.y / 2)
-//     };
-
-//     var radiusA = this.radius;
-
-//     var diff = {x: positionA.x - closest.x,
-//                 y: positionA.y - closest.y};
-
-//     var distanceSquared = diff.x * diff.x + diff.y * diff.y;
-
-//     return distanceSquared < radiusA * radiusA;
-// };
-
 CircleCollisionComponent.prototype.collideRect2 = function(entity) {
     var clamp = function(value, low, high) {
         if (value < low) {
@@ -503,7 +472,7 @@ var FlappyBird = function(){
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
-	this.html = document.querySelector('html');
+	this.html = document.querySelector("html");
 };
 
 FlappyBird.prototype.run = function(){
@@ -518,9 +487,9 @@ exports.FlappyBird = FlappyBird;
 
 },{"./entities/bird":10,"./entities/bottom-edge":11,"./entities/pipe":13,"./entities/pipe-edge":12,"./entities/top-edge":14,"./systems/collision":17,"./systems/graphics":18,"./systems/input":19,"./systems/physics":20,"./systems/score":21}],16:[function(require,module,exports){
 //On page load...
-var flappyBird = require('./flappy_bird');
+var flappyBird = require("./flappy_bird");
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
 	var app = new flappyBird.FlappyBird();
 	app.run();
 });
@@ -567,9 +536,9 @@ pipeHeightsArray = [0.9, 0.75, 0.5, 0.25, -0.25, -0.75];
 var GraphicsSystem = function(entities) {
 	this.entities = entities;
 	// Canvas is where we draw
-	this.canvas = document.getElementById('main-canvas');
+	this.canvas = document.getElementById("main-canvas");
 	// Context is what we draw to
-	this.context = this.canvas.getContext('2d');
+	this.context = this.canvas.getContext("2d");
 };
 
 GraphicsSystem.prototype.run = function(){
@@ -666,20 +635,20 @@ var InputSystem = function(entities) {
 	this.entities = entities;
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
-	this.html = document.querySelector('html');
+	this.html = document.querySelector("html");
 	//Canvas is where we get input from
-	this.canvas = document.getElementById('main-canvas');
-	this.pauseButton = document.getElementById('btn-pause');
+	this.canvas = document.getElementById("main-canvas");
+	this.pauseButton = document.getElementById("btn-pause");
 	this.paused = false;
 };
 
-//On click(or touch, if mobile) the bird entity's acceleration will increase vertically (a 'hopping' motion)
+//On click(or touch, if mobile) the bird entity"s acceleration will increase vertically (a "hopping" motion)
 InputSystem.prototype.run = function(){
 	// On mobile, leaving both of these active creates a doubling-effect on touch. 
-	this.canvas.addEventListener('click', this.onClick.bind(this));
-	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
-	this.pauseButton.addEventListener('click', this.pauseGame.bind(this), false);
-	this.html.addEventListener('keydown', this.onShift.bind(this), false);
+	this.canvas.addEventListener("click", this.onClick.bind(this));
+	this.canvas.addEventListener("touchstart", this.onClick.bind(this), false);
+	this.pauseButton.addEventListener("click", this.pauseGame.bind(this), false);
+	this.html.addEventListener("keydown", this.onShift.bind(this), false);
 };
 
 InputSystem.prototype.onClick = function(e){
@@ -795,8 +764,8 @@ var Score = function(entities){
 
 //Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
 Score.prototype.get = function(){
-	if(localStorage.getItem('high-score')){
-		this.highScore = localStorage.getItem('high-score');
+	if(localStorage.getItem("high-score")){
+		this.highScore = localStorage.getItem("high-score");
 		this.highScore = parseInt(this.highScore);
 	} 
 };
@@ -810,7 +779,7 @@ Score.prototype.high = function(){
 
 //Checks to see if current HIGH score is greater than our locally-stored high score, and if so, sets the new high score.
 Score.prototype.set = function(){
-	localStorage.setItem('high-score', this.highScore);
+	localStorage.setItem("high-score", this.highScore);
 };
 
 Score.prototype.update = function(){
@@ -830,7 +799,7 @@ Score.prototype.update = function(){
 };
 
 Score.prototype.clearLocalHigh = function(){
-	localStorage.setItem('high-score', 0);
+	localStorage.setItem("high-score", 0);
 };
 
 exports.Score = Score;

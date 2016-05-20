@@ -9,8 +9,8 @@ var Score = function(entities){
 
 //Checks to see if we have a high-score key in localStorage. If not, we return 0. If we do, we return it.
 Score.prototype.get = function(){
-	if(localStorage.getItem('high-score')){
-		this.highScore = localStorage.getItem('high-score');
+	if(localStorage.getItem("high-score")){
+		this.highScore = localStorage.getItem("high-score");
 		this.highScore = parseInt(this.highScore);
 	} 
 };
@@ -24,7 +24,7 @@ Score.prototype.high = function(){
 
 //Checks to see if current HIGH score is greater than our locally-stored high score, and if so, sets the new high score.
 Score.prototype.set = function(){
-	localStorage.setItem('high-score', this.highScore);
+	localStorage.setItem("high-score", this.highScore);
 };
 
 Score.prototype.update = function(){
@@ -44,7 +44,7 @@ Score.prototype.update = function(){
 };
 
 Score.prototype.clearLocalHigh = function(){
-	localStorage.setItem('high-score', 0);
+	localStorage.setItem("high-score", 0);
 };
 
 exports.Score = Score;

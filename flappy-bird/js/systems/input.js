@@ -6,20 +6,20 @@ var InputSystem = function(entities) {
 	this.entities = entities;
 	this.graphics = new graphicsSystem.GraphicsSystem(this.entities);
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
-	this.html = document.querySelector('html');
+	this.html = document.querySelector("html");
 	//Canvas is where we get input from
-	this.canvas = document.getElementById('main-canvas');
-	this.pauseButton = document.getElementById('btn-pause');
+	this.canvas = document.getElementById("main-canvas");
+	this.pauseButton = document.getElementById("btn-pause");
 	this.paused = false;
 };
 
-//On click(or touch, if mobile) the bird entity's acceleration will increase vertically (a 'hopping' motion)
+//On click(or touch, if mobile) the bird entity"s acceleration will increase vertically (a "hopping" motion)
 InputSystem.prototype.run = function(){
 	// On mobile, leaving both of these active creates a doubling-effect on touch. 
-	this.canvas.addEventListener('click', this.onClick.bind(this));
-	this.canvas.addEventListener('touchstart', this.onClick.bind(this), false);
-	this.pauseButton.addEventListener('click', this.pauseGame.bind(this), false);
-	this.html.addEventListener('keydown', this.onShift.bind(this), false);
+	this.canvas.addEventListener("click", this.onClick.bind(this));
+	this.canvas.addEventListener("touchstart", this.onClick.bind(this), false);
+	this.pauseButton.addEventListener("click", this.pauseGame.bind(this), false);
+	this.html.addEventListener("keydown", this.onShift.bind(this), false);
 };
 
 InputSystem.prototype.onClick = function(e){

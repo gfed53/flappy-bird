@@ -19,7 +19,7 @@ var FlappyBird = function(){
 	this.physics = new physicsSystem.PhysicsSystem(this.entities);
 	this.input = new inputSystem.InputSystem(this.entities);
 	this.collision = new collisionSystem.CollisionSystem(this.entities);
-	this.html = document.querySelector('html');
+	this.html = document.querySelector("html");
 };
 
 FlappyBird.prototype.run = function(){
