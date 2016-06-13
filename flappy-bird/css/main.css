@@ -16,14 +16,16 @@ div#obs-countdown {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: grey;
-    opacity: 0.5;
+    background-color: rgba(4, 4, 4, 0.5);
 }
 
 .obs-text {
-    font-size: 7em;
     text-align: center;
     color: white;
+}
+
+.obs-text-title {
+    font-size: 7em;
 }
 
 div#overlay {
