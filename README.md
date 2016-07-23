@@ -6,6 +6,23 @@ This app is essentially a game which is a clone of the popular cult hit, Flappy 
 
 It's a simple game where you tap or click the screen to control the gravity of the "bird", and try to guide the bird in between obstacles, avoiding a collision.
 
+The following is taken from the 'about' section of the landing page:
+
+### Storyline
+
+Inspired by Street Fighter, this Flappy Bird crossover involves using your unique telekinetic power of clicking (or tapping) to control Ryu's (or Ken's, Akuma's, Sakura's, or Sean's....but not Dan's!) hadouken and maneuver it between ascending and descending wooden planks. This is in honor of the deceased Gouken, arguable original master of the hadouken (Akuma might disagree though), and is a ritual performed every so often between the hadouken-throwing martial artists. Won't you join in?
+
+
+### Directions
+
+The goal is to not collide with the planks, and achieve a high score. If you do collide, it's game over.
+
+Simply tap or click, depending on the device, anywhere on the screen other than the pause button (on mobile devices) to control the hadouken. While using a keyboard, hit the spacebar to toggle pause mode. On mobile devices, use (you guessed it!) the pause button. From the moment the game starts, as well as the moment after un-pausing, you get a 5 second breather.
+
+If you do pretty well, you might notice that the game will adjust as well... 
+
+Good luck!
+
 ## The Process
 
 The code used to build this app demonstrates an entity component system, where the entities (the bird, pipes, etc) are comprised of different components (graphics, physics, collision detection) which are connected to one another by their respective systems.
