@@ -43,6 +43,8 @@ The Landing Page has a source directory ('site') and a build directory ('build')
 
 The app's game's code is found under 'flappy-bird'. This is the source code.
 
+I plan on creating build tasks for the actual game itself. For demo purposes, I will create minified files to be utilized. Normally, the user will clone the repo and create the build themself (which you can do as well here).
+
 
 
 
