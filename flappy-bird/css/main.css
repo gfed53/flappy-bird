@@ -44,16 +44,6 @@ div#overlay {
     font-family: "Roboto", sans-serif;
 }
 
-div#overlay-cover {
-    /*Layout*/
-   /* width: 10em;
-    height: 6.5em;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;*/
-}
-
 #btn-pause {
     padding: 2em;
     border-radius: 5em;

@@ -2,7 +2,7 @@ var gulp = require("gulp");
 
 var jshint = require("gulp-jshint");
 var uglify = require("gulp-uglify");
-var pump = require('pump');
+var pump = require("pump");
 var browserify = require("browserify");
 var source = require("vinyl-source-stream");
 var buffer = require("vinyl-buffer");
@@ -21,20 +21,20 @@ gulp.task("scripts", function(){
     .pipe(gulp.dest("js"));
 });
 
-gulp.task('compress', function (cb) {
+gulp.task("compress", function () {
   pump([
-        gulp.src('js/app.js'),
+        gulp.src("js/app.js"),
         uglify(),
-        gulp.dest('dist')
+        gulp.dest("dist")
     ]
   );
 });
 
 gulp.task("watch", function(){
-	gulp.watch("js/**/*.js", ["jshint", "scripts"]);
+	gulp.watch("js/**/*.js", ["jshint", "scripts", "compress"]);
 });
 
-gulp.task("default", ["jshint", "scripts", "watch"]);
+gulp.task("default", ["jshint", "scripts", "compress", "watch"]);
 
 gulp.task("build", ["jshint", "scripts"]);
 

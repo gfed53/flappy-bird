@@ -237,6 +237,8 @@ var PipeGraphicsComponent = function(entity) {
 };
 
 PipeGraphicsComponent.prototype.draw = function(context){
+	console.log("pipes drawin");
+	//Issue: pipes (and probably everything else) continue to draw even when game is paused.
 	var position = this.entity.components.physics.position,
 	image = document.getElementById("wood");
 
