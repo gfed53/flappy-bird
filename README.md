@@ -37,6 +37,8 @@ Even a simple game such as this requires a relatively complex code architecture 
 
 * I wanted to actually add sprite animations to the hadouken itself rather than just have a GIF that doesn't even animate (on most browsers, at least). Sprite creation isn't really my forte, but hopefully I'll have the time to figure this out in the future.
 
+* I'm aware that the game can be taxing performance-wise. Hinderances such as heavy memory usage can cause nasty flickering, so if you're someone who is seizure-prone, please avoid this game for the time being. This may be attributed to the game loop being constant, even on game pause, so this is something I plan on fixing in the future. 
+
 ## The Code
 
 The Landing Page has a source directory ('site') and a build directory ('build').
@@ -44,6 +46,8 @@ The Landing Page has a source directory ('site') and a build directory ('build')
 The app's game's code is found under 'flappy-bird'. This is the source code.
 
 I plan on creating build tasks for the actual game itself. For demo purposes, I will create minified files to be utilized. Normally, the user will clone the repo and create the build themself (which you can do as well here).
+
+
 
 
 
