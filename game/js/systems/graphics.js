@@ -18,12 +18,13 @@ GraphicsSystem.prototype.run = function(){
 };
 
 GraphicsSystem.prototype.tick = function() {
+	console.log("graphics tick");
 	// Set the canvas to the correct size if the window is resized
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
 		this.canvas.height = this.canvas.offsetHeight;
-}
+	}
 
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);

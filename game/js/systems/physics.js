@@ -58,6 +58,7 @@ PhysicsSystem.prototype.controlPipes = function(){
 
 	//Tick loop that updates physics of entities, as well as score. Also, a constant check for any collision.
 	PhysicsSystem.prototype.tick = function(){
+		console.log('physics tick');
 		for(var i=0; i<this.entities.length; i++){
 			var entity = this.entities[i];
 			if (!"physics" in entity.components){

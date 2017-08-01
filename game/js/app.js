@@ -501,6 +501,7 @@ var CollisionSystem = function(entities) {
 };
 
 CollisionSystem.prototype.tick = function() {
+	console.log('collision tick');
 	for(var i=0; i<this.entities.length; i++) {
 		var entityA = this.entities[i];
 		if (!"collision" in entityA.components){
@@ -550,12 +551,13 @@ GraphicsSystem.prototype.run = function(){
 };
 
 GraphicsSystem.prototype.tick = function() {
+	console.log("graphics tick");
 	// Set the canvas to the correct size if the window is resized
 	if (this.canvas.width != this.canvas.offsetWidth ||
 		this.canvas.height != this.canvas.offsetHeight) {
 		this.canvas.width = this.canvas.offsetWidth;
 		this.canvas.height = this.canvas.offsetHeight;
-}
+	}
 
 	// Clear the canvas
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -739,6 +741,7 @@ PhysicsSystem.prototype.controlPipes = function(){
 
 	//Tick loop that updates physics of entities, as well as score. Also, a constant check for any collision.
 	PhysicsSystem.prototype.tick = function(){
+		console.log('physics tick');
 		for(var i=0; i<this.entities.length; i++){
 			var entity = this.entities[i];
 			if (!"physics" in entity.components){

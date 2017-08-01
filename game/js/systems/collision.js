@@ -3,6 +3,7 @@ var CollisionSystem = function(entities) {
 };
 
 CollisionSystem.prototype.tick = function() {
+	console.log('collision tick');
 	for(var i=0; i<this.entities.length; i++) {
 		var entityA = this.entities[i];
 		if (!"collision" in entityA.components){

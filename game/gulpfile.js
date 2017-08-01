@@ -10,15 +10,15 @@ var buffer = require("vinyl-buffer");
 // JavaScript linting task
 gulp.task("jshint", function(){
 	return gulp.src("js/**/*.js")
-		.pipe(jshint())
-		.pipe(jshint.reporter("default"));
+      		.pipe(jshint())
+      		.pipe(jshint.reporter("default"));
 });
 
 gulp.task("scripts", function(){
 	return browserify("js/main.js")
-	.bundle()
-    .pipe(source("app.js"))
-    .pipe(gulp.dest("js"));
+          .bundle()
+          .pipe(source("app.js"))
+          .pipe(gulp.dest("js"));
 });
 
 gulp.task("compress", function () {
