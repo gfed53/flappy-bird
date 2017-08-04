@@ -34,7 +34,7 @@ gulp.task("watch", function(){
 	gulp.watch("js/**/*.js", ["jshint", "scripts", "compress"]);
 });
 
-gulp.task("default", ["jshint", "scripts", "compress", "watch"]);
+gulp.task("game-start", ["jshint", "scripts", "compress", "watch"]);
 
-gulp.task("build", ["jshint", "scripts"]);
+gulp.task("game-build", ["jshint", "scripts"]);
 

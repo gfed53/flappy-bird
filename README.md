@@ -45,7 +45,7 @@ Even a simple game such as this requires a relatively complex code architecture 
 
 The Landing Page has a source directory ('site') and a build directory ('build').
 
-The app's game's code is found under 'flappy-bird'. This is the source code.
+The app's game's code is found under 'game'. This is the source code.
 
 Note that there is a package.json and gulpfile for each part of the project, the landing page and the game itself. The page's files are in the root directory while the game's files are in the game directory. I wanted to achieve separation of concerns, but a drawback is that the user who plans to make their own build has to make sure all of the appropriate dependencies are installed.
 
