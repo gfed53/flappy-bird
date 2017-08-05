@@ -13,20 +13,21 @@ var source = require("vinyl-source-stream");
 var buffer = require("vinyl-buffer");
 var runSequence = require("run-sequence");
 
-var html = ["./index.html", "./about.html"];
-
 var paths = {
 	html: ["./src/index.html", "./src/about.html"],
-	//Pretty files to be minified
-	js: ["./src/js/app.js", "./src/js/livePerf.js"],
-	//Already minifed to be copied
-	minjs: ["./src/js/jssor.slider.mini.js", "./src/js/picturefill.min.js"],
-	build: "./site_build"
+	js: {
+		all: "./src/js/*.js",
+		//Pretty files to be minified
+		pretty: ["./src/js/app.js", "./src/js/livePerf.js"],
+		//Already minifed files to be copied
+		min: ["./src/js/jssor.slider.mini.js", "./src/js/picturefill.min.js"]
+	},
+	build: "./build"
 };
 
 // JavaScript linting task
 gulp.task("jshint", function(){
-	return gulp.src("./src/js/*.js")
+	return gulp.src(paths.js.all)
 	.pipe(jshint())
 	.pipe(jshint.reporter("default"));
 });
@@ -40,14 +41,12 @@ gulp.task("sass", function(){
 
 // Watch task
 gulp.task("watch", function(){
-	gulp.watch("./src/js/*.js", ["jshint"]);
+	gulp.watch(paths.js.all, ["jshint"]);
 	gulp.watch("./src/scss/*", ["sass"]);
 });
 
 // Default task
 gulp.task("site-start", ["jshint", "sass", "watch"]);
-
-
 
 
 //Build parts ***
@@ -60,27 +59,26 @@ gulp.task('clean', function(){
 
 // Minify index
 gulp.task("html", function(){
-	return gulp.src(html)
+	return gulp.src(paths.html)
 	.pipe(minifyHTML())
 	.pipe(gulp.dest(paths.build));
 });
 
 // JavaScript build task, removes whitespace and concatenates all files
 gulp.task("js", function(){
-	return gulp.src(paths.js)
+	return gulp.src(paths.js.pretty)
 	.pipe(uglify())
 	.pipe(gulp.dest(paths.build+"/js"));
 });
 
 gulp.task("copy", function(){
-	return gulp.src(paths.minjs)
+	return gulp.src(paths.js.min)
 	.pipe(gulp.dest(paths.build+"/js"));
 });
 
 // Styles build task, concatenates all the files
 gulp.task("styles", function() {
 	return gulp.src("./src/css/*.css")
-	.pipe(concat("./src/styles.css"))
 	.pipe(gulp.dest(paths.build+"/css"));
 });
 
@@ -104,10 +102,6 @@ gulp.task("site-build", function(){
 		"images"
 		);
 });
-
-
-// gulp.task("site-build", ["jshint", "sass", "html", "scripts", "styles", "images"]);
-
 
 
 
