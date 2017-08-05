@@ -43,9 +43,9 @@ Even a simple game such as this requires a relatively complex code architecture 
 
 ## The Code
 
-The Landing Page has a source directory ('site') and a build directory ('build').
+The Landing Page is found in the directory 'site' which contains the source code ('src' directory). After running `gulp site-build` from the terminal while in the 'site' directory, a build version is created ('build' directory) within the 'site' directory.
 
-The app's game's code is found under 'game'. This is the source code.
+The app's game's code is found under 'game'. This is the source code (for now).
 
 Note that there is a package.json and gulpfile for each part of the project, the landing page and the game itself. The page's files are in the root directory while the game's files are in the game directory. I wanted to achieve separation of concerns, but a drawback is that the user who plans to make their own build has to make sure all of the appropriate dependencies are installed.
 
