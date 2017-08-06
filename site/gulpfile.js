@@ -4,13 +4,8 @@ var del = require('del');
 var jshint = require("gulp-jshint");
 var sass = require("gulp-sass");
 var imagemin = require("gulp-imagemin");
-var browserify = require("browserify");
 var uglify = require("gulp-uglify");
 var minifyHTML = require("gulp-minify-html");
-var concat = require("gulp-concat");
-var rename = require("gulp-rename");
-var source = require("vinyl-source-stream");
-var buffer = require("vinyl-buffer");
 var runSequence = require("run-sequence");
 
 var paths = {
@@ -22,6 +17,15 @@ var paths = {
 		//Already minifed files to be copied
 		min: ["./src/js/jssor.slider.mini.js", "./src/js/picturefill.min.js"]
 	},
+	scss: {
+		all: "./src/scss/*",
+		main: "./src/scss/*.scss"
+	},
+	css: {
+		dir: "./src/css",
+		all: "./src/css/*.css"
+	},
+	img: "./src/img/*",
 	build: "./build"
 };
 
@@ -34,19 +38,19 @@ gulp.task("jshint", function(){
 
 // Compile SASS task
 gulp.task("sass", function(){
-	return gulp.src("./src/scss/*.scss")
+	return gulp.src(paths.scss.all)
 	.pipe(sass())
-	.pipe(gulp.dest("./src/css"));
+	.pipe(gulp.dest(paths.css.dir));
 });
 
 // Watch task
 gulp.task("watch", function(){
 	gulp.watch(paths.js.all, ["jshint"]);
-	gulp.watch("./src/scss/*", ["sass"]);
+	gulp.watch(paths.scss.all, ["sass"]);
 });
 
 // Default task
-gulp.task("site-start", ["jshint", "sass", "watch"]);
+gulp.task("site-dev", ["jshint", "sass", "watch"]);
 
 
 //Build parts ***
@@ -78,13 +82,13 @@ gulp.task("copy", function(){
 
 // Styles build task, concatenates all the files
 gulp.task("styles", function() {
-	return gulp.src("./src/css/*.css")
+	return gulp.src(paths.css.all)
 	.pipe(gulp.dest(paths.build+"/css"));
 });
 
 // Image optimization task
 gulp.task("images", function() {
-	return gulp.src("./src/img/*")
+	return gulp.src(paths.img)
 	.pipe(imagemin())
 	.pipe(gulp.dest(paths.build+"/img"));
 });

@@ -1,21 +1,6 @@
 // Media Queries
+
 $tablet: 'min-width: 768px';
 $desktop: 'min-width: 1024px';
 $social-tweak1: 'min-width: 453px';
 $social-tweak2: 'min-width: 333px';
-
-//Layout
-$background-color: #bdc3c7;
-
-// Typography
-$title-font: 'Righteous', serif;
-$sans-serif-font: 'Roboto', Helvetica, Arial, sans-serif;
-$serif-font: Georgia, Times, 'Times New Roman', serif;
-$alt-font: 'Helvetica Neue', Helvetica, sans-serif;
-
-// Buttons
-@mixin button-style {
-	padding: 0.5em;
-	border-radius: 0.3em;
-}
-$button-background-color: #1abc9c;
