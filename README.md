@@ -43,11 +43,11 @@ Even a simple game such as this requires a relatively complex code architecture 
 
 ## The Code
 
-The Landing Page is found in the directory 'site' which contains the source code ('src' directory). After running `gulp site-build` from the terminal while in the 'site' directory, a build version is created ('build' directory) within the 'site' directory.
+The Landing Page is found in the directory 'site' which contains the source code ('src' directory). After running `gulp site-build` from the terminal while in the 'site' directory, a build version is created (as the 'build' directory) within the 'site' directory.
 
 The app's game's code is found under 'game'. This is the source code (for now).
 
-Note that there is a package.json and gulpfile for each part of the project, the landing page and the game itself. The page's files are in the root directory while the game's files are in the game directory. I wanted to achieve separation of concerns, but a drawback is that the user who plans to make their own build has to make sure all of the appropriate dependencies are installed.
+Note that there is a gulpfile for each part of the project, the landing page and the game itself. The page's files are in the 'site' directory while the game's files are in the 'game' directory. I wanted to achieve separation of concerns, but a drawback is that the user who plans to make their own build has to be aware of what tasks they are running, and where they need to be in the terminal to run the tasks. I try to make it easier by giving more specific task names, such as `gulp site-build` instead of just `gulp build` so, in case the user is in the wrong directory, they won't accidently run the wrong build task.
 
 I plan on creating build tasks for the actual game itself. For demo purposes, I will create minified files to be utilized. Normally, the user will clone the repo and create the build themselves (which you can do as well here).
 
