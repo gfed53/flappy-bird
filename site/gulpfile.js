@@ -3,6 +3,7 @@ var gulp = require("gulp");
 var del = require('del');
 var jshint = require("gulp-jshint");
 var sass = require("gulp-sass");
+var cleanCSS = require('gulp-clean-css');
 var imagemin = require("gulp-imagemin");
 var uglify = require("gulp-uglify");
 var minifyHTML = require("gulp-minify-html");
@@ -83,6 +84,7 @@ gulp.task("copy", function(){
 // Styles build task, concatenates all the files
 gulp.task("styles", function() {
 	return gulp.src(paths.css.all)
+	.pipe(cleanCSS())
 	.pipe(gulp.dest(paths.build+"/css"));
 });
 
